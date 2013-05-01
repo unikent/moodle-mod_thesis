@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/newmodule/db" VERSION="20101203" COMMENT="XMLDB file for Moodle mod/newmodule"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+  >
+  <TABLES>
+    <TABLE NAME="thesis" COMMENT="erm, thesis" NEXT="thesis_submissions">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course_id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="course_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course_id" UNIQUE="false" FIELDS="course_id"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="thesis_submissions" COMMENT="thesis submissions" PREVIOUS="thesis">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="thesis_id"/>
+        <FIELD NAME="thesis_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="user_id"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="thesis_id" NEXT="title"/>
+        <FIELD NAME="title" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="user_id" NEXT="keywords"/>
+        <FIELD NAME="keywords" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="title" NEXT="abstract"/>
+        <FIELD NAME="abstract" TYPE="text" LENGTH="big"  NOTNULL="false" SEQUENCE="false" PREVIOUS="keywords" NEXT="thesis_type"/>
+        <FIELD NAME="thesis_type" TYPE="text" LENGTH="small"  NOTNULL="false" SEQUENCE="false" PREVIOUS="abstract" NEXT="publishdate"/>
+        <FIELD NAME="publishdate" TYPE="int" LENGTH="10" NOTNULL="false" PREVIOUS="thesis_type" NEXT="contactemail"/>
+        <FIELD NAME="contactemail" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="publishdate" NEXT="institution"/>
+        <FIELD NAME="institution" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="contactemail" NEXT="department"/>
+        <FIELD NAME="department" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="institution" NEXT="corporate_acknowledgement"/>
+        <FIELD NAME="corporate_acknowledgement" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="department" NEXT="identification_number"/>
+        <FIELD NAME="identification_number" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="corporate_acknowledgement" NEXT="number_of_pages"/>
+        <FIELD NAME="number_of_pages" TYPE="int" LENGTH="10" NOTNULL="false" PREVIOUS="identification_number" NEXT="funding"/>
+        <FIELD NAME="funding" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="number_of_pages" NEXT="additional_information"/>
+        <FIELD NAME="additional_information" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="funding" NEXT="qualification_level"/>
+        <FIELD NAME="qualification_level" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="additional_information" NEXT="qualification_name"/>
+        <FIELD NAME="qualification_name" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="qualification_level" NEXT="supervisor_fname"/>
+        <FIELD NAME="supervisor_fname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="qualification_name" NEXT="supervisor_sname"/>
+        <FIELD NAME="supervisor_sname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_fname" NEXT="supervisor_email"/>
+        <FIELD NAME="supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_sname" NEXT="metadata"/>
+        <FIELD NAME="metadata" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_email" NEXT="publish"/>
+        <FIELD NAME="publish" TYPE="int" LENGTH="1" NOTNULL="false" PREVIOUS="metadata" NEXT="published_by"/>
+        <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="publish"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="thesis_id" UNIQUE="false" FIELDS="thesis_id" NEXT="user_id"/>
+        <INDEX NAME="user_id" UNIQUE="false" FIELDS="user_id" PREVIOUS="thesis_id"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

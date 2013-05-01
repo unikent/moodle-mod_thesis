@@ -1,0 +1,78 @@
+
+form.thesis_form>fieldset {
+  padding: 20px;
+}
+
+.thesis_form .fitem .fitemtitle {
+  width: 23%;
+}
+
+.thesis_form .fitem .felement {
+  margin-left: 24%;
+}
+
+.thesis_form input[type="text"] {
+  width: 69% !important;
+}
+
+.thesis_form textarea {
+  width: 69% !important;
+  height: 60px;
+  padding: 8px;
+  color: #6f6f6f;
+  font-weight: bold;
+  border: 1px solid #999;
+}
+
+.thesis_form img.iconhelp {
+  margin-right: 0px !important;
+}
+
+.thesis_ok {
+  margin-bottom: 10px !important;
+}
+
+.thesis_list table.thesis {
+  margin-top: 20px;
+  font-size: 120%;
+}
+
+table.thesis th, table.thesis td {
+  padding: 8px;
+  line-height: 25px;
+  text-align: left;
+}
+
+.thesis_list table th:first-of-type {
+  width: 65%;
+}
+
+table.thesis td {
+  border-top: 1px solid #ddd;
+}
+
+.thesis_list h2 {
+  display: inline;
+  padding-right: 5px;
+  font-size: 200%;
+}
+.thesis_list>a {
+  font-size: 120%;
+}
+
+.thesis_list p {
+  margin-top: 20px;
+}
+
+.thesis_back {
+  position: absolute;
+  top: 25px;
+}
+
+.thesis_table_head {
+  width: 20% !important;
+}
+
+.thesis_table_data{
+  width: 65% !important;
+}
