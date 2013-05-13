@@ -133,7 +133,10 @@ function thesis_cron () {
     $eprint->addChild('userid', $e_user->username);
 
     $eprint->addChild('type', 'thesis');
-    $eprint->addChild('metadata_visibility', $sub->metadata === '1' ? 'show' : 'hide');
+    //Always show
+    //$eprint->addChild('metadata_visibility', $sub->metadata === '1' ? 'show' : 'hide');
+    $eprint->addChild('metadata_visibility', 'show');
+
 
     // Thesis creator data
     $user = $DB->get_record('user', array('id' => $sub->user_id));

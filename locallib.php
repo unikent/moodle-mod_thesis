@@ -125,7 +125,8 @@ class mod_thesis_submit_form extends moodleform {
     // $mform->addElement('text','superviser', get_string('superviser','thesis'));
     // $mform->setType('superviser', PARAM_TEXT);
 
-    $mform->addElement('checkbox', 'metadata',  get_string('metadata_vis','thesis'), ' ');
+    //not needed
+    //$mform->addElement('checkbox', 'metadata',  get_string('metadata_vis','thesis'), ' ');
 
     $mform->addElement('filemanager','publish_filemanager','Publish');
     $mform->addElement('filemanager','private_filemanager','Restricted');
