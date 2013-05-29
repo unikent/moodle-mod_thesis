@@ -77,6 +77,7 @@ class mod_thesis_submit_form extends moodleform {
 
     $mform->addElement('textarea','keywords', get_string('keywords', 'thesis'));
     $mform->setType('keywords', PARAM_TEXT);
+    $mform->addHelpButton('keywords', 'keywords', 'thesis');
 
     $mform->addElement('textarea','corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
     $mform->setType('corporate_acknowledgement', PARAM_TEXT);
@@ -104,6 +105,7 @@ class mod_thesis_submit_form extends moodleform {
 
     $mform->addElement('textarea','additional_information', get_string('note', 'thesis'));
     $mform->setType('additional_information', PARAM_TEXT);
+    $mform->addHelpButton('additional_information', 'note', 'thesis');
 
     $qualoptions = array();
     $qualoptions['Masters'] = get_string('quals_masters','thesis');
@@ -131,6 +133,7 @@ class mod_thesis_submit_form extends moodleform {
 
     $mform->addElement('filemanager','publish_filemanager','Publish');
     $mform->addElement('filemanager','private_filemanager','Restricted');
+    $mform->addHelpButton('private_filemanager', 'restricted', 'thesis');
 
     if(isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin']) {
       $mform->addElement('submit', 'publish_kar', 'Save changes and publish to Kar');
