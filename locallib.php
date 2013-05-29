@@ -66,6 +66,7 @@ class mod_thesis_submit_form extends moodleform {
 
     $mform->addElement('textarea','abstract', get_string('abstract', 'thesis'));
     $mform->setType('abstract', PARAM_TEXT);
+    $mform->addRule('abstract', get_string('abstract_req', 'thesis'),'required');
 
     $typeoptions = array();
     $typeoptions['PHD'] = get_string('type_phd','thesis');
@@ -132,7 +133,7 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('filemanager','private_filemanager','Restricted');
 
     if(isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin']) {
-      $mform->addElement('submit', 'publish_kar', 'Save and push to Kar');
+      $mform->addElement('submit', 'publish_kar', 'Save changes and publish to Kar');
     }
 
     $this->add_action_buttons();

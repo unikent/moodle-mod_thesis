@@ -10,6 +10,7 @@ $string['pluginadministration'] = '';
 $string['title'] = 'Title';
 $string['title_help'] = 'This title needs to be exactly the same as the title on your thesis';
 $string['title_req'] = 'You must enter a title';
+$string['abstract_req'] = 'You must enter an abstract';
 $string['abstract'] = 'Abstract';
 $string['thesis_type'] = 'Thesis type';
 $string['thesis_type_req'] = 'You must enter a thesis type';
