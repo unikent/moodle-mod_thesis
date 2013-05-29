@@ -12,7 +12,6 @@ function thesis_supports($feature) {
 function thesis_add_instance($data, $mform) {
   global $DB;
 
-  $data->course_id = $data->course;
   $id = $DB->insert_record('thesis', $data);
 
   return $id;
@@ -48,7 +47,7 @@ function thesis_cron () {
   foreach ($submissions as $sub) {
 
     $thesis = $DB->get_record('thesis',array('id'=>$sub->thesis_id));
-    if( !$cm = $DB->get_record('course_modules',array('module'=>$module->id,'course'=>$thesis->course_id,'instance'=>$sub->thesis_id)) ) {
+    if( !$cm = $DB->get_record('course_modules',array('module'=>$module->id,'course'=>$thesis->course,'instance'=>$sub->thesis_id)) ) {
       print_error('invalidcoursemodule');
     }
 
