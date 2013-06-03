@@ -28,6 +28,14 @@ form.thesis_form>fieldset {
   margin-right: 0px !important;
 }
 
+.thesis_form #fitem_id_publish_kar>div {
+  text-align: right;
+}
+
+.thesis_form #id_submitpublish, .thesis_form #id_submitdraft {
+  float: right;
+}
+
 .thesis_ok {
   margin-bottom: 10px !important;
 }

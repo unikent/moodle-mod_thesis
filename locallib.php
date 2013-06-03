@@ -151,19 +151,24 @@ class mod_thesis_submit_form extends moodleform {
       $buttonarray[] = $mform->createElement('cancel');
     }
 
+    //$mform->addGroup($buttonarray, 'buttona', '', array(' '), false);
+    //$buttonarray=array();
+
     if(!$submitted_for_publishing) {
       $buttonarray[] = $mform->createElement('submit', 'submitpublish', 'Submit for publishing');
     }
 
-    if($isadmin) {
-      if($submitted_for_publishing) {
-        $buttonarray[] = $mform->createElement('submit', 'submitdraft', 'Reset to draft');
-      }
-      $buttonarray[] = $mform->createElement('submit', 'publish_kar', 'Save changes and publish to Kar');
+    if($isadmin && $submitted_for_publishing) {
+      $buttonarray[] = $mform->createElement('submit', 'submitdraft', 'Reset to draft');
     }
 
-    $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
-    $mform->closeHeaderBefore('buttonar');
+    $mform->addGroup($buttonarray, 'buttonb', '', array(' '), false);
+
+    if($isadmin) {
+      $mform->addElement('submit', 'publish_kar', 'Save changes and publish to Kar');
+    }
+
+    $mform->closeHeaderBefore('buttonb');
   }
 }
 
