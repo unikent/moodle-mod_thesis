@@ -43,6 +43,7 @@
         <FIELD NAME="metadata" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_email" NEXT="publish"/>
         <FIELD NAME="publish" TYPE="int" LENGTH="1" NOTNULL="false" PREVIOUS="metadata" NEXT="published_by"/>
         <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="publish"/>
+        <FIELD NAME="submitted_for_publishing" TYPE="int" LENGTH="1" NOTNULL="false" PREVIOUS="publish"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

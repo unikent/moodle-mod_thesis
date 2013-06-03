@@ -27,7 +27,11 @@ function thesis_list_submissions($cmid,$tid,$coursecontext) {
   $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td>%s</td><td><a href="mailto:%5$s">%5$s</a></td><td>%6$s</td></tr>';
   $out = '';
   foreach( $submissions as $s ) {
-    $pushed = 0 == $s->publish ? 'draft' : 'published';
+
+    $pushed = 'draft';
+    if($s->submitted_for_publishing == 1) $pushed = 'submitted';
+    if(isset($s->publish)) $pushed = 'published';
+
     $user = $DB->get_record('user',array('id'=>$s->user_id));
     $name = join(' ', array($user->firstname, $user->lastname));
     $out .= sprintf( $row, $cmid, $s->id, $s->title, $name, $user->email, $pushed );
@@ -136,11 +140,30 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('filemanager','private_filemanager','Restricted');
     $mform->addHelpButton('private_filemanager', 'restricted', 'thesis');
 
-    if(isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin']) {
-      $mform->addElement('submit', 'publish_kar', 'Save changes and publish to Kar');
+    $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];
+    $submitted_for_publishing = isset($this->_customdata['submitted_for_publishing']) && true === $this->_customdata['submitted_for_publishing'];
+
+
+    $buttonarray=array();
+
+    if(!$submitted_for_publishing || $isadmin) {
+      $buttonarray[] = $mform->createElement('submit', 'submitbutton', 'Update');
+      $buttonarray[] = $mform->createElement('cancel');
     }
 
-    $this->add_action_buttons();
+    if(!$submitted_for_publishing) {
+      $buttonarray[] = $mform->createElement('submit', 'submitpublish', 'Submit for publishing');
+    }
+
+    if($isadmin) {
+      if($submitted_for_publishing) {
+        $buttonarray[] = $mform->createElement('submit', 'submitdraft', 'Reset to draft');
+      }
+      $buttonarray[] = $mform->createElement('submit', 'publish_kar', 'Save changes and publish to Kar');
+    }
+
+    $mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+    $mform->closeHeaderBefore('buttonar');
   }
 }
 

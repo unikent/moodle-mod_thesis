@@ -22,12 +22,17 @@ if (! $course = $DB->get_record("course", array("id" => $cm->course))) {
 if (! $thesis = $DB->get_record("thesis", array("id" => $cm->instance))) {
   print_error('invalidthesisid', 'thesis');
 }
+$published = false;
+$submitted_for_publishing = false;
 if($submission_id) {
   $submission = $DB->get_record('thesis_submissions',array('id'=>$submission_id));
-  $published = $submission->publish != 0 ? true : false;
-} else {
-  $published = false;
+  $published = $submission->publish != 0;
+  $submitted_for_publishing = $submission->submitted_for_publishing != 0;
 }
+
+$isadmin = has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $cm->course));
+
+$show_as_published = $published || ($submitted_for_publishing && !$isadmin);
 
 
 
@@ -43,7 +48,7 @@ if(!is_enrolled($context) && !has_capability('moodle/course:update', get_context
   exit;
 }
 
-if($published) {
+if($show_as_published) {
   $heading = 'View thesis submission';
   $PAGE->set_title($heading);
   $PAGE->set_heading($heading);
@@ -80,8 +85,7 @@ if($published) {
 
   $heading = 'Create/update thesis';
 
-  $isadmin = has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $cm->course));
-  $form = new mod_thesis_submit_form(null,array('isadmin'=>$isadmin),'post','',array('class'=>'thesis_form'));
+  $form = new mod_thesis_submit_form(null,array('isadmin'=>$isadmin,'submitted_for_publishing'=>$submitted_for_publishing),'post','',array('class'=>'thesis_form'));
 
   //Has the form been submited?
   if( $entry = $form->get_data() ) {
@@ -94,7 +98,15 @@ if($published) {
       }
     }
 
+    if(isset($entry->submitpublish)) {
+      $entry->submitted_for_publishing = 1;
+    }
+    if(isset($entry->submitdraft)) {
+      $entry->submitted_for_publishing = 0;
+    }
+
     if(isset($entry->publish_kar)) {
+      $entry->submitted_for_publishing = 1;
       $entry->publish = 1;
       $entry->published_by = $USER->id;
     }
@@ -135,6 +147,6 @@ if(null != $f) {
 
 echo '<a class="thesis_back" href="view.php?id='.$id.'">Return to submissions list</a>';
 
-if($published) {echo $output;} else {$form->display();}
+if($show_as_published) {echo $output;} else {$form->display();}
 
 echo $OUTPUT->footer();

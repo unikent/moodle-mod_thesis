@@ -22,6 +22,17 @@ function xmldb_thesis_upgrade($oldversion=0) {
     upgrade_mod_savepoint(true, 2013052904, 'thesis');
   }
 
+  if($oldversion<2013060104) {
+    $table = new xmldb_table('thesis_submissions');
+    $field = new xmldb_field('submitted_for_publishing', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0');
+
+    if (!$dbman->field_exists($table, $field)) {
+      $dbman->add_field($table, $field);
+    }
+
+    upgrade_mod_savepoint(true, 2013060104, 'thesis');
+  }
+
   return true;
 }
 
