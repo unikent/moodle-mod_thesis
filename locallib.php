@@ -24,12 +24,13 @@ function thesis_list_submissions($cmid,$tid,$coursecontext) {
     $submissions = $DB->get_records('thesis_submissions',array('thesis_id'=>$tid,'user_id'=>$USER->id));
   }
 
-  $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td><a href="mailto:%4$s">%4$s</a></td><td>%5$s</td></tr>';
+  $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td>%s</td><td><a href="mailto:%5$s">%5$s</a></td><td>%6$s</td></tr>';
   $out = '';
   foreach( $submissions as $s ) {
     $pushed = 0 == $s->publish ? 'draft' : 'published';
     $user = $DB->get_record('user',array('id'=>$s->user_id));
-    $out .= sprintf( $row, $cmid, $s->id, $s->title, $user->email, $pushed );
+    $name = join(' ', array($user->firstname, $user->lastname));
+    $out .= sprintf( $row, $cmid, $s->id, $s->title, $name, $user->email, $pushed );
   }
 
   $message = '';
@@ -38,7 +39,7 @@ function thesis_list_submissions($cmid,$tid,$coursecontext) {
   } else {
     return <<<HTML
     <table class="thesis">
-      <thead><tr><th>Title</th><th>Contact email</th><th>Status</th></tr></thead>
+      <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Status</th></tr></thead>
       <tbody>$out</tbody>
     </table>
 HTML;
