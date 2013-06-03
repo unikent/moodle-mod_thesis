@@ -35,7 +35,6 @@ $isadmin = has_capability('moodle/course:update', get_context_instance(CONTEXT_C
 $show_as_published = $published || ($submitted_for_publishing && !$isadmin);
 
 
-
 require_course_login($course, true, $cm);
 
 $context = get_context_instance(CONTEXT_MODULE, $cm->id);
@@ -90,6 +89,8 @@ if($show_as_published) {
   //Has the form been submited?
   if( $entry = $form->get_data() ) {
 
+    $f = 'ok';
+
     //Are we updating? if so do you have access to update this
     if(isset($submission)) {
       if(!$isadmin && $submission->user_id != $USER->id) {
@@ -100,6 +101,7 @@ if($show_as_published) {
 
     if(isset($entry->submitpublish)) {
       $entry->submitted_for_publishing = 1;
+      $f = 'publish';
     }
     if(isset($entry->submitdraft)) {
       $entry->submitted_for_publishing = 0;
@@ -114,7 +116,7 @@ if($show_as_published) {
     thesis_create_or_update($entry,$thesis);
     file_postupdate_standard_filemanager($entry, 'publish', array(), $context, 'mod_thesis', 'publish', $entry->submission_id);
     file_postupdate_standard_filemanager($entry, 'private', array(), $context, 'mod_thesis', 'private', $entry->submission_id);
-    redirect('edit.php?id='.$id.'&amp;submission_id='.$entry->submission_id.'&amp;f=ok');
+    redirect('edit.php?id='.$id.'&amp;submission_id='.$entry->submission_id.'&amp;f='.$f);
     die;
 
   } else {
@@ -142,7 +144,11 @@ if($show_as_published) {
 echo $OUTPUT->header();
 echo $OUTPUT->heading($heading);
 if(null != $f) {
-  echo '<div class="thesis_ok notifysuccess">Content changes saved ok. <a href="view.php?id='.$id.'">Return to submissions list</a></div>';
+  $message = 'Content changes saved ok.';
+  if('publish' == $f) {
+    $message = 'Submission queued for publishing approval.';
+  }
+  echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">Return to submissions list</a></div>';
 }
 
 echo '<a class="thesis_back" href="view.php?id='.$id.'">Return to submissions list</a>';
