@@ -93,9 +93,10 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('select', 'thesis_type', 'Thesis/Dissertation type', $typeoptions);
     $mform->addRule('thesis_type', get_string('thesis_type_req', 'thesis'),'required');
 
-    $mform->addElement('textarea','keywords', get_string('keywords', 'thesis'));
+    $mform->addElement('textarea','keywords', 'Subject Keywords');
     $mform->setType('keywords', PARAM_TEXT);
     $mform->addHelpButton('keywords', 'keywords', 'thesis');
+    $mform->addRule('keywords', 'Subject keywords are required','required');
 
     $mform->addElement('textarea','corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
     $mform->setType('corporate_acknowledgement', PARAM_TEXT);
