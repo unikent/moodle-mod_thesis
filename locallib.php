@@ -132,12 +132,13 @@ class mod_thesis_submit_form extends moodleform {
     //not needed
     //$mform->addElement('checkbox', 'metadata',  get_string('metadata_vis','thesis'), ' ');
 
-    $mform->addElement('filemanager','publish_filemanager','Publish');
+    $mform->addElement('static','publish_info','Publicly-available Thesis/Dissertation','This version of the thesis/dissertation will be made available publicly via the Kent Academic Repository');
+    $mform->addElement('filemanager','publish_filemanager','');
     $mform->closeHeaderBefore('restricted_info');
     $mform->addElement('static','restricted_info','Restricted Thesis/Dissertation','This version of the thesis/dissertation will not be made available publicly via the Kent Academic Repository. If you wish the thesis/dissertation to become available publicly on a certain date, please indicate this in the Restricted Thesis/Dissertation Information box below.');
     $mform->addElement('filemanager','private_filemanager','');
 
-    $mform->addElement('static','additional_information_info', 'Restricted Thesis/Dissertation Information', 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository');
+    $mform->addElement('static','additional_information_info', 'Restricted Thesis/Dissertation Information', 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.');
     $mform->addElement('textarea','additional_information', '');
     $mform->setType('additional_information', PARAM_TEXT);
 
