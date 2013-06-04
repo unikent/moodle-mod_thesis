@@ -108,6 +108,10 @@ if($show_as_published) {
       }
     }
 
+    if(empty($entry->terms_accepted)) {
+      redirect($CFG->wwwroot . "/mod/thesis/terms.php?id=$id");
+    }
+
     if(isset($entry->submitpublish)) {
       $entry->submitted_for_publishing = 1;
       $f = 'publish';
@@ -130,6 +134,10 @@ if($show_as_published) {
 
   } else {
 
+    if(empty($submission->terms_accepted) && empty($_SESSION['thesis_terms'])) {
+      $suburl = isset($submission) ? "&submission_id={$submission->id}" : "";
+      redirect($CFG->wwwroot . "/mod/thesis/terms.php?id={$id}{$suburl}");
+    }
 
     // Are we updating a record and do you have access?
     if(isset($submission)) {
@@ -139,6 +147,11 @@ if($show_as_published) {
       }
     } else {
       $submission = new stdClass;
+    }
+
+    if(empty($submission->terms_accepted)) {
+      $submission->terms_accepted = $_SESSION['thesis_terms'];
+      unset($_SESSION['thesis_terms']);
     }
 
     $submission->submission_id = $submission_id;

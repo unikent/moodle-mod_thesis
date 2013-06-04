@@ -64,6 +64,9 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('hidden', 'submission_id');
     $mform->setType('submission_id', PARAM_INT);
 
+    $mform->addElement('hidden', 'terms_accepted');
+    $mform->setType('terms_accepted', PARAM_INT);
+
     $mform->addElement('static','title_info','',get_string('title_help','thesis'));
     $mform->addElement('text','title', get_string('title', 'thesis'));
     $mform->setType('title', PARAM_TEXT);
