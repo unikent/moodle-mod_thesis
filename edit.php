@@ -48,11 +48,15 @@ if(!is_enrolled($context) && !has_capability('moodle/course:update', get_context
 }
 
 if($show_as_published) {
-  $heading = 'View thesis submission';
+
+  $status = $submission->submitted_for_publishing == 1 ? ' <span class="thesis_status">(Submitted to School Administrator)</span>' : '';
+  $status = isset($submission->publish) ? ' <span class="thesis_status">(Published)</span>' : $status;
+
+  $heading = 'View thesis/dissertation submission' . $status;
   $PAGE->set_title($heading);
   $PAGE->set_heading($heading);
 
-  $hidden = array('id', 'thesis_id', 'user_id', 'institution', 'metadata', 'publish', 'published_by');
+  $hidden = array('id', 'thesis_id', 'user_id', 'institution', 'metadata', 'publish', 'published_by', 'submitted_for_publishing');
   $output .= '<table class="thesis">';
 
   foreach ($submission as $field => $fdata) {
@@ -60,13 +64,18 @@ if($show_as_published) {
     if(in_array($field, $hidden)) { continue;}
 
     $output .= '<tr>';
-      $output .= '<th class="thesis_table_head">' . ucwords(str_replace('_',' ',$field)) . '</th>';
 
-      if($field === 'publishdate') {
-        $fdata = date('d-m-Y', $fdata);
-      }
+    $flabel = ucwords(str_replace('_',' ',$field));
+    if($field == 'thesis_type') {
+      $flabel = 'Thesis/Dissertation type';
+    }
+    $output .=   '<th class="thesis_table_head">' . $flabel . '</th>';
 
-      $output .= '<td class="thesis_table_data">' . $fdata . '</td>';
+    if($field === 'publishdate') {
+      $fdata = date('d-m-Y', $fdata);
+    }
+
+    $output .=   '<td class="thesis_table_data">' . $fdata . '</td>';
     $output .= '</tr>';
   }
 
@@ -82,7 +91,7 @@ if($show_as_published) {
   $output .= '</table>';
 } else {
 
-  $heading = 'Create/update thesis';
+  $heading = 'Create/update thesis/dissertation';
 
   $form = new mod_thesis_submit_form(null,array('isadmin'=>$isadmin,'submitted_for_publishing'=>$submitted_for_publishing),'post','',array('class'=>'thesis_form'));
 
@@ -159,13 +168,13 @@ echo $OUTPUT->heading($heading);
 if(null != $f) {
   $message = 'Content changes saved ok.';
   if('publish' == $f) {
-    $message = 'Submission queued for publishing approval.';
+    $message = 'Your thesis/dissertation has now been submitted to your School Administrator.<br/>';
   }
   echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">Return to submissions list</a></div>';
 }
 
-echo '<a class="thesis_back" href="view.php?id='.$id.'">Return to submissions list</a>';
-
 if($show_as_published) {echo $output;} else {$form->display();}
+
+echo '<a class="thesis_back" href="view.php?id='.$id.'">Return to submissions list</a>';
 
 echo $OUTPUT->footer();

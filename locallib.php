@@ -111,10 +111,6 @@ class mod_thesis_submit_form extends moodleform {
     $mform->setType('contactemail', PARAM_TEXT);
     $mform->addHelpButton('contactemail', 'email', 'thesis');
 
-    $mform->addElement('textarea','additional_information', get_string('note', 'thesis'));
-    $mform->setType('additional_information', PARAM_TEXT);
-    $mform->addHelpButton('additional_information', 'note', 'thesis');
-
     $qualoptions = array();
     $qualoptions['Masters'] = get_string('quals_masters','thesis');
     $qualoptions['Doctoral'] = get_string('quals_doctoral','thesis');
@@ -140,8 +136,13 @@ class mod_thesis_submit_form extends moodleform {
     //$mform->addElement('checkbox', 'metadata',  get_string('metadata_vis','thesis'), ' ');
 
     $mform->addElement('filemanager','publish_filemanager','Publish');
-    $mform->addElement('filemanager','private_filemanager','Restricted');
-    $mform->addHelpButton('private_filemanager', 'restricted', 'thesis');
+    $mform->closeHeaderBefore('restricted_info');
+    $mform->addElement('static','restricted_info','Restricted Thesis/Dissertation','This version of the thesis/dissertation will not be made available publicly via the Kent Academic Repository. If you wish the thesis/dissertation to become available publicly on a certain date, please indicate this in the Restricted Thesis/Dissertation Information box below.');
+    $mform->addElement('filemanager','private_filemanager','');
+
+    $mform->addElement('static','additional_information_info', 'Restricted Thesis/Dissertation Information', 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository');
+    $mform->addElement('textarea','additional_information', '');
+    $mform->setType('additional_information', PARAM_TEXT);
 
     $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];
     $submitted_for_publishing = isset($this->_customdata['submitted_for_publishing']) && true === $this->_customdata['submitted_for_publishing'];
@@ -150,7 +151,7 @@ class mod_thesis_submit_form extends moodleform {
     $buttonarray=array();
 
     if(!$submitted_for_publishing || $isadmin) {
-      $buttonarray[] = $mform->createElement('submit', 'submitbutton', 'Update');
+      $buttonarray[] = $mform->createElement('submit', 'submitbutton', 'Save');
       $buttonarray[] = $mform->createElement('cancel');
     }
 
@@ -158,7 +159,7 @@ class mod_thesis_submit_form extends moodleform {
     //$buttonarray=array();
 
     if(!$submitted_for_publishing) {
-      $buttonarray[] = $mform->createElement('submit', 'submitpublish', 'Submit for publishing');
+      $buttonarray[] = $mform->createElement('submit', 'submitpublish', 'Submit to School Administrator');
     }
 
     if($isadmin && $submitted_for_publishing) {

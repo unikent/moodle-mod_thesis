@@ -73,8 +73,9 @@ table.thesis td {
 }
 
 .thesis_back {
-  position: absolute;
-  top: 25px;
+  display: block;
+  text-align: right;
+  margin: 15px;
 }
 
 .thesis_table_head {
@@ -85,6 +86,7 @@ table.thesis td {
   width: 65% !important;
 }
 
+<<<<<<< HEAD
 .kent_thesis_tcs {
   display: block;
   overflow: scroll;
@@ -135,3 +137,6 @@ table.thesis td {
   color: #6f6f6f;
 }
 
+.thesis_status {
+  font-size: 70%;
+}
