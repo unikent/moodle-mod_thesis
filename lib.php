@@ -164,7 +164,7 @@ function thesis_cron () {
     $eprint->addChild('abstract', $sub->abstract);
     $eprint->addChild('date', date('Y-m-d', $sub->publishdate));
     $eprint->addChild('date_type', 'submitted');
-    $eprint->addChild('id_number', $sub->identification_number);
+    $eprint->addChild('id_number', '');
     $eprint->addChild('institution', 'University of Kent');
     $eprint->addChild('department', $sub->department);
     $eprint->addChild('thesis_type', strtolower($sub->thesis_type));

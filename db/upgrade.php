@@ -33,6 +33,15 @@ function xmldb_thesis_upgrade($oldversion=0) {
     upgrade_mod_savepoint(true, 2013060104, 'thesis');
   }
 
+  if($oldversion<2013060401) {
+    $table = new xmldb_table('thesis_submissions');
+    $field = new xmldb_field('number_of_pages', XMLDB_TYPE_TEXT, 'small');
+
+    $dbman->change_field_type($table, $field);
+
+    upgrade_mod_savepoint(true, 2013060401, 'thesis');
+  }
+
   return true;
 }
 

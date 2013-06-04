@@ -32,7 +32,7 @@
         <FIELD NAME="department" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="institution" NEXT="corporate_acknowledgement"/>
         <FIELD NAME="corporate_acknowledgement" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="department" NEXT="identification_number"/>
         <FIELD NAME="identification_number" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="corporate_acknowledgement" NEXT="number_of_pages"/>
-        <FIELD NAME="number_of_pages" TYPE="int" LENGTH="10" NOTNULL="false" PREVIOUS="identification_number" NEXT="funding"/>
+        <FIELD NAME="number_of_pages" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="identification_number" NEXT="funding"/>
         <FIELD NAME="funding" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="number_of_pages" NEXT="additional_information"/>
         <FIELD NAME="additional_information" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="funding" NEXT="qualification_level"/>
         <FIELD NAME="qualification_level" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="additional_information" NEXT="qualification_name"/>

@@ -101,9 +101,6 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('textarea','corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
     $mform->setType('corporate_acknowledgement', PARAM_TEXT);
 
-    $mform->addElement('text','identification_number', get_string('ident_no', 'thesis'));
-    $mform->setType('identification_number', PARAM_TEXT);
-
     $mform->addElement('text','department', get_string('department', 'thesis'));
     $mform->setType('department', PARAM_TEXT);
     $mform->addRule('department', get_string('department_req', 'thesis'),'required');
