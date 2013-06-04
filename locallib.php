@@ -120,15 +120,12 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addHelpButton('contactemail', 'email', 'thesis');
 
     $qualoptions = array();
-    $qualoptions['Masters'] = get_string('quals_masters','thesis');
     $qualoptions['Doctoral'] = get_string('quals_doctoral','thesis');
+    $qualoptions['Masters'] = get_string('quals_masters','thesis');
     $qualoptions['Taught masters'] = get_string('quals_taughtmasters','thesis');
     $qualoptions['Unspecified'] = get_string('quals_unspecified','thesis');
     $mform->addElement('select', 'qualification_level', get_string("quals", "thesis"), $qualoptions);
     $mform->addRule('qualification_level', get_string('quals_req', 'thesis'),'required');
-
-    $mform->addElement('text','qualification_name', get_string('qual_name','thesis'));
-    $mform->setType('qualification_name', PARAM_TEXT);
 
     $mform->addElement('text', 'supervisor_fname', get_string('sup_fname', 'thesis'));
     $mform->setType('supervisor_fname', PARAM_TEXT);

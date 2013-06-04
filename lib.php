@@ -175,7 +175,7 @@ function thesis_cron () {
 
     $eprint->addChild('qualification_level', $sub->qualification_level);
 
-    $eprint->addChild('qualification_name', $sub->qualification_name);
+    $eprint->addChild('qualification_name', '');
 
     $funders = $eprint->addChild('org_units');
       $funder = $funders->addChild('item');
