@@ -84,3 +84,54 @@ table.thesis td {
 .thesis_table_data{
   width: 65% !important;
 }
+
+.kent_thesis_tcs {
+  display: block;
+  overflow: scroll;
+  height: 400px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  color: #6f6f6f;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.kent_thesis_tcs_back {
+  float: left;
+}
+
+.kent_thesis_tcs_sub {
+  float: right;
+}
+
+.kent_thesis_choose .form-submit {
+  clear: both;
+  display: block;
+  margin: 0 auto;
+}
+
+.kent_thesis_radio_grp {
+  float: left;
+  width: 30%;
+  margin: 25px 3% 25px 0px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.kent_thesis_radio_grp input[type="radio"] {
+  display: block;
+  margin: 25px auto 10px auto;
+}
+
+.kent_thesis_radio_grp input[type="radio"]+label {
+  display: block;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #6f6f6f;
+}
+
