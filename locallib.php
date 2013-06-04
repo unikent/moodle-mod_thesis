@@ -147,7 +147,7 @@ class mod_thesis_submit_form extends moodleform {
     $buttonarray=array();
 
     if(!$submitted_for_publishing || $isadmin) {
-      $buttonarray[] = $mform->createElement('submit', 'submitbutton', 'Update');
+      $buttonarray[] = $mform->createElement('submit', 'submitbutton', 'Save');
       $buttonarray[] = $mform->createElement('cancel');
     }
 
@@ -155,7 +155,7 @@ class mod_thesis_submit_form extends moodleform {
     //$buttonarray=array();
 
     if(!$submitted_for_publishing) {
-      $buttonarray[] = $mform->createElement('submit', 'submitpublish', 'Submit for publishing');
+      $buttonarray[] = $mform->createElement('submit', 'submitpublish', 'Submit to School Administrator');
     }
 
     if($isadmin && $submitted_for_publishing) {

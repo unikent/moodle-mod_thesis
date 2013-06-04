@@ -73,8 +73,9 @@ table.thesis td {
 }
 
 .thesis_back {
-  position: absolute;
-  top: 25px;
+  display: block;
+  text-align: right;
+  margin: 15px;
 }
 
 .thesis_table_head {
@@ -83,4 +84,8 @@ table.thesis td {
 
 .thesis_table_data{
   width: 65% !important;
+}
+
+.thesis_status {
+  font-size: 70%;
 }

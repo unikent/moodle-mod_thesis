@@ -28,7 +28,7 @@ thesis_cron();
 
 echo $OUTPUT->header();
 echo '<div class="thesis_list">';
-echo '<h2>Thesis Submissions</h2>';
+echo '<h2>Thesis/Dissertation Submissions</h2>';
 echo '<a class="thesis_new" href="edit.php?id='.$id.'">(Create new submission)</a>';
 echo thesis_list_submissions($id,$thesis->id, get_context_instance(CONTEXT_COURSE, $cm->course));
 echo '</div>';
