@@ -64,9 +64,9 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('hidden', 'submission_id');
     $mform->setType('submission_id', PARAM_INT);
 
+    $mform->addElement('static','title_info','',get_string('title_help','thesis'));
     $mform->addElement('text','title', get_string('title', 'thesis'));
     $mform->setType('title', PARAM_TEXT);
-    $mform->addHelpButton('title', 'title', 'thesis');
     $mform->addRule('title', get_string('title_req', 'thesis'),'required');
 
     $mform->addElement('textarea','abstract', get_string('abstract', 'thesis'));
@@ -134,20 +134,18 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('text', 'supervisor_email', get_string('sup_email', 'thesis'));
     $mform->setType('supervisor_email', PARAM_TEXT);
 
-    // $mform->addElement('text','superviser', get_string('superviser','thesis'));
-    // $mform->setType('superviser', PARAM_TEXT);
+    $mform->closeHeaderBefore('publish_info');
 
-    //not needed
-    //$mform->addElement('checkbox', 'metadata',  get_string('metadata_vis','thesis'), ' ');
+    $mform->addElement('static','publish_info','','This version of the thesis/dissertation will be made available publicly via the Kent Academic Repository');
+    $mform->addElement('filemanager','publish_filemanager','Publicly-available Thesis/Dissertation',array('accepted_types'=>'application/pdf'));
 
-    $mform->addElement('static','publish_info','Publicly-available Thesis/Dissertation','This version of the thesis/dissertation will be made available publicly via the Kent Academic Repository');
-    $mform->addElement('filemanager','publish_filemanager','');
     $mform->closeHeaderBefore('restricted_info');
-    $mform->addElement('static','restricted_info','Restricted Thesis/Dissertation','This version of the thesis/dissertation will not be made available publicly via the Kent Academic Repository. If you wish the thesis/dissertation to become available publicly on a certain date, please indicate this in the Restricted Thesis/Dissertation Information box below.');
-    $mform->addElement('filemanager','private_filemanager','');
 
-    $mform->addElement('static','additional_information_info', 'Restricted Thesis/Dissertation Information', 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.');
-    $mform->addElement('textarea','additional_information', '');
+    $mform->addElement('static','restricted_info','','This version of the thesis/dissertation will not be made available publicly via the Kent Academic Repository. If you wish the thesis/dissertation to become available publicly on a certain date, please indicate this in the Restricted Thesis/Dissertation Information box below.');
+    $mform->addElement('filemanager','private_filemanager','Restricted Thesis/Dissertation');
+
+    $mform->addElement('static','additional_information_info', '', 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.');
+    $mform->addElement('textarea','additional_information', 'Restricted Thesis/Dissertation Information');
     $mform->setType('additional_information', PARAM_TEXT);
 
     $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];

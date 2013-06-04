@@ -89,3 +89,7 @@ table.thesis td {
 .thesis_status {
   font-size: 70%;
 }
+
+.fitem_ffilemanager>.fitemtitle {
+  margin-top: 10px;
+}
