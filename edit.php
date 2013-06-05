@@ -166,9 +166,9 @@ if($show_as_published) {
 echo $OUTPUT->header();
 echo $OUTPUT->heading($heading);
 if(null != $f) {
-  $message = 'Content changes saved ok.';
+  $message = 'Thesis/dissertation submission successfully saved - you are welcome to make further changes and amendments, and at this stage your Thesis/dissertation has not been fully submitted.<br/>';
   if('publish' == $f) {
-    $message = 'Your thesis/dissertation has now been submitted to your School Administrator.<br/>';
+    $message = 'Thesis/dissertation submission published.  An administrator will now check and approve your submission.  No further updates can now be made.<br/>';
   }
   echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">Return to submissions list</a></div>';
 }

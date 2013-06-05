@@ -42,8 +42,8 @@
         <FIELD NAME="supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_sname" NEXT="metadata"/>
         <FIELD NAME="metadata" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_email" NEXT="publish"/>
         <FIELD NAME="publish" TYPE="int" LENGTH="1" NOTNULL="false" PREVIOUS="metadata" NEXT="published_by"/>
-        <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="publish"/>
-        <FIELD NAME="submitted_for_publishing" TYPE="int" LENGTH="1" NOTNULL="false" PREVIOUS="publish" NEXT="terms_accepted"/>
+        <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" NEXT="submitted_for_publishing" PREVIOUS="publish"/>
+        <FIELD NAME="submitted_for_publishing" TYPE="int" LENGTH="1" NOTNULL="false" PREVIOUS="published_by" NEXT="terms_accepted"/>
         <FIELD NAME="terms_accepted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submitted_for_publishing"/>
       </FIELDS>
       <KEYS>
