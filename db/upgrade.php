@@ -53,6 +53,25 @@ function xmldb_thesis_upgrade($oldversion=0) {
     upgrade_mod_savepoint(true, 2013060402, 'thesis');
   }
 
+  if($oldversion<2013061001) {
+    $table = new xmldb_table('thesis_submissions');
+    $month = new xmldb_field('publish_month', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+    $year = new xmldb_field('publish_year', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+    $publishdate = new xmldb_field('publishdate');
+
+    if (!$dbman->field_exists($table, $month)) {
+      $dbman->add_field($table, $month);
+    }
+    if (!$dbman->field_exists($table, $year)) {
+      $dbman->add_field($table, $year);
+    }
+    if ($dbman->field_exists($table, $publishdate)) {
+      $dbman->drop_field($table, $publishdate);
+    }
+
+    upgrade_mod_savepoint(true, 2013061001, 'thesis');
+  }
+
   return true;
 }
 

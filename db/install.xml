@@ -25,8 +25,9 @@
         <FIELD NAME="title" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="user_id" NEXT="keywords"/>
         <FIELD NAME="keywords" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="title" NEXT="abstract"/>
         <FIELD NAME="abstract" TYPE="text" LENGTH="big"  NOTNULL="false" SEQUENCE="false" PREVIOUS="keywords" NEXT="thesis_type"/>
-        <FIELD NAME="thesis_type" TYPE="text" LENGTH="small"  NOTNULL="false" SEQUENCE="false" PREVIOUS="abstract" NEXT="publishdate"/>
-        <FIELD NAME="publishdate" TYPE="int" LENGTH="10" NOTNULL="false" PREVIOUS="thesis_type" NEXT="contactemail"/>
+        <FIELD NAME="thesis_type" TYPE="text" LENGTH="small"  NOTNULL="false" SEQUENCE="false" PREVIOUS="abstract" NEXT="publish_month"/>
+        <FIELD NAME="publish_month" TYPE="int" LENGTH="10" NOTNULL="false" PREVIOUS="thesis_type" NEXT="publish_year"/>
+        <FIELD NAME="publish_year" TYPE="int" LENGTH="10" NOTNULL="false" PREVIOUS="publish_month" NEXT="contactemail"/>
         <FIELD NAME="contactemail" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="publishdate" NEXT="institution"/>
         <FIELD NAME="institution" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="contactemail" NEXT="department"/>
         <FIELD NAME="department" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="institution" NEXT="corporate_acknowledgement"/>

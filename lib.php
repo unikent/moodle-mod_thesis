@@ -162,7 +162,7 @@ function thesis_cron () {
     $eprint->addChild('pages', $sub->number_of_pages);
     $eprint->addChild('note', $sub->additional_information);
     $eprint->addChild('abstract', $sub->abstract);
-    $eprint->addChild('date', date('Y-m-d', $sub->publishdate));
+    $eprint->addChild('date', $sub->publish_year . '-' . sprintf("%02d", $sub->publish_month));
     $eprint->addChild('date_type', 'submitted');
     $eprint->addChild('id_number', '');
     $eprint->addChild('institution', 'University of Kent');

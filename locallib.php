@@ -4,6 +4,9 @@ require_once($CFG->libdir.'/formslib.php');
 function thesis_create_or_update($data,$thesis) {
   global $DB, $USER;
 
+  $data->publish_month = $data->publishdate['mon'];
+  $data->publish_year = $data->publishdate['year'];
+
   if(null == $data->submission_id) {
     $data->thesis_id = $thesis->id;
     $data->user_id = $USER->id;
@@ -111,9 +114,20 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('text','number_of_pages', get_string('no_pages', 'thesis'));
     $mform->setType('number_of_pages', PARAM_TEXT);
 
-    $mform->addElement('date_selector','publishdate', get_string('publishdate', 'thesis'));
-    $mform->addHelpButton('publishdate', 'publishdate', 'thesis');
+    $date_group = array();
+    $months = array();
+    for( $i = 0; $i < 12; $i++ ) {
+      $months[$i+1] = date('F', mktime(0, 0, 0, $i+1));
+    }
+    $date_group []= $mform->createElement('select','mon','',$months);
+
+    $range = range(1980,2020);
+    $years = array_combine($range,$range);
+    $date_group []= $mform->createElement('select','year','',$years);
+
+    $mform->addGroup($date_group,'publishdate',get_string('publishdate','thesis'));
     $mform->addRule('publishdate', get_string('publishdate_req', 'thesis'),'required');
+    $mform->addHelpButton('publishdate', 'publishdate', 'thesis');
 
     $mform->addElement('textarea','funding', get_string('funding', 'thesis'));
     $mform->setType('funding', PARAM_TEXT);
@@ -180,6 +194,12 @@ class mod_thesis_submit_form extends moodleform {
     }
 
     $mform->closeHeaderBefore('buttonb');
+  }
+
+  function terms_accepted() {
+    $ta = $this->_form->getSubmitValue('terms_accepted');
+    $r = isset($ta) && ($ta > 0);
+    return $r;
   }
 }
 

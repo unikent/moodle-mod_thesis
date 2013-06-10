@@ -26,6 +26,10 @@ $published = false;
 $submitted_for_publishing = false;
 if($submission_id) {
   $submission = $DB->get_record('thesis_submissions',array('id'=>$submission_id));
+  $submission->publishdate = array(
+    'mon' => $submission->publish_month,
+    'year' => $submission->publish_year
+  );
   $published = $submission->publish != 0;
   $submitted_for_publishing = $submission->submitted_for_publishing != 0;
 }
@@ -56,7 +60,7 @@ if($show_as_published) {
   $PAGE->set_title($heading);
   $PAGE->set_heading($heading);
 
-  $hidden = array('id', 'thesis_id', 'user_id', 'institution', 'metadata', 'publish', 'published_by', 'submitted_for_publishing');
+  $hidden = array('id', 'thesis_id', 'user_id', 'institution', 'metadata', 'publish', 'published_by', 'submitted_for_publishing', 'publish_month', 'publish_year');
   $output .= '<table class="thesis">';
 
   foreach ($submission as $field => $fdata) {
@@ -72,7 +76,7 @@ if($show_as_published) {
     $output .=   '<th class="thesis_table_head">' . $flabel . '</th>';
 
     if($field === 'publishdate') {
-      $fdata = date('d-m-Y', $fdata);
+      $fdata = sprintf("%02d", $submission->publishdate['mon']) . '/' . $submission->publishdate['year'];
     }
 
     $output .=   '<td class="thesis_table_data">' . $fdata . '</td>';
@@ -94,6 +98,10 @@ if($show_as_published) {
   $heading = 'Create/update thesis/dissertation';
 
   $form = new mod_thesis_submit_form(null,array('isadmin'=>$isadmin,'submitted_for_publishing'=>$submitted_for_publishing),'post','',array('class'=>'thesis_form'));
+  $terms_accepted_by_form = $form->terms_accepted();
+  $terms_accepted_already = isset($submission->terms_accepted) && $submission->terms_accepted > 0;
+  $terms_accepted_in_session = !empty($_SESSION['thesis_terms']);
+  $terms_accepted = ($terms_accepted_by_form || $terms_accepted_already || $terms_accepted_in_session);
 
   //Has the form been submited?
   if( $entry = $form->get_data() ) {
@@ -108,8 +116,9 @@ if($show_as_published) {
       }
     }
 
-    if(empty($entry->terms_accepted)) {
+    if(!$terms_accepted) {
       redirect($CFG->wwwroot . "/mod/thesis/terms.php?id=$id");
+      die;
     }
 
     if(isset($entry->submitpublish)) {
@@ -124,6 +133,7 @@ if($show_as_published) {
       $entry->submitted_for_publishing = 1;
       $entry->publish = 1;
       $entry->published_by = $USER->id;
+      $f = 'kar';
     }
 
     thesis_create_or_update($entry,$thesis);
@@ -134,9 +144,10 @@ if($show_as_published) {
 
   } else {
 
-    if(empty($submission->terms_accepted) && empty($_SESSION['thesis_terms'])) {
+    if(!$terms_accepted) {
       $suburl = isset($submission) ? "&submission_id={$submission->id}" : "";
       redirect($CFG->wwwroot . "/mod/thesis/terms.php?id={$id}{$suburl}");
+      die;
     }
 
     // Are we updating a record and do you have access?
@@ -145,11 +156,9 @@ if($show_as_published) {
         throw new moodle_exception('Unauthorized access to resource');
         exit;
       }
-    } else {
+    } else { // new record, init
       $submission = new stdClass;
-    }
-
-    if(empty($submission->terms_accepted)) {
+      $submission->publishdate = array('mon' => date('n'), 'year' => date('Y'));
       $submission->terms_accepted = $_SESSION['thesis_terms'];
       unset($_SESSION['thesis_terms']);
     }
@@ -169,6 +178,9 @@ if(null != $f) {
   $message = 'Thesis/dissertation submission successfully saved - you are welcome to make further changes and amendments, and at this stage your Thesis/dissertation has not been fully submitted.<br/>';
   if('publish' == $f) {
     $message = 'Thesis/dissertation submission published.  An administrator will now check and approve your submission.  No further updates can now be made.<br/>';
+  }
+  if('kar' == $f) {
+    $message = 'Thesis/dissertation submission published to kar.  Further updates can not be made.<br/>';
   }
   echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">Return to submissions list</a></div>';
 }
