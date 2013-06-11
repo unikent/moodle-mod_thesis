@@ -144,12 +144,16 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('select', 'qualification_level', get_string("quals", "thesis"), $qualoptions);
     $mform->addRule('qualification_level', get_string('quals_req', 'thesis'),'required');
 
-    $mform->addElement('text', 'supervisor_fname', get_string('sup_fname', 'thesis'));
-    $mform->setType('supervisor_fname', PARAM_TEXT);
-    $mform->addElement('text', 'supervisor_sname', get_string('sup_sname', 'thesis'));
-    $mform->setType('supervisor_sname', PARAM_TEXT);
-    $mform->addElement('text', 'supervisor_email', get_string('sup_email', 'thesis'));
-    $mform->setType('supervisor_email', PARAM_TEXT);
+    foreach(array('','second_','third_') as $i) {
+      $mform->addElement('text', $i . 'supervisor_fname', get_string($i . 'sup_fname', 'thesis'));
+      $mform->setType($i . 'supervisor_fname', PARAM_TEXT);
+      $mform->addElement('text', $i . 'supervisor_sname', get_string($i . 'sup_sname', 'thesis'));
+      $mform->setType($i . 'supervisor_sname', PARAM_TEXT);
+      $mform->addElement('text', $i . 'supervisor_email', get_string($i . 'sup_email', 'thesis'));
+      $mform->setType($i . 'supervisor_email', PARAM_TEXT);
+    }
+
+    $mform->addElement('button','more_supervisors','Add another supervisor',array('onclick'=>'thesis_more_supervisors();'));
 
     $mform->closeHeaderBefore('publish_info');
 

@@ -41,6 +41,12 @@
         <FIELD NAME="supervisor_fname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="qualification_name" NEXT="supervisor_sname"/>
         <FIELD NAME="supervisor_sname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_fname" NEXT="supervisor_email"/>
         <FIELD NAME="supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_sname" NEXT="metadata"/>
+        <FIELD NAME="second_supervisor_fname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_email" NEXT="second_supervisor_sname"/>
+        <FIELD NAME="second_supervisor_sname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="second_supervisor_fname" NEXT="second_supervisor_email"/>
+        <FIELD NAME="second_supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="second_supervisor_sname" NEXT="third_supervisor_fname"/>
+        <FIELD NAME="third_supervisor_fname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="second_supervisor_email" NEXT="third_supervisor_sname"/>
+        <FIELD NAME="third_supervisor_sname" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="third_supervisor_fname" NEXT="third_supervisor_email"/>
+        <FIELD NAME="third_supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="third_supervisor_sname" NEXT="metadata"/>
         <FIELD NAME="metadata" TYPE="text" LENGTH="small" NOTNULL="false" PREVIOUS="supervisor_email" NEXT="publish"/>
         <FIELD NAME="publish" TYPE="int" LENGTH="1" NOTNULL="false" PREVIOUS="metadata" NEXT="published_by"/>
         <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" NEXT="submitted_for_publishing" PREVIOUS="publish"/>

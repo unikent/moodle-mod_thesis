@@ -72,6 +72,24 @@ function xmldb_thesis_upgrade($oldversion=0) {
     upgrade_mod_savepoint(true, 2013061001, 'thesis');
   }
 
+  if($oldversion<2013061003) {
+    $table = new xmldb_table('thesis_submissions');
+
+    $fields = array(
+      'second_supervisor_fname', 'second_supervisor_sname', 'second_supervisor_email',
+      'third_supervisor_fname', 'third_supervisor_sname', 'third_supervisor_email'
+    );
+
+    foreach ($fields as $i) {
+      $field = new xmldb_field($i, XMLDB_TYPE_TEXT, 'small');
+      if (!$dbman->field_exists($table, $field)) {
+        $dbman->add_field($table, $field);
+      }
+    }
+
+    upgrade_mod_savepoint(true, 2013061003, 'thesis');
+  }
+
   return true;
 }
 

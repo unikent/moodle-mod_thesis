@@ -11,6 +11,7 @@ $submission_id = optional_param('submission_id', null, PARAM_INT);
 $f = optional_param('f', null, PARAM_TEXT);
 
 $PAGE->set_pagelayout('admin');
+$PAGE->requires->js('/mod/thesis/javascript/form.js');
 $PAGE->set_url('/mod/thesis/edit.php', array('id'=>$id,'submission_id'=>$submission_id));
 
 if (! $cm = get_coursemodule_from_id('thesis', $id)) {
@@ -68,6 +69,9 @@ if($show_as_published) {
     if(in_array($field, $hidden)) { continue;}
 
     $output .= '<tr>';
+
+    $field = str_replace('fname', 'firstname', $field);
+    $field = str_replace('sname', 'surname', $field);
 
     $flabel = ucwords(str_replace('_',' ',$field));
     if($field == 'thesis_type') {

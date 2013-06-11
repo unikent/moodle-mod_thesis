@@ -26,6 +26,17 @@ function thesis_update_instance($data, $mform) {
   return true;
 }
 
+function thesis_cron_add_contributor($contributors,$sname=null,$fname=null,$email=null) {
+  if(null==$email) return;
+
+  $contributor = $contributors->addChild('item');
+  $contributor->addChild('type', 'http://www.loc.gov/loc.terms/relators/THS');
+  $con_name = $contributor->addChild('name');
+  $con_name->addChild('family', $sname);
+  $con_name->addChild('given', $fname);
+  $contributor->addChild('id', $email);
+}
+
 function thesis_cron () {
   global $CFG, $DB;
 
@@ -148,12 +159,9 @@ function thesis_cron () {
 
 
     $contributors = $eprint->addChild('contributors');
-      $contributor = $contributors->addChild('item');
-        $contributor->addChild('type', 'http://www.loc.gov/loc.terms/relators/THS');
-        $con_name = $contributor->addChild('name');
-          $con_name->addChild('family', $sub->supervisor_sname);
-          $con_name->addChild('given', $sub->supervisor_fname);
-        $contributor->addChild('id', $sub->supervisor_email);
+    thesis_cron_add_contributor($contributors, $sub->supervisor_sname, $sub->supervisor_fname, $sub->supervisor_email);
+    thesis_cron_add_contributor($contributors, $sub->second_supervisor_sname, $sub->second_supervisor_fname, $sub->second_supervisor_email);
+    thesis_cron_add_contributor($contributors, $sub->third_supervisor_sname, $sub->third_supervisor_fname, $sub->third_supervisor_email);
 
     $eprint->addChild('corp_creators', $sub->corporate_acknowledgement);
     $eprint->addChild('title', $sub->title);
