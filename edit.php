@@ -83,6 +83,11 @@ if($show_as_published) {
       $fdata = sprintf("%02d", $submission->publishdate['mon']) . '/' . $submission->publishdate['year'];
     }
 
+    if($field == 'department') {
+      $r = $DB->get_record('course_categories', array('id'=>$fdata));
+      $fdata = $r != null ? $r->name : $fdata;
+    }
+
     $output .=   '<td class="thesis_table_data">' . $fdata . '</td>';
     $output .= '</tr>';
   }
