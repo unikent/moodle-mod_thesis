@@ -80,22 +80,22 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addRule('abstract', get_string('abstract_req', 'thesis'),'required');
 
     $typeoptions = array();
-    $typeoptions['PHD'] = 'Doctor of Philosophy (Ph.D.)';
-    $typeoptions['DENG'] = 'Doctor of Engineering (D.Eng.)';
-    $typeoptions['SPORTD'] = 'Doctor of Sport, Exercise and Health Science (Sport.D.)';
-    $typeoptions['DSC'] = 'Doctor of Clinical Science (D.Sc.)';
-    $typeoptions['PD'] = 'Professional Doctorate (P.D.)';
-    $typeoptions['DED'] = 'Doctor of Education (D.Ed.)';
-    $typeoptions['MD'] = 'Doctor of Medicine (M.D.)';
-    $typeoptions['MSG'] = 'Master of Surgery (M.Sg.)';
-    $typeoptions['MPHIL'] = 'Master of Philosophy (M.Phil.)';
-    $typeoptions['MSC'] = 'Master of Science (MSc)';
-    $typeoptions['MA'] = 'Master of Arts (MA)';
-    $typeoptions['LLM'] = 'Master of Law (LLM)';
-    $typeoptions['MRES'] = 'Master of Research (M.Res.)';
-    $typeoptions['MSCRES'] = 'Master of Science by Research (MScRes)';
-    $typeoptions['MARES'] = 'Master of Arts by Research (MARes)';
-    $typeoptions['LLMRes'] = 'Master of Law by Research (LLMRes)';
+    $typeoptions['phd'] = 'Doctor of Philosophy (Ph.D.)';
+    $typeoptions['engd'] = 'Doctor of Engineering (D.Eng.)';
+    $typeoptions['sportd'] = 'Doctor of Sport, Exercise and Health Science (Sport.D.)';
+    $typeoptions['dsc'] = 'Doctor of Clinical Science (D.Sc.)';
+    $typeoptions['pd'] = 'Professional Doctorate (P.D.)';
+    $typeoptions['ded'] = 'Doctor of Education (D.Ed.)';
+    $typeoptions['md'] = 'Doctor of Medicine (M.D.)';
+    $typeoptions['msg'] = 'Master of Surgery (M.Sg.)';
+    $typeoptions['mphil'] = 'Master of Philosophy (M.Phil.)';
+    $typeoptions['msc'] = 'Master of Science (MSc)';
+    $typeoptions['ma'] = 'Master of Arts (MA)';
+    $typeoptions['llm'] = 'Master of Law (LLM)';
+    $typeoptions['mres'] = 'Master of Research (M.Res.)';
+    $typeoptions['mscres'] = 'Master of Science by Research (MScRes)';
+    $typeoptions['mares'] = 'Master of Arts by Research (MARes)';
+    $typeoptions['llmres'] = 'Master of Law by Research (LLMRes)';
     $mform->addElement('select', 'thesis_type', 'Thesis/Dissertation type', $typeoptions);
     $mform->addRule('thesis_type', get_string('thesis_type_req', 'thesis'),'required');
 
