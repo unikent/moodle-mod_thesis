@@ -163,7 +163,9 @@ function thesis_cron () {
     thesis_cron_add_contributor($contributors, $sub->second_supervisor_sname, $sub->second_supervisor_fname, $sub->second_supervisor_email);
     thesis_cron_add_contributor($contributors, $sub->third_supervisor_sname, $sub->third_supervisor_fname, $sub->third_supervisor_email);
 
-    $eprint->addChild('corp_creators', $sub->corporate_acknowledgement);
+
+    $corp_creators = $eprint->addChild('corp_creators');
+    $corp_creators->addChild('item', $sub->corporate_acknowledgement);
     $eprint->addChild('title', $sub->title);
     $eprint->addChild('ispublished', 'unpub');
     $eprint->addChild('keywords', $sub->keywords);
@@ -186,7 +188,7 @@ function thesis_cron () {
     $eprint->addChild('contact_email', $sub->contactemail);
     $eprint->addChild('submit_hardcopy', 'FALSE');
 
-    $eprint->addChild('qualification_level', $sub->qualification_level);
+    $eprint->addChild('qual_level', $sub->qualification_level);
 
     $eprint->addChild('qualification_name', '');
 
