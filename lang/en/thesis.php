@@ -5,6 +5,7 @@ defined('MOODLE_INTERNAL') || die();
 $string['modulename'] = 'Thesis';
 $string['modulenameplural'] = 'Thesis';
 $string['pluginadministration'] = '';
+$string['pluginname'] = 'Thesis';
 
 //Fomr strings
 $string['title'] = 'Title';

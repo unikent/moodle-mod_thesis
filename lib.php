@@ -3,8 +3,19 @@
 defined('MOODLE_INTERNAL') || die();
 
 function thesis_supports($feature) {
+
+  $isadmin = has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+
   switch($feature) {
   case FEATURE_MOD_INTRO: return false;
+  case FEATURE_MOD_ARCHETYPE:
+      if($isadmin)
+      {
+          return MOD_ARCHETYPE_RESOURCE;
+      } else {
+          // If not an administrator, don't show up as an activity or resource
+          return MOD_ARCHETYPE_SYSTEM;
+      }  
   default: return null;
   }
 }
