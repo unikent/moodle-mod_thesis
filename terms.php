@@ -169,10 +169,14 @@ $choose_btns = <<<CBTNS
 	</form>
 
 CBTNS;
+
+$choose_btns_intro = get_string("choose_btns_intro", "thesis");
+
 if($accepted > 0) {
 	$_SESSION['thesis_terms'] = $accepted;
 	redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}");
 } elseif(empty($choice)) {
+	$content .= $choose_btns_intro;
 	$content .= $choose_btns;
 } else {
 	$type = 0;
