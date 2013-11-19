@@ -4,7 +4,7 @@ defined('MOODLE_INTERNAL') || die();
 
 function thesis_supports($feature) {
 
-  $isadmin = has_capability('moodle/site:config', get_context_instance(CONTEXT_SYSTEM));
+  $isadmin = has_capability('moodle/site:config', context_system::instance());
 
   switch($feature) {
   case FEATURE_MOD_INTRO: return false;
