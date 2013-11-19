@@ -35,7 +35,7 @@ if($submission_id) {
   $submitted_for_publishing = $submission->submitted_for_publishing != 0;
 }
 
-$isadmin = has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $cm->course));
+$isadmin = has_capability('moodle/course:update', context_course::instance($cm->course));
 
 $show_as_published = $published || ($submitted_for_publishing && !$isadmin);
 
@@ -47,7 +47,7 @@ $PAGE->set_context($context);
 
 $output = '';
 
-if(!is_enrolled($context) && !has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $cm->course))) {
+if(!is_enrolled($context) && !has_capability('moodle/course:update', context_course::instance($cm->course))) {
   throw new moodle_exception('You are not enrolled on this module');
   exit;
 }
@@ -161,7 +161,7 @@ if($show_as_published) {
 
     // Are we updating a record and do you have access?
     if(isset($submission)) {
-      if( !has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $cm->course)) && $submission->user_id != $USER->id ) {
+      if( !has_capability('moodle/course:update', context_course::instance($cm->course)) && $submission->user_id != $USER->id ) {
         throw new moodle_exception('Unauthorized access to resource');
         exit;
       }
