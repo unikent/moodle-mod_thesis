@@ -73,7 +73,7 @@ function thesis_cron () {
       print_error('invalidcoursemodule');
     }
 
-    $context = get_context_instance(CONTEXT_MODULE, $cm->id);
+    $context = context_module::instance($cm->id);
     $folder_name = md5($sub->title) . time();
     $filepath = $tmpdir . '/' . $folder_name;
     check_dir_exists($filepath);

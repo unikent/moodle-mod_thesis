@@ -21,7 +21,7 @@ if (! $thesis = $DB->get_record("thesis", array("id" => $cm->instance))) {
 }
 require_course_login($course, true, $cm);
 
-$context = get_context_instance(CONTEXT_MODULE, $cm->id);
+$context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
 thesis_cron();
