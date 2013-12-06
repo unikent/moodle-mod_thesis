@@ -50,3 +50,5 @@ $string['metadata_vis'] = 'Metadata visible?';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
 $string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to submit for display of correct terms and conditions.</p>';
+
+$string['thesis:addinstance'] = 'Add a new thesis';
