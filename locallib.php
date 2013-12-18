@@ -1,4 +1,5 @@
 <?php
+require_once($CFG->libdir.'/coursecatlib.php');
 require_once($CFG->libdir.'/formslib.php');
 
 function thesis_create_or_update($data,$thesis) {
@@ -107,9 +108,8 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('textarea','corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
     $mform->setType('corporate_acknowledgement', PARAM_TEXT);
 
-    $options = array();
-    $parents = array();
-    make_categories_list($options, $parents, '', 58); // magic number is 'Removed' on live
+    $options = \coursecat::make_categories_list('', 58);
+
     $mform->addElement('select','department', get_string('department', 'thesis'), $options);
     $mform->setType('department', PARAM_TEXT);
     $mform->addRule('department', get_string('department_req', 'thesis'),'required');
