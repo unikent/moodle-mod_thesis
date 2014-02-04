@@ -151,23 +151,27 @@ $restricted_tcs = <<<NTCS
 	</div>
 NTCS;
 
+
+$thesis_normal = get_string('thesis_normal', 'mod_thesis');
+$thesis_redacted = get_string('thesis_redacted', 'mod_thesis');
+$thesis_restricted = get_string('thesis_restricted', 'mod_thesis');
+
 $choose_btns = <<<CBTNS
 	<form class="kent_thesis_choose" action="terms.php?id={$id}{$suburl}" method="post">
 		<div class="kent_thesis_radio_grp">
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_normal" value="normal">
-			<label for="kent_thesis_normal">Normal thesis</label>
+			<label for="kent_thesis_normal">{$thesis_normal}</label>
 		</div>
 		<div class="kent_thesis_radio_grp">
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_redacted" value="redacted">
-			<label for="kent_thesis_redacted">Redacted thesis</label>
+			<label for="kent_thesis_redacted">{$thesis_redacted}</label>
 		</div>
 		<div class="kent_thesis_radio_grp">
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_restricted" value="restricted">
-			<label for="kent_thesis_restricted">Permantly restricted thesis</label>
+			<label for="kent_thesis_restricted">{$thesis_restricted}</label>
 		</div>
 		<input class="form-submit" type="submit" value="Choose">
 	</form>
-
 CBTNS;
 
 $choose_btns_intro = get_string("choose_btns_intro", "thesis");

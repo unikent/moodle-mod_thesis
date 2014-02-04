@@ -52,3 +52,7 @@ $string['restricted_help'] = 'Restricted material';
 $string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to submit for display of correct terms and conditions.</p>';
 
 $string['thesis:addinstance'] = 'Add a new thesis';
+
+$string['thesis_normal'] = 'Normal thesis';
+$string['thesis_redacted'] = 'Redacted thesis';
+$string['thesis_restricted'] = 'Permanently restricted thesis';
