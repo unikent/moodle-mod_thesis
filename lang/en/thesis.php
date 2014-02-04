@@ -56,3 +56,5 @@ $string['thesis:addinstance'] = 'Add a new thesis';
 $string['thesis_normal'] = 'Normal thesis';
 $string['thesis_redacted'] = 'Redacted thesis';
 $string['thesis_restricted'] = 'Permanently restricted thesis';
+
+$string['thesis_restricted_info'] = 'Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.';

@@ -178,7 +178,12 @@ $choose_btns_intro = get_string("choose_btns_intro", "thesis");
 
 if($accepted > 0) {
 	$_SESSION['thesis_terms'] = $accepted;
-	redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}");
+
+	if (!in_array($choice, array("normal", "redacted", "restricted"))) {
+		$content = "Incorrect choice";
+	} else {
+		redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}&choice={$choice}");
+	}
 } elseif(empty($choice)) {
 	$content .= $choose_btns_intro;
 	$content .= $choose_btns;
@@ -205,6 +210,7 @@ if($accepted > 0) {
 	if($type > 0) {
 		$content .= "<a href='/course/view.php?id=$course->id' class='btn form-button kent_thesis_tcs_back'>Back</a>
 					<form class='kent_thesis_tcs_sub' action='terms.php?id={$id}{$suburl}' method='post'>
+						<input type='hidden' value='$choice' name='kent_thesis_choose_btn' />
 						<input type='hidden' value='$type' name='kent_thesis_tcs_accepted' />
 						<input class='form-submit' type='submit' value='Accept'>
 					</form>";

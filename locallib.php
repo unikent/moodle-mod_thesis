@@ -60,6 +60,8 @@ class mod_thesis_submit_form extends moodleform {
   protected function definition() {
     global $CFG;
 
+    $choice = required_param('choice', PARAM_TEXT);
+
     $mform =& $this->_form;
 
     $mform->addElement('hidden', 'id');
@@ -160,17 +162,26 @@ class mod_thesis_submit_form extends moodleform {
 
     $mform->closeHeaderBefore('publish_info');
 
-    $mform->addElement('static','publish_info','','This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.');
-    $mform->addElement('filemanager','publish_filemanager','Publicly-available Thesis/Dissertation','',array('accepted_types'=>'application/pdf'));
+    if ($choice != "restricted") {
+      $mform->addElement('static','publish_info','','This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.');
+      $mform->addElement('filemanager','publish_filemanager','Publicly-available Thesis/Dissertation','',array('accepted_types'=>'application/pdf'));
+    }
 
     $mform->closeHeaderBefore('restricted_info');
 
-    $mform->addElement('static','restricted_info','','<p>This version of your thesis/dissertation will not be made available publicly via the Kent Academic Repository. If you wish the thesis/dissertation to become available publicly on a certain date, please indicate this in the Restricted Thesis/Dissertation Information box below.</p>Please upload your thesis/dissertation in PDF format.');
-    $mform->addElement('filemanager','private_filemanager','Restricted Thesis/Dissertation');
+    if ($choice != "restricted") {
+      $private_lang = get_string('thesis_restricted_info', 'mod_thesis');
+      $mform->addElement('static','restricted_info','','<p>'.$private_lang.'</p>');
+    }
 
-    $mform->addElement('static','additional_information_info', '', 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.');
-    $mform->addElement('textarea','additional_information', 'Restricted Thesis/Dissertation Information');
-    $mform->setType('additional_information', PARAM_TEXT);
+    $mform->addElement('filemanager','private_filemanager','Restricted Thesis/Dissertation');
+    $mform->addElement('static','format_info','','<p>Please upload your thesis/dissertation in PDF format.</p>');
+
+    if ($choice != "restricted") {
+      $mform->addElement('static','additional_information_info', '', 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.');
+      $mform->addElement('textarea','additional_information', 'Restricted Thesis/Dissertation Information');
+      $mform->setType('additional_information', PARAM_TEXT);
+    }
 
     $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];
     $submitted_for_publishing = isset($this->_customdata['submitted_for_publishing']) && true === $this->_customdata['submitted_for_publishing'];
@@ -182,9 +193,6 @@ class mod_thesis_submit_form extends moodleform {
       $buttonarray[] = $mform->createElement('submit', 'submitbutton', 'Save');
       $buttonarray[] = $mform->createElement('cancel');
     }
-
-    //$mform->addGroup($buttonarray, 'buttona', '', array(' '), false);
-    //$buttonarray=array();
 
     if(!$submitted_for_publishing) {
       $buttonarray[] = $mform->createElement('submit', 'submitpublish', 'Submit to School Administrator');
