@@ -24,8 +24,6 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
-thesis_cron();
-
 echo $OUTPUT->header();
 echo '<div class="thesis_list">';
 echo '<h2>Thesis/Dissertation Submissions</h2>';
