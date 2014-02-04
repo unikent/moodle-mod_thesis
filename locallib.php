@@ -60,12 +60,15 @@ class mod_thesis_submit_form extends moodleform {
   protected function definition() {
     global $CFG;
 
-    $choice = required_param('choice', PARAM_TEXT);
+    $choice = $this->_customdata['choice'];
 
     $mform =& $this->_form;
 
     $mform->addElement('hidden', 'id');
     $mform->setType('id', PARAM_INT);
+
+    $mform->addElement('hidden', 'choice', $choice);
+    $mform->setType('choice', PARAM_TEXT);
 
     $mform->addElement('hidden', 'submission_id');
     $mform->setType('submission_id', PARAM_INT);

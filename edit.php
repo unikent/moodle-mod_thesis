@@ -9,6 +9,7 @@ require_once($CFG->libdir.'/formslib.php');
 $id = optional_param('id', 0, PARAM_INT);
 $submission_id = optional_param('submission_id', null, PARAM_INT);
 $f = optional_param('f', null, PARAM_TEXT);
+$choice = required_param('choice', PARAM_TEXT);
 
 $PAGE->set_pagelayout('admin');
 $PAGE->requires->js('/mod/thesis/javascript/form.js');
@@ -106,7 +107,7 @@ if($show_as_published) {
 
   $heading = 'Create/update thesis/dissertation';
 
-  $form = new mod_thesis_submit_form(null,array('isadmin'=>$isadmin,'submitted_for_publishing'=>$submitted_for_publishing),'post','',array('class'=>'thesis_form'));
+  $form = new mod_thesis_submit_form(null,array('isadmin'=>$isadmin,'submitted_for_publishing'=>$submitted_for_publishing,'choice'=>$choice),'post','',array('class'=>'thesis_form'));
   $terms_accepted_by_form = $form->terms_accepted();
   $terms_accepted_already = isset($submission->terms_accepted) && $submission->terms_accepted > 0;
   $terms_accepted_in_session = !empty($_SESSION['thesis_terms']);
