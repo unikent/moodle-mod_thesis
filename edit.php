@@ -9,7 +9,7 @@ require_once($CFG->libdir.'/formslib.php');
 $id = optional_param('id', 0, PARAM_INT);
 $submission_id = optional_param('submission_id', null, PARAM_INT);
 $f = optional_param('f', null, PARAM_TEXT);
-$choice = required_param('choice', PARAM_TEXT);
+$choice = optional_param('choice', '', PARAM_TEXT);
 
 $PAGE->set_pagelayout('admin');
 $PAGE->requires->js('/mod/thesis/javascript/form.js');
