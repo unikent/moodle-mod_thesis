@@ -210,7 +210,6 @@ if($accepted > 0) {
 	if($type > 0) {
 		$content .= "<a href='/course/view.php?id=$course->id' class='btn form-button kent_thesis_tcs_back'>Back</a>
 					<form class='kent_thesis_tcs_sub' action='terms.php?id={$id}{$suburl}' method='post'>
-						<input type='hidden' value='$choice' name='kent_thesis_choose_btn' />
 						<input type='hidden' value='$type' name='kent_thesis_tcs_accepted' />
 						<input class='form-submit' type='submit' value='Accept'>
 					</form>";

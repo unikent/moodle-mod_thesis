@@ -60,15 +60,10 @@ class mod_thesis_submit_form extends moodleform {
   protected function definition() {
     global $CFG;
 
-    $choice = $this->_customdata['choice'];
-
     $mform =& $this->_form;
 
     $mform->addElement('hidden', 'id');
     $mform->setType('id', PARAM_INT);
-
-    $mform->addElement('hidden', 'choice', $choice);
-    $mform->setType('choice', PARAM_TEXT);
 
     $mform->addElement('hidden', 'submission_id');
     $mform->setType('submission_id', PARAM_INT);
@@ -164,6 +159,8 @@ class mod_thesis_submit_form extends moodleform {
     $mform->addElement('button','more_supervisors','Add another supervisor',array('onclick'=>'thesis_more_supervisors();'));
 
     $mform->closeHeaderBefore('publish_info');
+
+    $choice = $this->terms_accepted();
 
     if ($choice != "restricted") {
       $mform->addElement('static','publish_info','','This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.');
