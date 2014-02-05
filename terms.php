@@ -178,12 +178,7 @@ $choose_btns_intro = get_string("choose_btns_intro", "thesis");
 
 if($accepted > 0) {
 	$_SESSION['thesis_terms'] = $accepted;
-
-	if (!in_array($choice, array("normal", "redacted", "restricted"))) {
-		$content = "Incorrect choice";
-	} else {
-		redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}&choice={$choice}");
-	}
+	redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}");
 } elseif(empty($choice)) {
 	$content .= $choose_btns_intro;
 	$content .= $choose_btns;
