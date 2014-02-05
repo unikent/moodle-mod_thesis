@@ -56,13 +56,11 @@ function thesis_cron () {
 
   //Main xml bits
 
-  $submissions = $DB->get_records('thesis_submissions');//, array('publish'=>1));
+  $submissions = $DB->get_records('thesis_submissions', array('publish'=>1));
 
   if(!$submissions) {
     return false;
   }
-
-  $tmpdir = $CFG->tempdir;
 
   $module = $DB->get_record('modules',array('name'=>'thesis'));
 
@@ -75,11 +73,11 @@ function thesis_cron () {
 
     $context = context_module::instance($cm->id);
     $folder_name = md5($sub->title) . time();
-    $filepath = $tmpdir . '/' . $folder_name;
+    $filepath = $CFG->tempdir . '/' . $folder_name;
     check_dir_exists($filepath);
 
     // Create the final location for the gzipped files
-    $final_path = $CFG->dataroot.'/mod_thesis/';
+    $final_path = $CFG->dataroot.'/thesis/';
     check_dir_exists($final_path);
 
     // Create public and private folders
@@ -231,6 +229,7 @@ function thesis_cron () {
       return false;
     }
 
+    // Delete the tmp directory (not the gzipped file)
     rrmdir($filepath);
 
     if (copy($filepath . '.tgz', "$final_path/$folder_name.tgz")) {
