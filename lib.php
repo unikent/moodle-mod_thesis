@@ -56,7 +56,7 @@ function thesis_cron () {
 
   //Main xml bits
 
-  $submissions = $DB->get_records('thesis_submissions', array('publish'=>1));
+  $submissions = $DB->get_records('thesis_submissions');//, array('publish'=>1));
 
   if(!$submissions) {
     return false;
@@ -218,33 +218,23 @@ function thesis_cron () {
       'private' => $filepath . '/private'
     );
 
-    $zippacker = get_file_packer('application/zip');
-    if(!$zippacker->archive_to_pathname($archive, $filepath .'.zip')) {
-      mtrace('Errors whilst trying to zip up xml and files.');
+    $zippacker = get_file_packer('application/x-gzip');
+    if(!$zippacker->archive_to_pathname($archive, $filepath .'.tgz')) {
+      mtrace('Errors whilst trying to tar xml and files.');
       return false;
     }
 
     rrmdir($filepath);
 
     check_dir_exists($tmpdir.'/thesis/');
-    if (copy($filepath .'.zip', $tmpdir . '/thesis/' . $folder_name . '.zip')) {
-      unlink($filepath .'.zip');
+    if (copy($filepath .'.tgz', $tmpdir . '/thesis/' . $folder_name . '.tgz')) {
+      unlink($filepath .'.tgz');
     } else {
-      mtrace('Errors whilst trying to copy thesis zip into the thesis dir.');
+      mtrace('Errors whilst trying to copy thesis tgz into the thesis dir.');
       return false;
     }
 
     $DB->update_record('thesis_submissions',array('id'=>$sub->id,'publish'=>2));
-
-    // //formatting stuff for test printing
-    // $dom = dom_import_simplexml($xml)->ownerDocument;
-    // $dom->formatOutput = true;
-    // $scrn = htmlspecialchars($dom->saveXml(), ENT_QUOTES);
-
-    // echo '<pre>';
-    // var_dump($scrn);
-    // echo '</pre>';
-
   }
 }
 
