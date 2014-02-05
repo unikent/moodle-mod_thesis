@@ -154,7 +154,7 @@ function thesis_cron () {
 
     // Eprints username
     $e_user = $DB->get_record('user', array('id'=>$sub->published_by));
-    $eprint->addChild('userid', $e_user->username);
+    $eprint->addChild('userid', !empty($e_user) ? $e_user->username : 'admin');
 
     $eprint->addChild('type', 'thesis');
     //Always show
