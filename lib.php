@@ -230,7 +230,7 @@ function thesis_cron () {
     }
 
     // Delete the tmp directory (not the gzipped file)
-    rrmdir($filepath);
+    fulldelete($filepath);
 
     if (copy($filepath . '.tgz', "$final_path/$folder_name.tgz")) {
       unlink($filepath . '.tgz');
@@ -241,19 +241,6 @@ function thesis_cron () {
 
     $DB->update_record('thesis_submissions',array('id'=>$sub->id,'publish'=>2));
   }
-}
-
-function rrmdir($dir) { 
-  if (is_dir($dir)) { 
-    $objects = scandir($dir); 
-    foreach ($objects as $object) { 
-      if ($object != "." && $object != "..") { 
-        if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object); 
-      } 
-    } 
-    reset($objects); 
-    rmdir($dir); 
-  } 
 }
 
 function thesis_listfiles($files, $title) {
