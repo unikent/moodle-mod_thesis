@@ -160,7 +160,7 @@ class mod_thesis_submit_form extends moodleform {
 
     $mform->closeHeaderBefore('publish_info');
 
-    $choice = $_SESSION['thesis_terms'];
+    $choice = isset($_SESSION['thesis_terms']) ? $_SESSION['thesis_terms'] : 0;
 
     if ($choice != 3) {
       $mform->addElement('static','publish_info','',get_string('form_publish_info', 'thesis'));
