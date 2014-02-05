@@ -57,4 +57,30 @@ $string['thesis_normal'] = 'Normal thesis';
 $string['thesis_redacted'] = 'Redacted thesis';
 $string['thesis_restricted'] = 'Permanently restricted thesis';
 
-$string['thesis_restricted_info'] = 'Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.';
+$string['thesis_restricted_info'] = '<p>Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.</p>';
+
+
+$string['form_heading'] = 'Create/update thesis/dissertation';
+$string['page_title_view'] = 'View thesis/dissertation submission';
+$string['submitted_school'] = 'Submitted to School Administrator';
+$string['published'] = 'Published';
+$string['save_state_message_1'] = 'Thesis/dissertation submission successfully saved - you are welcome to make further changes and amendments, and at this stage your Thesis/dissertation has not been fully submitted.';
+$string['save_state_message_publish'] = 'Thesis/dissertation submission published.  An administrator will now check and approve your submission.  No further updates can now be made.';
+$string['save_state_message_kar'] = 'Thesis/dissertation submission published to kar.  Further updates can not be made.';
+$string['return_submissions_list'] = 'Return to submissions list';
+$string['view_page_title'] = 'Thesis/Dissertation Submissions';
+$string['create_submission'] = '(Create new submission)';
+
+$string['form_publish_info'] = 'This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.';
+$string['form_pa_td'] = 'Publicly-available Thesis/Dissertation';
+$string['form_res_td'] = 'Restricted Thesis/Dissertation';
+$string['form_pdf_format'] = '<p>Please upload your thesis/dissertation in PDF format.</p>';
+$string['form_embargo_date'] = 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.';
+$string['form_res_info'] = 'Restricted Thesis/Dissertation Information';
+
+$string['form_buttons_save'] = 'Save';
+$string['form_buttons_submit'] = 'Submit to School Administrator';
+$string['form_buttons_reset'] = 'Reset to draft';
+$string['form_buttons_publish'] = 'Save changes and publish to Kar';
+
+$string['form_add_sup'] = 'Add another supervisor';

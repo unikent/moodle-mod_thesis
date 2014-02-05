@@ -26,8 +26,8 @@ $PAGE->set_context($context);
 
 echo $OUTPUT->header();
 echo '<div class="thesis_list">';
-echo '<h2>Thesis/Dissertation Submissions</h2>';
-echo '<a class="thesis_new" href="edit.php?id='.$id.'">(Create new submission)</a>';
+echo $OUTPUT->heading(get_string('view_page_title', 'mod_thesis'), 2);
+echo '<a class="thesis_new" href="edit.php?id='.$id.'">'.get_string('create_submission', 'mod_thesis').'</a>';
 echo thesis_list_submissions($id,$thesis->id, context_course::instance($cm->course));
 echo '</div>';
 echo $OUTPUT->footer();

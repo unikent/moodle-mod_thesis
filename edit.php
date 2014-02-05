@@ -54,10 +54,10 @@ if (!is_enrolled($context) && !has_capability('moodle/course:update', context_co
 
 if ($show_as_published) {
 
-  $status = $submission->submitted_for_publishing == 1 ? ' <span class="thesis_status">(Submitted to School Administrator)</span>' : '';
-  $status = isset($submission->publish) ? ' <span class="thesis_status">(Published)</span>' : $status;
+  $status = $submission->submitted_for_publishing == 1 ? ' <span class="thesis_status">('.get_string('submitted_school', 'mod_thesis').')</span>' : '';
+  $status = isset($submission->publish) ? ' <span class="thesis_status">('.get_string('published', 'mod_thesis').')</span>' : $status;
 
-  $heading = 'View thesis/dissertation submission' . $status;
+  $heading = get_string('page_title_view', 'mod_thesis') . $status;
   $PAGE->set_title($heading);
   $PAGE->set_heading($heading);
 
@@ -77,7 +77,7 @@ if ($show_as_published) {
 
     $flabel = ucwords(str_replace('_',' ',$field));
     if ($field == 'thesis_type') {
-      $flabel = 'Thesis/Dissertation type';
+      $flabel = get_string('thesis_type', 'mod_thesis');
     }
     $output .=   '<th class="thesis_table_head">' . $flabel . '</th>';
 
@@ -106,7 +106,7 @@ if ($show_as_published) {
   $output .= '</table>';
 } else {
 
-  $heading = 'Create/update thesis/dissertation';
+  $heading = get_string('form_heading', 'mod_thesis');
 
   $form = new mod_thesis_submit_form(null,array('isadmin'=>$isadmin,'submitted_for_publishing'=>$submitted_for_publishing),'post','',array('class'=>'thesis_form'));
   $terms_accepted_by_form = $form->terms_accepted();
@@ -188,18 +188,18 @@ if ($show_as_published) {
 echo $OUTPUT->header();
 echo $OUTPUT->heading($heading);
 if (null != $f) {
-  $message = 'Thesis/dissertation submission successfully saved - you are welcome to make further changes and amendments, and at this stage your Thesis/dissertation has not been fully submitted.<br/>';
+  $message = get_string('save_state_message_1', 'mod_thesis') . '<br/>';
   if ('publish' == $f) {
-    $message = 'Thesis/dissertation submission published.  An administrator will now check and approve your submission.  No further updates can now be made.<br/>';
+    $message = get_string('save_state_message_publish', 'mod_thesis') . '<br/>';
   }
   if ('kar' == $f) {
-    $message = 'Thesis/dissertation submission published to kar.  Further updates can not be made.<br/>';
+    $message = get_string('save_state_message_kar', 'mod_thesis') . '<br/>';
   }
-  echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">Return to submissions list</a></div>';
+  echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">'.get_string('return_submissions_list', 'mod_thesis').'</a></div>';
 }
 
 if ($show_as_published) {echo $output;} else {$form->display();}
 
-echo '<a class="thesis_back" href="view.php?id='.$id.'">Return to submissions list</a>';
+echo '<a class="thesis_back" href="view.php?id='.$id.'">'.get_string('return_submissions_list', 'mod_thesis').'</a>';
 
 echo $OUTPUT->footer();
