@@ -78,6 +78,10 @@ function thesis_cron () {
     $filepath = $tmpdir . '/' . $folder_name;
     check_dir_exists($filepath);
 
+    // Create the final location for the gzipped files
+    $final_path = $CFG->dataroot.'/mod_thesis/';
+    check_dir_exists($final_path);
+
     // Create public and private folders
     $public_path = $filepath . '/public/';
     check_dir_exists($public_path);
@@ -229,9 +233,8 @@ function thesis_cron () {
 
     rrmdir($filepath);
 
-    check_dir_exists($tmpdir.'/thesis/');
-    if (copy($filepath .'.tgz', $tmpdir . '/thesis/' . $folder_name . '.tgz')) {
-      unlink($filepath .'.tgz');
+    if (copy($filepath . '.tgz', "$final_path/$folder_name.tgz")) {
+      unlink($filepath . '.tgz');
     } else {
       mtrace('Errors whilst trying to copy thesis tgz into the thesis dir.');
       return false;
