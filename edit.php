@@ -26,7 +26,7 @@ if (! $thesis = $DB->get_record("thesis", array("id" => $cm->instance))) {
 }
 $published = false;
 $submitted_for_publishing = false;
-if($submission_id) {
+if ($submission_id) {
   $submission = $DB->get_record('thesis_submissions',array('id'=>$submission_id));
   $submission->publishdate = array(
     'mon' => $submission->publish_month,
@@ -48,12 +48,12 @@ $PAGE->set_context($context);
 
 $output = '';
 
-if(!is_enrolled($context) && !has_capability('moodle/course:update', context_course::instance($cm->course))) {
+if (!is_enrolled($context) && !has_capability('moodle/course:update', context_course::instance($cm->course))) {
   throw new moodle_exception('You are not enrolled on this module');
   exit;
 }
 
-if($show_as_published) {
+if ($show_as_published) {
 
   $status = $submission->submitted_for_publishing == 1 ? ' <span class="thesis_status">(Submitted to School Administrator)</span>' : '';
   $status = isset($submission->publish) ? ' <span class="thesis_status">(Published)</span>' : $status;
@@ -67,7 +67,9 @@ if($show_as_published) {
 
   foreach ($submission as $field => $fdata) {
 
-    if(in_array($field, $hidden)) { continue;}
+    if (in_array($field, $hidden)) {
+      continue;
+    }
 
     $output .= '<tr>';
 
@@ -75,16 +77,16 @@ if($show_as_published) {
     $field = str_replace('sname', 'surname', $field);
 
     $flabel = ucwords(str_replace('_',' ',$field));
-    if($field == 'thesis_type') {
+    if ($field == 'thesis_type') {
       $flabel = 'Thesis/Dissertation type';
     }
     $output .=   '<th class="thesis_table_head">' . $flabel . '</th>';
 
-    if($field === 'publishdate') {
+    if ($field === 'publishdate') {
       $fdata = sprintf("%02d", $submission->publishdate['mon']) . '/' . $submission->publishdate['year'];
     }
 
-    if($field == 'department') {
+    if ($field == 'department') {
       $r = $DB->get_record('course_categories', array('id'=>$fdata));
       $fdata = $r != null ? $r->name : $fdata;
     }
@@ -94,11 +96,11 @@ if($show_as_published) {
   }
 
   $fs = get_file_storage();
-  if($pubfs = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $submission->id, '', false)) {
+  if ($pubfs = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $submission->id, '', false)) {
     $output .= thesis_listfiles($pubfs, 'Public files');
   }
 
-  if($prifs = $fs->get_area_files($context->id, 'mod_thesis', 'private', $submission->id, '', false)) {
+  if ($prifs = $fs->get_area_files($context->id, 'mod_thesis', 'private', $submission->id, '', false)) {
     $output .= thesis_listfiles($prifs, 'Private files');
   }
 
@@ -116,32 +118,32 @@ if($show_as_published) {
   $file_options = array('subdirs'=>0, 'maxfiles'=>-1, 'accepted_types'=>'pdf', 'return_types'=>FILE_INTERNAL);
 
   //Has the form been submited?
-  if( $entry = $form->get_data() ) {
+  if ($entry = $form->get_data()) {
 
     $f = 'ok';
 
     //Are we updating? if so do you have access to update this
-    if(isset($submission)) {
-      if(!$isadmin && $submission->user_id != $USER->id) {
+    if (isset($submission)) {
+      if (!$isadmin && $submission->user_id != $USER->id) {
         throw new moodle_exception('Unauthorized access to resource');
         exit;
       }
     }
 
-    if(!$terms_accepted) {
+    if (!$terms_accepted) {
       redirect($CFG->wwwroot . "/mod/thesis/terms.php?id=$id");
       die;
     }
 
-    if(isset($entry->submitpublish)) {
+    if (isset($entry->submitpublish)) {
       $entry->submitted_for_publishing = 1;
       $f = 'publish';
     }
-    if(isset($entry->submitdraft)) {
+    if (isset($entry->submitdraft)) {
       $entry->submitted_for_publishing = 0;
     }
 
-    if(isset($entry->publish_kar)) {
+    if (isset($entry->publish_kar)) {
       $entry->submitted_for_publishing = 1;
       $entry->publish = 1;
       $entry->published_by = $USER->id;
@@ -156,15 +158,15 @@ if($show_as_published) {
 
   } else {
 
-    if(!$terms_accepted) {
+    if (!$terms_accepted) {
       $suburl = isset($submission) ? "&submission_id={$submission->id}" : "";
       redirect($CFG->wwwroot . "/mod/thesis/terms.php?id={$id}{$suburl}");
       die;
     }
 
     // Are we updating a record and do you have access?
-    if(isset($submission)) {
-      if( !has_capability('moodle/course:update', context_course::instance($cm->course)) && $submission->user_id != $USER->id ) {
+    if (isset($submission)) {
+      if (!has_capability('moodle/course:update', context_course::instance($cm->course)) && $submission->user_id != $USER->id) {
         throw new moodle_exception('Unauthorized access to resource');
         exit;
       }
@@ -186,18 +188,18 @@ if($show_as_published) {
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading($heading);
-if(null != $f) {
+if (null != $f) {
   $message = 'Thesis/dissertation submission successfully saved - you are welcome to make further changes and amendments, and at this stage your Thesis/dissertation has not been fully submitted.<br/>';
-  if('publish' == $f) {
+  if ('publish' == $f) {
     $message = 'Thesis/dissertation submission published.  An administrator will now check and approve your submission.  No further updates can now be made.<br/>';
   }
-  if('kar' == $f) {
+  if ('kar' == $f) {
     $message = 'Thesis/dissertation submission published to kar.  Further updates can not be made.<br/>';
   }
   echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">Return to submissions list</a></div>';
 }
 
-if($show_as_published) {echo $output;} else {$form->display();}
+if ($show_as_published) {echo $output;} else {$form->display();}
 
 echo '<a class="thesis_back" href="view.php?id='.$id.'">Return to submissions list</a>';
 
