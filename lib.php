@@ -77,6 +77,13 @@ function thesis_cron () {
     $folder_name = md5($sub->title) . time();
     $filepath = $tmpdir . '/' . $folder_name;
     check_dir_exists($filepath);
+
+    // Create public and private folders
+    $public_path = $filepath . '/public/';
+    check_dir_exists($public_path);
+    $private_path = $filepath . '/private/';
+    check_dir_exists($private_path);
+    
     $fs = get_file_storage();
 
     // Start of xml generation
@@ -91,9 +98,7 @@ function thesis_cron () {
     $pos = 1;
     if($publish_files = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $sub->id, '', false)) {
       foreach ($publish_files as $f) {
-        $fp = $filepath . '/public/';
-        check_dir_exists($fp);
-        if(!$f->copy_content_to($fp . $f->get_filename())) {
+        if(!$f->copy_content_to($public_path . $f->get_filename())) {
           mtrace('Errors whilst trying to copy thesis files to temp dir.');
           return false;
         }
@@ -121,9 +126,7 @@ function thesis_cron () {
     if($restrict_files = $fs->get_area_files($context->id, 'mod_thesis', 'private', $sub->id, '', false)) {
       foreach ($restrict_files as $f) {
 
-        $fp = $filepath . '/private/';
-        check_dir_exists($fp);
-        if(!$f->copy_content_to($fp . $f->get_filename())) {
+        if(!$f->copy_content_to($private_path . $f->get_filename())) {
           mtrace('Errors whilst trying to copy thesis files to temp dir.');
           return false;
         }
@@ -214,8 +217,8 @@ function thesis_cron () {
 
     $archive =array(
       'import.xml' => $filepath . '/import.xml',
-      'public' => $filepath . '/public',
-      'private' => $filepath . '/private'
+      'public' => $public_path,
+      'private' => $private_path
     );
 
     $zippacker = get_file_packer('application/x-gzip');
