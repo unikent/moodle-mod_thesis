@@ -157,7 +157,7 @@ class mod_thesis_submit_form extends moodleform {
         $category = \coursecat::make_categories_list('', 58, '!!!');
 
         // we need to just get the second level from the categories list
-        $options = array();
+        $options = array(null => "Choose school");
         foreach($category as $id => $cat) {
             $split = explode('!!!', $cat);
             // don't use the anything other than 2 level deep, others have the wrong ids
