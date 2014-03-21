@@ -77,7 +77,7 @@ $string['form_pdf_format'] = '<p>Please upload your thesis/dissertation in PDF f
 $string['form_embargo_date'] = 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.';
 $string['form_res_info'] = 'Restricted Thesis/Dissertation Information';
 
-$string['form_buttons_save'] = 'Save';
+$string['form_buttons_save'] = 'Save for later';
 $string['form_buttons_submit'] = 'Submit to School Administrator';
 $string['form_buttons_reset'] = 'Reset to draft';
 $string['form_buttons_publish'] = 'Save changes and publish to Kar';
