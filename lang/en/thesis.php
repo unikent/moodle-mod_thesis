@@ -33,7 +33,6 @@ $string['note_help'] = 'Additional information';
 $string['quals'] = 'Qualification level';
 $string['quals_masters'] = 'Masters';
 $string['quals_doctoral'] = 'Doctoral';
-$string['quals_taughtmasters'] = 'Taught/Dissertation masters';
 $string['quals_unspecified'] = 'Unspecified';
 $string['quals_req'] = 'You must enter your qualification level';
 $string['qual_name'] = 'Qualification name';
