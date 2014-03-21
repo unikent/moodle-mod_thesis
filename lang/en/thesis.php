@@ -49,13 +49,13 @@ $string['third_sup_email'] = 'Third supervisor email';
 $string['metadata_vis'] = 'Metadata visible?';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
-$string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to submit for display of correct terms and conditions.</p>';
+$string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to submit for display of correct terms and conditions.</p><p>Before proceeding please ensure you have read the <a href="#" target="_blank">Guide Advice to Candidates</a>.</p>';
 
 $string['thesis:addinstance'] = 'Add a new thesis';
 
-$string['thesis_normal'] = 'Normal thesis';
-$string['thesis_redacted'] = 'Redacted thesis';
-$string['thesis_restricted'] = 'Permanently restricted thesis';
+$string['thesis_normal'] = 'I am depositing one copy of my thesis for public access with/without embargo';
+$string['thesis_redacted'] = 'I am depositing two copies of my thesis, one redacted copy for public access, with/without embargo, and one full text copy to be permanently restricted';
+$string['thesis_restricted'] = 'I am depositing one copy of my thesis to be permanently restriced';
 
 $string['thesis_restricted_info'] = '<p>Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.</p>';
 
