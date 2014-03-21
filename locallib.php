@@ -154,7 +154,17 @@ class mod_thesis_submit_form extends moodleform {
         $mform->addElement('textarea', 'corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
         $mform->setType('corporate_acknowledgement', PARAM_TEXT);
 
-        $options = \coursecat::make_categories_list('', 58);
+        $category = \coursecat::make_categories_list('', 58, '!!!');
+
+        // we need to just get the second level from the categories list
+        $options = array();
+        foreach($category as $id => $cat) {
+            $split = explode('!!!', $cat);
+            // don't use the anything other than 2 level deep, others have the wrong ids
+            if(count($split) == 2 && strpos($split[1], "School") !== false) {
+                $options[$id] = $split[1];
+            }
+        }
 
         $mform->addElement('select', 'department', get_string('department', 'thesis'), $options);
         $mform->setType('department', PARAM_TEXT);
