@@ -218,7 +218,7 @@ if($accepted > 0) {
 	}
 
 	if($type > 0) {
-		$content .= "<a href='/course/view.php?id=$course->id' class='btn form-button kent_thesis_tcs_back'>Back</a>
+		$content .= "<a href=' {$CFG->wwwroot}/mod/thesis/terms.php?id={$id}' class='btn form-button kent_thesis_tcs_back'>Back</a>
 					<form class='kent_thesis_tcs_sub' action='terms.php?id={$id}{$suburl}' method='post'>
 						<input type='hidden' value='$type' name='kent_thesis_tcs_accepted' />
 						<input class='form-submit' type='submit' value='Accept'>
