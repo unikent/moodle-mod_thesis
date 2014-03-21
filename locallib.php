@@ -174,16 +174,16 @@ class mod_thesis_submit_form extends moodleform {
         $years = array_combine($range, $range);
         $date_group []= $mform->createElement('select', 'year', '', $years);
 
+        $mform->addElement('static', 'publishdate_info', '', get_string('publishdate_help', 'thesis'));
         $mform->addGroup($date_group, 'publishdate', get_string('publishdate', 'thesis'));
         $mform->addRule('publishdate', get_string('publishdate_req', 'thesis'), 'required');
-        $mform->addHelpButton('publishdate', 'publishdate', 'thesis');
 
         $mform->addElement('textarea', 'funding', get_string('funding', 'thesis'));
         $mform->setType('funding', PARAM_TEXT);
 
+        $mform->addElement('static', 'title_info', '', get_string('email_help', 'thesis'));
         $mform->addElement('text', 'contactemail', get_string('email', 'thesis'));
         $mform->setType('contactemail', PARAM_TEXT);
-        $mform->addHelpButton('contactemail', 'email', 'thesis');
 
         $qualoptions = array();
         $qualoptions['doctoral'] = get_string('quals_doctoral', 'thesis');
