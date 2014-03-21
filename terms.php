@@ -50,7 +50,7 @@ $normal_tcs = <<<NTCS
 		<h3>The University of Kent eThesis Deposit Agreement for doctoral theses</h3>
 		<h4>Covered Work</h4>
 		<p>I would like to deposit my thesis and abstract in the University of Kent 
-		digital repository, currently Kent Academic Repository. Research referred 
+		digital repository, currently Kent Academic Repository (KAR). Research referred 
 		to below as “Work” is covered by this agreement and when I deposit my Work, 
 		whether personally or through an assistant or other agent, I agree to the 
 		following:</p>
@@ -80,12 +80,14 @@ $normal_tcs = <<<NTCS
 			<li>That I have obtained permission from copyright holders (authors/publishers) in 
 			respect of any substantial extracts of third party copyright material that have already 
 			been published, which is included within the thesis. Permission obtained specifically 
-			includes the right to publish digitally. (Please contact Information Services if you need 
+			includes the right to publish digitally. (Please contact the Copyright Licensing Compliance
+			Officer, email <a href="mailto:copyright@kent.ac.uk">copyright@kent.ac.uk</a> if you need
 			further help and advice)</li>
 			<li>That I have exercised reasonable care to ensure that the Work is original and does 
 			not, to the best of my knowledge, break any UK law or infringe any third party’s 
-			copyright or other Intellectual Property Right. (Please contact Information Services 
-			if you need further help and advice)</li>
+			copyright or other Intellectual Property Right. (Please contact the Copyright Licensing Compliance
+			Officer, email <a href="mailto:copyright@kent.ac.uk">copyright@kent.ac.uk</a> if you need
+			further help and advice)</li>
 			<li>The University of Kent does not hold any obligation to take legal action on behalf of 
 			the Depositor, or other rights holders, in the event of breach of intellectual property 
 			rights, or any other right, in the material deposited</li>
@@ -98,7 +100,7 @@ $redacted_tcs = <<<NTCS
 		<h3>The University of Kent eThesis Deposit Agreement for doctoral theses</h3>
 		<h4>Covered Work</h4>
 		<p>I would like to deposit my thesis and abstract in the University of Kent 
-		digital repository, currently Kent Academic Repository. Research referred 
+		digital repository, currently Kent Academic Repository (KAR). Research referred 
 		to below as “Work” is covered by this agreement and when I deposit my Work, 
 		whether personally or through an assistant or other agent, I agree to the 
 		following:</p>
@@ -127,8 +129,9 @@ $redacted_tcs = <<<NTCS
 			for sharing and also the original for preservation </li>
 			<li>That I have exercised reasonable care to ensure that the Work is original and does 
 			not, to the best of my knowledge, break any UK law or infringe any third party’s 
-			copyright or other Intellectual Property Right. (Please contact Information Services 
-			if you need further help and advice)</li>
+			copyright or other Intellectual Property Right. (Please contact the Copyright Licensing Compliance
+			Officer, email <a href="mailto:copyright@kent.ac.uk">copyright@kent.ac.uk</a> if you need
+			further help and advice)</li>
 			<li>The University of Kent does not hold any obligation to take legal action on behalf of 
 			the Depositor, or other rights holders, in the event of breach of intellectual property 
 			rights, or any other right, in the material deposited</li>
@@ -141,7 +144,7 @@ $restricted_tcs = <<<NTCS
 		<h3>The University of Kent eThesis Deposit Agreement for doctoral theses</h3>
 		<h4>Covered Work</h4>
 		<p>I would like to deposit my thesis and abstract in the University of Kent 
-		digital repository, currently Kent Academic Repository. Research referred 
+		digital repository, currently Kent Academic Repository (KAR). Research referred 
 		to below as “Work” is covered by this agreement and when I deposit my Work, 
 		whether personally or through an assistant or other agent, I agree to the 
 		following:</p>
@@ -153,16 +156,11 @@ $restricted_tcs = <<<NTCS
 		so may, without changing content, translate the Work to any medium or format 
 		for the purpose of future preservation and accessibility.</p>
 		<h4>Deposit In The University Of Kent Digital Repository (currently Kent Academic Repository)</h4>
-		<p>I understand that work deposited in the University of Kent digital repository 
-		will be accessible to a wide variety of people and institutions – including 
-		automated agents – via the World Wide Web. An electronic copy of my thesis may 
-		also be included in the British Library Electronic Theses On-line Service (EThOS).</p>
-		<p>I understand that once the Work is deposited, metadata will be incorporated into 
-		public access catalogues. This citation to the Work will always remain visible. 
-		Removal of the Work can be made after discussion with University and School 
-		administrators.</p>
-		<h4>I Do Not Agree Because:</h4>
-		<p>My School has approved permanent restricted access.</p>
+		<p>I understand that once the Work is deposited, metadata will be incorporated into public 
+		access catalogues. This citation to the Work will always remain visible.</p>
+		<p>A permanently embargoed full-text copy will be retained by the University but this will 
+		not be released without the permission of the rights holder, following legal expiry of all 
+		copyright content, or as a result of a legal requirement.</p>
 	</div>
 NTCS;
 
