@@ -224,8 +224,8 @@ function thesis_cron() {
         $creators = $eprint->addChild('creators');
         $creator = $creators->addChild('item');
         $c_name = $creator->addChild('name');
-        $c_name->addChild('family', $user->lastname);
-        $c_name->addChild('given', $user->firstname);
+        $c_name->addChild('family', $sub->family_name);
+        $c_name->addChild('given', $sub->given_name);
         $creator->addChild('id', $user->email);
 
 
