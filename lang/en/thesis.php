@@ -77,7 +77,7 @@ $string['create_submission'] = '(Create new submission)';
 
 $string['form_publish_info'] = 'This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.';
 $string['form_pa_td'] = 'Publicly-available Thesis/Dissertation';
-$string['form_res_td'] = 'Restricted Thesis/Dissertation';
+$string['form_res_td'] = 'Permanently Restricted Thesis/Dissertation';
 $string['form_pdf_format'] = '<p>Please upload your thesis/dissertation in PDF format.</p>';
 $string['form_embargo_date'] = 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.';
 $string['form_res_info'] = 'Restricted Thesis/Dissertation Information';
