@@ -128,6 +128,15 @@ class mod_thesis_submit_form extends moodleform {
         $mform->setType('abstract', PARAM_TEXT);
         $mform->addRule('abstract', get_string('abstract_req', 'thesis'), 'required');
 
+        $mform->addElement('static', 'family_name_info', '', get_string('family_name_info', 'thesis'));
+        $mform->addElement('text', 'family_name', get_string('family_name', 'thesis'));
+        $mform->setType('family_name', PARAM_TEXT);
+        $mform->addRule('family_name', get_string('family_name_req', 'thesis'), 'required');
+
+        $mform->addElement('text', 'given_name', get_string('given_name', 'thesis'));
+        $mform->setType('given_name', PARAM_TEXT);
+        $mform->addRule('given_name', get_string('given_name_req', 'thesis'), 'required');
+
         $typeoptions = array();
         $typeoptions['deng'] = 'Doctor of Engineering (D.Eng.)';
         $typeoptions['sportd'] = 'Doctor of Sport, Exercise and Health Science (Sport.D.)';

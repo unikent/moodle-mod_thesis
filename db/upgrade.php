@@ -90,6 +90,21 @@ function xmldb_thesis_upgrade($oldversion=0) {
     upgrade_mod_savepoint(true, 2013061003, 'thesis');
   }
 
+  if ($oldversion < 2014032101) {
+    // Define field family_name to be added to thesis_submissions.
+    $table = new xmldb_table('thesis_submissions');
+    $field = new xmldb_field('family_name', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'user_id');
+    $field = new xmldb_field('given_name', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'user_id');
+
+    // Conditionally launch add field family_name.
+    if (!$dbman->field_exists($table, $field)) {
+        $dbman->add_field($table, $field);
+    }
+
+    // Newmodule savepoint reached.
+    upgrade_mod_savepoint(true, 2014032101, 'thesis');
+  }
+
   return true;
 }
 

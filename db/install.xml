@@ -21,8 +21,10 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="thesis_id"/>
         <FIELD NAME="thesis_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="user_id"/>
-        <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="thesis_id" NEXT="title"/>
-        <FIELD NAME="title" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="user_id" NEXT="keywords"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="thesis_id" NEXT="family_name"/>
+        <FIELD NAME="family_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="user_id" NEXT="given_name"/>
+        <FIELD NAME="given_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="family_name" NEXT="title"/>
+        <FIELD NAME="title" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="given_name" NEXT="keywords"/>
         <FIELD NAME="keywords" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="title" NEXT="abstract"/>
         <FIELD NAME="abstract" TYPE="text" LENGTH="big"  NOTNULL="false" SEQUENCE="false" PREVIOUS="keywords" NEXT="thesis_type"/>
         <FIELD NAME="thesis_type" TYPE="text" LENGTH="small"  NOTNULL="false" SEQUENCE="false" PREVIOUS="abstract" NEXT="publish_month"/>
