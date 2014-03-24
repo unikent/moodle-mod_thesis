@@ -19,6 +19,7 @@ require_once '../../course/moodleform_mod.php';
 require_once 'lib.php';
 require_once 'locallib.php';
 require_once $CFG->libdir.'/formslib.php';
+require_once $CFG->dirroot . '/repository/lib.php';
 
 $id = optional_param('id', 0, PARAM_INT);
 $submission_id = optional_param('submission_id', null, PARAM_INT);

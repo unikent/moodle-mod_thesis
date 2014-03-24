@@ -222,29 +222,41 @@ class mod_thesis_submit_form extends moodleform {
 
         $mform->addElement('button', 'more_supervisors', get_string('form_add_sup', 'thesis'), array('onclick' => 'thesis_more_supervisors();'));
 
-        $mform->closeHeaderBefore('publish_info');
-
         $choice = isset($_SESSION['thesis_terms']) ? $_SESSION['thesis_terms'] : 0;
 
-        if ($choice != 3) {
+        if ($choice == 1) {
+            // public
+            $mform->closeHeaderBefore('publish_info');
+
             $mform->addElement('static', 'publish_info', '', get_string('form_publish_info', 'thesis'));
             $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
         }
 
-        $mform->closeHeaderBefore('restricted_info');
+        if ($choice == 2) {
+            // restricted
+            $mform->closeHeaderBefore('publish_info');
 
-        if ($choice != 3) {
-            $private_lang = get_string('thesis_restricted_info', 'mod_thesis');
-            $mform->addElement('static', 'restricted_info', '', $private_lang);
-        }
+            $mform->addElement('static', 'publish_info', '', get_string('form_publish_info', 'thesis'));
+            $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
 
-        $mform->addElement('filemanager', 'private_filemanager', get_string('form_res_td', 'thesis'));
-        $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
+            $mform->closeHeaderBefore('restricted_info');
 
-        if ($choice != 3) {
+            $mform->addElement('static', 'restricted_info', '', get_string('thesis_restricted_info', 'mod_thesis'));
+
+            $mform->addElement('filemanager', 'private_filemanager', get_string('form_res_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
+            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
+
             $mform->addElement('static', 'additional_information_info', '', get_string('form_embargo_date', 'thesis'));
             $mform->addElement('textarea', 'additional_information', get_string('form_res_info', 'thesis'));
             $mform->setType('additional_information', PARAM_TEXT);
+        }
+
+        if ($choice == 3) {
+            // permantently restricted
+            $mform->closeHeaderBefore('private_filemanager');
+
+            $mform->addElement('filemanager', 'private_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
+            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
         }
 
         $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];
