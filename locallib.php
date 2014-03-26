@@ -224,38 +224,51 @@ class mod_thesis_submit_form extends moodleform {
 
         $choice = isset($_SESSION['thesis_terms']) ? $_SESSION['thesis_terms'] : 0;
 
+        $embargo_options = array();
+        $embargo_options[0] = 'Immediate open access - no embargo';
+        $embargo_options[1] = 'One year embargo';
+        $embargo_options[3] = 'Three year embargo';
+
         if ($choice == 1) {
             // public
             $mform->closeHeaderBefore('publish_info');
 
             $mform->addElement('static', 'publish_info', '', get_string('form_publish_info', 'thesis'));
             $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
+
+            $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
+            $mform->setDefault('embargo', 3);
         }
 
         if ($choice == 2) {
             // restricted
-            $mform->closeHeaderBefore('publish_info');
-
-            $mform->addElement('static', 'publish_info', '', get_string('form_publish_info', 'thesis'));
-            $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
-
             $mform->closeHeaderBefore('restricted_info');
 
+            // restricted form
             $mform->addElement('static', 'restricted_info', '', get_string('thesis_restricted_info', 'mod_thesis'));
 
             $mform->addElement('filemanager', 'private_filemanager', get_string('form_res_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
-            $mform->addElement('static', 'additional_information_info', '', get_string('form_embargo_date', 'thesis'));
-            $mform->addElement('textarea', 'additional_information', get_string('form_res_info', 'thesis'));
-            $mform->setType('additional_information', PARAM_TEXT);
+            $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
+            $mform->setDefault('embargo', 3);
+
+            $mform->closeHeaderBefore('permanent_filemanager');
+
+            // perm restricted form
+            $mform->addElement('filemanager', 'permanent_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
+            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
+
+            //$mform->addElement('static', 'additional_information_info', '', get_string('form_embargo_date', 'thesis'));
+            //$mform->addElement('textarea', 'additional_information', get_string('form_res_info', 'thesis'));
+            //$mform->setType('additional_information', PARAM_TEXT);
         }
 
         if ($choice == 3) {
             // permantently restricted
             $mform->closeHeaderBefore('private_filemanager');
 
-            $mform->addElement('filemanager', 'private_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
+            $mform->addElement('filemanager', 'permanent_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
         }
 

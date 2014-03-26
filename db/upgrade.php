@@ -113,7 +113,7 @@ function xmldb_thesis_upgrade($oldversion=0) {
 
   if ($oldversion < 2014032500) {
     $table = new xmldb_table('thesis_submissions');
-    $month = new xmldb_field('embargo',     XMLDB_TYPE_INTEGER, '1',    null, null, null, '0',  'metadata');
+    $field = new xmldb_field('embargo', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'metadata');
 
     if (!$dbman->field_exists($table, $field)) {
         $dbman->add_field($table, $field);

@@ -154,6 +154,7 @@ function thesis_cron() {
 
         // Set the pos as 1 so it can be incremented for each file.
         $pos = 1;
+        // open
         if ($publish_files = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $sub->id, '', false)) {
             foreach ($publish_files as $f) {
                 if (!$f->copy_content_to($public_path . $f->get_filename())) {
@@ -175,14 +176,56 @@ function thesis_cron() {
                 $doc->addChild('language', 'en');
                 $doc->addChild('security', 'public');
                 $doc->addChild('main', $f->get_filename());
-                $doc->addChild('date_embargo', '');
+
+                $embargo_date = '';
+                if($sub->embargo != 0) {
+                    $embargo_date = ($sub->publish_year + $sub->embargo) . '-' . sprintf("%02d", $sub->publish_month);
+                }
+                
+                $doc->addChild('date_embargo', $embargo_date);
+
                 $doc->addChild('content', 'submitted');
             }
         }
 
-
+        // restricted
         if ($restrict_files = $fs->get_area_files($context->id, 'mod_thesis', 'private', $sub->id, '', false)) {
             foreach ($restrict_files as $f) {
+
+                if (!$f->copy_content_to($private_path . $f->get_filename())) {
+                    mtrace('Errors whilst trying to copy thesis files to temp dir.');
+                    return false;
+                }
+
+                $doc = $docs->addChild('document');
+                $doc->addChild('pos', $pos);
+                $doc->addChild('placement', $pos);
+                $pos++;
+                $files = $doc->addChild('files');
+                $file = $files->addChild('file');
+                $file->addChild('datasetid', 'document');
+                $file->addChild('filename', $f->get_filename());
+                $file->addChild('url', 'private/' . $f->get_filename());
+
+                $doc->addChild('format', $f->get_mimetype());
+                $doc->addChild('language', 'en');
+                $doc->addChild('security', 'staffonly');
+                $doc->addChild('main', $f->get_filename());
+                
+                $embargo_date = '';
+                if($sub->embargo != 0) {
+                    $embargo_date = ($sub->publish_year + $sub->embargo) . '-' . sprintf("%02d", $sub->publish_month);
+                }
+                
+                $doc->addChild('date_embargo', $embargo_date);
+
+                $doc->addChild('content', 'submitted');
+            }
+        }
+
+        // permanently restriced
+        if ($permanent_files = $fs->get_area_files($context->id, 'mod_thesis', 'permanent', $sub->id, '', false)) {
+            foreach ($permanent_files as $f) {
 
                 if (!$f->copy_content_to($private_path . $f->get_filename())) {
                     mtrace('Errors whilst trying to copy thesis files to temp dir.');

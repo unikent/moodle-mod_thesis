@@ -38,6 +38,9 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
+// reset terms session variable
+unset($_SESSION['thesis_terms']);
+
 echo $OUTPUT->header();
 echo '<div class="thesis_list">';
 echo $OUTPUT->heading(get_string('view_page_title', 'mod_thesis'), 2);

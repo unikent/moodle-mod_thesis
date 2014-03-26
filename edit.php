@@ -52,6 +52,7 @@ if ($submission_id) {
     );
     $published = $submission->publish != 0;
     $submitted_for_publishing = $submission->submitted_for_publishing != 0;
+    $_SESSION['thesis_terms'] = $submission->terms_accepted;
 }
 
 $isadmin = has_capability('moodle/course:update', context_course::instance($cm->course));
@@ -122,6 +123,10 @@ if ($show_as_published) {
         $output .= thesis_listfiles($prifs, 'Private files');
     }
 
+    if ($prifs = $fs->get_area_files($context->id, 'mod_thesis', 'permanent', $submission->id, '', false)) {
+        $output .= thesis_listfiles($prifs, 'Permanently restricted files');
+    }
+
     $output .= '</table>';
 } else {
 
@@ -136,7 +141,11 @@ if ($show_as_published) {
     $file_options = array('subdirs'=>0, 'maxfiles'=>-1, 'accepted_types'=>'pdf', 'return_types'=>FILE_INTERNAL);
 
     //Has the form been submited?
-    if ($entry = $form->get_data()) {
+    if ($form->is_cancelled()) {
+        unset($_SESSION['thesis_terms']);
+        redirect($CFG->wwwroot . "/mod/thesis/view.php?id=$id");
+        die;
+    } else if ($entry = $form->get_data()) {
 
         $f = 'ok';
 
@@ -171,6 +180,7 @@ if ($show_as_published) {
         thesis_create_or_update($entry, $thesis);
         file_postupdate_standard_filemanager($entry, 'publish', $file_options, $context, 'mod_thesis', 'publish', $entry->submission_id);
         file_postupdate_standard_filemanager($entry, 'private', $file_options, $context, 'mod_thesis', 'private', $entry->submission_id);
+        file_postupdate_standard_filemanager($entry, 'permanent', $file_options, $context, 'mod_thesis', 'permanent', $entry->submission_id);
         redirect('edit.php?id='.$id.'&amp;submission_id='.$entry->submission_id.'&amp;f='.$f);
         die;
 
@@ -192,7 +202,7 @@ if ($show_as_published) {
             $submission = new stdClass;
             $submission->publishdate = array('mon' => date('n'), 'year' => date('Y'));
             $submission->terms_accepted = $_SESSION['thesis_terms'];
-            unset($_SESSION['thesis_terms']);
+            //unset($_SESSION['thesis_terms']);
         }
 
         $submission->submission_id = $submission_id;
@@ -200,6 +210,7 @@ if ($show_as_published) {
 
         file_prepare_standard_filemanager($submission, 'publish', $file_options, $context, 'mod_thesis', 'publish', $submission_id);
         file_prepare_standard_filemanager($submission, 'private', $file_options, $context, 'mod_thesis', 'private', $submission_id);
+        file_prepare_standard_filemanager($submission, 'permanent', $file_options, $context, 'mod_thesis', 'permanent', $submission_id);
         $form->set_data($submission);
     }
 }

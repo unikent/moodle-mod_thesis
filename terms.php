@@ -193,9 +193,11 @@ if($accepted > 0) {
 	$_SESSION['thesis_terms'] = $accepted;
 	redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}");
 } elseif(empty($choice)) {
+	unset($_SESSION['thesis_terms']);
 	$content .= $choose_btns_intro;
 	$content .= $choose_btns;
 } else {
+	unset($_SESSION['thesis_terms']);
 	$type = 0;
 	switch ($choice) {
 		case 'normal':
