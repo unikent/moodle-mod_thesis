@@ -52,6 +52,7 @@ $string['third_sup_sname'] = 'Third supervisor last name';
 $string['third_sup_email'] = 'Third supervisor email';
 $string['metadata_vis'] = 'Metadata visible?';
 $string['embargo'] = 'With embargo?';
+$string['staff_comments'] = 'Staff comments';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
 $string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to submit for display of correct terms and conditions.</p><p>Before proceeding please ensure you have read the <a href="#" target="_blank">Guidance Advice to Candidates</a>.</p>';

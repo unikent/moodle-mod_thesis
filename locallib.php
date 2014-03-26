@@ -108,6 +108,8 @@ class mod_thesis_submit_form extends moodleform {
     protected function definition() {
         global $CFG;
 
+        $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];
+
         $mform =& $this->_form;
 
         $mform->addElement('hidden', 'id');
@@ -118,6 +120,13 @@ class mod_thesis_submit_form extends moodleform {
 
         $mform->addElement('hidden', 'terms_accepted');
         $mform->setType('terms_accepted', PARAM_INT);
+
+        // student comments area
+        if (!$isadmin && !empty($this->_customdata['submission_comments'])) {
+            $comment_group[] =& $mform->addElement('static', 'comments_text', get_string('staff_comments', 'thesis'), $this->_customdata['submission_comments']);
+
+            $mform->closeHeaderBefore('title_info');
+        }
 
         $mform->addElement('static', 'title_info', '', get_string('title_help', 'thesis'));
         $mform->addElement('text', 'title', get_string('title', 'thesis'));
@@ -272,8 +281,15 @@ class mod_thesis_submit_form extends moodleform {
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
         }
 
-        $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];
         $submitted_for_publishing = isset($this->_customdata['submitted_for_publishing']) && true === $this->_customdata['submitted_for_publishing'];
+
+        // admin comments area
+        if ($isadmin) {
+            $mform->closeHeaderBefore('comments');
+
+            $mform->addElement('textarea', 'comments', get_string('staff_comments', 'thesis'));
+            $mform->setType('comments', PARAM_TEXT);
+        }
 
         $buttonarray = array();
 

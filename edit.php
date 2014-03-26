@@ -43,6 +43,7 @@ if (! $thesis = $DB->get_record("thesis", array("id" => $cm->instance))) {
 
 $published = false;
 $submitted_for_publishing = false;
+$submission_comments = '';
 
 if ($submission_id) {
     $submission = $DB->get_record('thesis_submissions', array('id'=>$submission_id));
@@ -52,6 +53,7 @@ if ($submission_id) {
     );
     $published = $submission->publish != 0;
     $submitted_for_publishing = $submission->submitted_for_publishing != 0;
+    $submission_comments = $submission->comments;
     $_SESSION['thesis_terms'] = $submission->terms_accepted;
 }
 
@@ -132,7 +134,7 @@ if ($show_as_published) {
 
     $heading = get_string('form_heading', 'mod_thesis');
 
-    $form = new mod_thesis_submit_form(null, array('isadmin'=>$isadmin, 'submitted_for_publishing'=>$submitted_for_publishing), 'post', '', array('class'=>'thesis_form'));
+    $form = new mod_thesis_submit_form(null, array('isadmin'=>$isadmin, 'submitted_for_publishing'=>$submitted_for_publishing, 'submission_comments'=>$submission_comments), 'post', '', array('class'=>'thesis_form'));
     $terms_accepted_by_form = $form->terms_accepted();
     $terms_accepted_already = isset($submission->terms_accepted) && $submission->terms_accepted > 0;
     $terms_accepted_in_session = !empty($_SESSION['thesis_terms']);
