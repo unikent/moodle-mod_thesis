@@ -156,8 +156,9 @@ $restricted_tcs = <<<NTCS
 		so may, without changing content, translate the Work to any medium or format 
 		for the purpose of future preservation and accessibility.</p>
 		<h4>Deposit In The University Of Kent Digital Repository (currently Kent Academic Repository)</h4>
-		<p>I understand that once the Work is deposited, metadata will be incorporated into public 
-		access catalogues. This citation to the Work will always remain visible.</p>
+		<p>I understand that once the Work is deposited, bibliographic details (including the abstract)
+		will be incorporated into public access catalogues. This citation to the Work will always remain
+		visible.</p>
 		<p>A permanently embargoed full-text copy will be retained by the University but this will 
 		not be released without the permission of the rights holder, following legal expiry of all 
 		copyright content, or as a result of a legal requirement.</p>

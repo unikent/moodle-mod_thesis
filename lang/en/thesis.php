@@ -14,9 +14,9 @@ $string['title_req'] = 'You must enter a title';
 $string['abstract_req'] = 'You must enter an abstract';
 $string['abstract'] = 'Abstract';
 $string['family_name_info'] = 'Name as it appears on your thesis/dissertation';
-$string['family_name'] = 'Family Name';
+$string['family_name'] = 'Last Name';
 $string['family_name_req'] = 'You must enter your family name';
-$string['given_name'] = 'Given Name';
+$string['given_name'] = 'First Name';
 $string['given_name_req'] = 'You must enter your given name';
 $string['thesis_type'] = 'Thesis/Dissertation type';
 $string['thesis_type_req'] = 'You must enter a thesis/dissertation type';
@@ -61,7 +61,7 @@ $string['thesis:addinstance'] = 'Add a new thesis';
 
 $string['thesis_normal'] = 'I am depositing one copy of my thesis for public access with/without embargo';
 $string['thesis_redacted'] = 'I am depositing two copies of my thesis, one redacted copy for public access, with/without embargo, and one full text copy to be permanently restricted';
-$string['thesis_restricted'] = 'I am depositing one copy of my thesis to be permanently restriced';
+$string['thesis_restricted'] = 'I am depositing one copy of my thesis to be permanently restricted';
 
 $string['thesis_restricted_info'] = '<p>Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.</p>';
 
@@ -81,6 +81,7 @@ $string['form_publish_info'] = 'This version of your thesis/dissertation will be
 $string['form_pa_td'] = 'Publicly-available Thesis/Dissertation';
 $string['form_res_td'] = 'Restricted Thesis/Dissertation';
 $string['form_res_perm_td'] = 'Permanently restricted Thesis/Dissertation';
+$string['form_red_td'] = 'Redacted Thesis/Dissertation';
 $string['form_pdf_format'] = '<p>Please upload your thesis/dissertation in PDF format.</p>';
 $string['form_embargo_date'] = 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.';
 $string['form_res_info'] = 'Restricted Thesis/Dissertation Information';

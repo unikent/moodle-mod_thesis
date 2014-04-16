@@ -138,13 +138,13 @@ class mod_thesis_submit_form extends moodleform {
         $mform->addRule('abstract', get_string('abstract_req', 'thesis'), 'required');
 
         $mform->addElement('static', 'family_name_info', '', get_string('family_name_info', 'thesis'));
-        $mform->addElement('text', 'family_name', get_string('family_name', 'thesis'));
-        $mform->setType('family_name', PARAM_TEXT);
-        $mform->addRule('family_name', get_string('family_name_req', 'thesis'), 'required');
-
         $mform->addElement('text', 'given_name', get_string('given_name', 'thesis'));
         $mform->setType('given_name', PARAM_TEXT);
         $mform->addRule('given_name', get_string('given_name_req', 'thesis'), 'required');
+
+        $mform->addElement('text', 'family_name', get_string('family_name', 'thesis'));
+        $mform->setType('family_name', PARAM_TEXT);
+        $mform->addRule('family_name', get_string('family_name_req', 'thesis'), 'required');
 
         $typeoptions = array();
         $typeoptions['deng'] = 'Doctor of Engineering (D.Eng.)';
@@ -214,7 +214,7 @@ class mod_thesis_submit_form extends moodleform {
         $mform->setType('contactemail', PARAM_TEXT);
 
         $qualoptions = array();
-        $qualoptions['doctoral'] = get_string('quals_doctoral', 'thesis');
+        $qualoptions['doctorial'] = get_string('quals_doctoral', 'thesis');
         $qualoptions['masters'] = get_string('quals_masters', 'thesis');
         $qualoptions['unspecified'] = get_string('quals_unspecified', 'thesis');
         $mform->addElement('select', 'qualification_level', get_string("quals", "thesis"), $qualoptions);
@@ -251,12 +251,9 @@ class mod_thesis_submit_form extends moodleform {
 
         if ($choice == 2) {
             // restricted
-            $mform->closeHeaderBefore('restricted_info');
+            $mform->closeHeaderBefore('private_filemanager');
 
-            // restricted form
-            $mform->addElement('static', 'restricted_info', '', get_string('thesis_restricted_info', 'mod_thesis'));
-
-            $mform->addElement('filemanager', 'private_filemanager', get_string('form_res_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
+            $mform->addElement('filemanager', 'private_filemanager', get_string('form_red_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
             $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
