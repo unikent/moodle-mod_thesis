@@ -26,7 +26,7 @@ require_once $CFG->libdir.'/formslib.php';
  * @param unknown $data
  * @param unknown $thesis
  */
-function thesis_create_or_update($data, $thesis) {
+function thesis_create_or_update($data, $thesis, $isadmin) {
     global $DB, $USER;
 
     $data->publish_month = $data->publishdate['mon'];
@@ -35,8 +35,13 @@ function thesis_create_or_update($data, $thesis) {
     if (null == $data->submission_id) {
         $data->thesis_id = $thesis->id;
         $data->user_id = $USER->id;
+        $data->timecreated = time();
+        $data->timemodified = time();
         $data->submission_id = $DB->insert_record('thesis_submissions', $data);
     } else {
+        if(!$isadmin) {
+            $data->timemodified = time();
+        }
         $data->id = $data->submission_id;
         $DB->update_record('thesis_submissions', $data);
     }
@@ -66,7 +71,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         ));
     }
 
-    $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td>%s</td><td><a href="mailto:%5$s">%5$s</a></td><td>%6$s</td></tr>';
+    $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td>%s</td><td><a href="mailto:%5$s">%5$s</a></td><td>%6$s</td><td>%7$s</td><td>%8$s</td></tr>';
     $out = '';
     foreach ($submissions as $s) {
 
@@ -83,7 +88,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         ));
 
         $name = join(' ', array($user->firstname, $user->lastname));
-        $out .= sprintf($row, $cmid, $s->id, $s->title, $name, $user->email, $pushed);
+        $out .= sprintf($row, $cmid, $s->id, $s->title, $name, $user->email, date("Y-m-d H:i:s", $s->timecreated), date("Y-m-d H:i:s", $s->timemodified), $pushed);
     }
 
     $message = '';
@@ -92,7 +97,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
     } else {
         return <<<HTML
     <table class="thesis">
-      <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Status</th></tr></thead>
+      <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Time created</th><th>Time modified</th><th>Status</th></tr></thead>
       <tbody>$out</tbody>
     </table>
 HTML;
