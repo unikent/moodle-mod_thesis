@@ -128,8 +128,24 @@ class mod_thesis_submit_form extends moodleform {
 
         // student comments area
         if (!$isadmin && !empty($this->_customdata['submission_comments'])) {
-            $comment_group[] =& $mform->addElement('static', 'comments_text', get_string('staff_comments', 'thesis'), $this->_customdata['submission_comments']);
+            $comments_html = <<<HTML
+    <fieldset class="hidden staff_comments">
+        <div>
+            <div class="fitem">
+                <div class="fitemtitle">
+                    <div class="fstaticlabel">
+                        <label>%s</label>
+                    </div>
+                </div>
 
+                <div class="felement fstatic">
+                    %s
+                </div>
+            </div>
+        </div>
+    </fieldset>
+HTML;
+            $mform->addElement('html', sprintf($comments_html, get_string('staff_comments', 'thesis'), $this->_customdata['submission_comments']));
             $mform->closeHeaderBefore('title_info');
         }
 
