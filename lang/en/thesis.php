@@ -55,7 +55,7 @@ $string['embargo'] = 'With embargo?';
 $string['staff_comments'] = 'Staff comments';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
-$string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to submit for display of correct terms and conditions.</p><p>Before proceeding please ensure you have read the <a href="#" target="_blank">Guidance Advice to Candidates</a>.</p>';
+$string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to deposit for display of correct terms and conditions.</p><p>Before proceeding please ensure you have read the <a href="#" target="_blank">Guidance Advice to Candidates</a>.</p>';
 
 $string['thesis:addinstance'] = 'Add a new thesis';
 
@@ -67,15 +67,15 @@ $string['thesis_restricted_info'] = '<p>Files placed here will be made publicly 
 
 
 $string['form_heading'] = 'Create/update thesis/dissertation';
-$string['page_title_view'] = 'View thesis/dissertation submission';
+$string['page_title_view'] = 'View thesis/dissertation deposit';
 $string['submitted_school'] = 'Submitted to School Administrator';
 $string['published'] = 'Published';
-$string['save_state_message_1'] = 'Thesis/dissertation submission successfully saved - you are welcome to make further changes and amendments, and at this stage your Thesis/dissertation has not been fully submitted.';
-$string['save_state_message_publish'] = 'Thesis/dissertation submission published.  An administrator will now check and approve your submission.  No further updates can now be made.';
-$string['save_state_message_kar'] = 'Thesis/dissertation submission published to kar.  Further updates can not be made.';
-$string['return_submissions_list'] = 'Return to submissions list';
-$string['view_page_title'] = 'Thesis/Dissertation Submissions';
-$string['create_submission'] = '(Create new submission)';
+$string['save_state_message_1'] = 'Thesis/dissertation deposit successfully saved - you are welcome to make further changes and amendments, and at this stage your Thesis/dissertation has not been fully submitted.';
+$string['save_state_message_publish'] = 'Thesis/dissertation deposit published.  An administrator will now check and approve your deposit.  No further updates can now be made.';
+$string['save_state_message_kar'] = 'Thesis/dissertation deposit published to kar.  Further updates can not be made.';
+$string['return_submissions_list'] = 'Return to deposits list';
+$string['view_page_title'] = 'Thesis/Dissertation Deposits';
+$string['create_submission'] = '(Make a new deposit)';
 
 $string['form_publish_info'] = 'This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.';
 $string['form_pa_td'] = 'Publicly-available Thesis/Dissertation';
