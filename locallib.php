@@ -214,6 +214,10 @@ HTML;
         $mform->setType('department', PARAM_TEXT);
         $mform->addRule('department', get_string('department_req', 'thesis'), 'required');
 
+        $mform->addElement('text', 'institution', get_string('institution', 'thesis'), $options);
+        $mform->setType('institution', PARAM_TEXT);
+        $mform->addHelpButton('institution', 'institution', 'thesis');
+
         $mform->addElement('text', 'number_of_pages', get_string('no_pages', 'thesis'));
         $mform->setType('number_of_pages', PARAM_TEXT);
 
