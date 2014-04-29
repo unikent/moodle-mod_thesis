@@ -251,7 +251,7 @@ function thesis_cron() {
             }
         }
 
-        $eprint->addChild('eprint_status', 'buffer');
+        $eprint->addChild('eprint_status', 'archive');
 
         // Eprints username
         $e_user = $DB->get_record('user', array('id' => $sub->published_by));
