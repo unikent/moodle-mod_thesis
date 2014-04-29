@@ -289,8 +289,13 @@ function thesis_cron() {
         $eprint->addChild('date', $sub->publish_year . '-' . sprintf("%02d", $sub->publish_month));
         $eprint->addChild('date_type', 'submitted');
         $eprint->addChild('id_number', '');
-        $eprint->addChild('institution', 'University of Kent');
 
+        // if additional awarding institution is set
+        if(isset($sub->institution)) {
+            $eprint->addChild('institution', 'University of Kent, ' . strip($sub->institution));
+        } else {
+            $eprint->addChild('institution', 'University of Kent');
+        }
 
         $dept = $DB->get_record('course_categories', array('id' => $sub->department));
         $dept = null == $dept ? 'Unknown' : $dept->name;
