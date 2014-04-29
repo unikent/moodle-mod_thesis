@@ -143,3 +143,7 @@ table.thesis td {
 .fitem_ffilemanager>.fitemtitle {
   margin-top: 10px;
 }
+
+.mform fieldset.staff_comments {
+  background-color: #FCF9B4;
+}

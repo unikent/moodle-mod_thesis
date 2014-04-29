@@ -174,7 +174,7 @@ function thesis_cron() {
 
                 $doc->addChild('format', $f->get_mimetype());
                 $doc->addChild('language', 'en');
-                $doc->addChild('security', 'public');
+                $doc->addChild('security', 'staffonly');
                 $doc->addChild('main', $f->get_filename());
 
                 $embargo_date = '';
@@ -246,12 +246,11 @@ function thesis_cron() {
                 $doc->addChild('language', 'en');
                 $doc->addChild('security', 'staffonly');
                 $doc->addChild('main', $f->get_filename());
-                $doc->addChild('date_embargo', '');
                 $doc->addChild('content', 'submitted');
             }
         }
 
-        $eprint->addChild('eprint_status', 'buffer');
+        $eprint->addChild('eprint_status', 'archive');
 
         // Eprints username
         $e_user = $DB->get_record('user', array('id' => $sub->published_by));
@@ -289,8 +288,13 @@ function thesis_cron() {
         $eprint->addChild('date', $sub->publish_year . '-' . sprintf("%02d", $sub->publish_month));
         $eprint->addChild('date_type', 'submitted');
         $eprint->addChild('id_number', '');
-        $eprint->addChild('institution', 'University of Kent');
 
+        // if additional awarding institution is set
+        if(isset($sub->institution)) {
+            $eprint->addChild('institution', 'University of Kent, ' . trim($sub->institution));
+        } else {
+            $eprint->addChild('institution', 'University of Kent');
+        }
 
         $dept = $DB->get_record('course_categories', array('id' => $sub->department));
         $dept = null == $dept ? 'Unknown' : $dept->name;
@@ -303,8 +307,6 @@ function thesis_cron() {
         $eprint->addChild('submit_hardcopy', 'FALSE');
 
         $eprint->addChild('qual_level', $sub->qualification_level);
-
-        $eprint->addChild('qualification_name', '');
 
         $funders = $eprint->addChild('org_units');
         $funder = $funders->addChild('item');

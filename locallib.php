@@ -26,7 +26,7 @@ require_once $CFG->libdir.'/formslib.php';
  * @param unknown $data
  * @param unknown $thesis
  */
-function thesis_create_or_update($data, $thesis) {
+function thesis_create_or_update($data, $thesis, $isadmin) {
     global $DB, $USER;
 
     $data->publish_month = $data->publishdate['mon'];
@@ -35,8 +35,13 @@ function thesis_create_or_update($data, $thesis) {
     if (null == $data->submission_id) {
         $data->thesis_id = $thesis->id;
         $data->user_id = $USER->id;
+        $data->timecreated = time();
+        $data->timemodified = time();
         $data->submission_id = $DB->insert_record('thesis_submissions', $data);
     } else {
+        if(!$isadmin) {
+            $data->timemodified = time();
+        }
         $data->id = $data->submission_id;
         $DB->update_record('thesis_submissions', $data);
     }
@@ -66,7 +71,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         ));
     }
 
-    $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td>%s</td><td><a href="mailto:%5$s">%5$s</a></td><td>%6$s</td></tr>';
+    $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td>%s</td><td><a href="mailto:%5$s">%5$s</a></td><td>%6$s</td><td>%7$s</td><td>%8$s</td></tr>';
     $out = '';
     foreach ($submissions as $s) {
 
@@ -83,7 +88,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         ));
 
         $name = join(' ', array($user->firstname, $user->lastname));
-        $out .= sprintf($row, $cmid, $s->id, $s->title, $name, $user->email, $pushed);
+        $out .= sprintf($row, $cmid, $s->id, $s->title, $name, $user->email, date("Y-m-d H:i:s", $s->timecreated), date("Y-m-d H:i:s", $s->timemodified), $pushed);
     }
 
     $message = '';
@@ -92,7 +97,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
     } else {
         return <<<HTML
     <table class="thesis">
-      <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Status</th></tr></thead>
+      <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Time created</th><th>Time modified</th><th>Status</th></tr></thead>
       <tbody>$out</tbody>
     </table>
 HTML;
@@ -123,8 +128,24 @@ class mod_thesis_submit_form extends moodleform {
 
         // student comments area
         if (!$isadmin && !empty($this->_customdata['submission_comments'])) {
-            $comment_group[] =& $mform->addElement('static', 'comments_text', get_string('staff_comments', 'thesis'), $this->_customdata['submission_comments']);
+            $comments_html = <<<HTML
+    <fieldset class="hidden staff_comments">
+        <div>
+            <div class="fitem">
+                <div class="fitemtitle">
+                    <div class="fstaticlabel">
+                        <label>%s</label>
+                    </div>
+                </div>
 
+                <div class="felement fstatic">
+                    %s
+                </div>
+            </div>
+        </div>
+    </fieldset>
+HTML;
+            $mform->addElement('html', sprintf($comments_html, get_string('staff_comments', 'thesis'), $this->_customdata['submission_comments']));
             $mform->closeHeaderBefore('title_info');
         }
 
@@ -147,19 +168,24 @@ class mod_thesis_submit_form extends moodleform {
         $mform->addRule('family_name', get_string('family_name_req', 'thesis'), 'required');
 
         $typeoptions = array();
-        $typeoptions['deng'] = 'Doctor of Engineering (D.Eng.)';
-        $typeoptions['sportd'] = 'Doctor of Sport, Exercise and Health Science (Sport.D.)';
+        $typeoptions['engd'] = 'Doctor of Engineering (Eng.Doc)';
+        $typeoptions['sportd'] = 'Professional Doctorate in Sport, Exercise and Health Science (Sport.D.)';
         $typeoptions['mphil'] = 'Master of Philosophy (M.Phil.)';
         $typeoptions['phd'] = 'Doctor of Philosophy (Ph.D.)';
-        $typeoptions['dcs'] = 'Doctor of Clinical Science (D.Sc.)';
-        $typeoptions['mscres'] = 'Master of Science by Research (MScRes)';
-        $typeoptions['mares'] = 'Master of Arts by Research (MARes)';
-        $typeoptions['llmres'] = 'Master of Law by Research (LLMRes)';
+        $typeoptions['dcs'] = 'Doctor of Clinical Science (D.Clin.Sci.)';
+        $typeoptions['mscres'] = 'Master of Science by Research (M.Sc.)';
+        $typeoptions['mares'] = 'Master of Arts by Research (M.A.)';
+        $typeoptions['llmres'] = 'Master of Law by Research (LL.M.)';
         $typeoptions['md'] = 'Doctor of Medicine (M.D.)';
-        $typeoptions['msg'] = 'Master of Surgery (M.Sg.)';
+        $typeoptions['msg'] = 'Master of Surgery (M.Surg.)';
         $typeoptions['pd'] = 'Professional Doctorate (P.D.)';
         $typeoptions['mres'] = 'Master of Research (M.Res.)';
-        $typeoptions['ded'] = 'Doctor of Education (D.Ed.)';        
+        $typeoptions['ded'] = 'Doctor of Education (D.Ed.)';
+        $typeoptions['dd'] = 'Doctor of Divinity (D.D.)';
+        $typeoptions['dlitt'] = 'Doctor of Letters (D.Litt.)';
+        $typeoptions['lld'] = 'Doctor of Laws (LL.D.)';
+        $typeoptions['dsc'] = 'Doctor of Science (D.Sc.)';
+        $typeoptions['pdip'] = 'Postgraduate Diploma by Research (P.Dip.)';
         
         $mform->addElement('select', 'thesis_type', 'Thesis/Dissertation type', $typeoptions);
         $mform->addRule('thesis_type', get_string('thesis_type_req', 'thesis'), 'required');
@@ -187,6 +213,9 @@ class mod_thesis_submit_form extends moodleform {
         $mform->addElement('select', 'department', get_string('department', 'thesis'), $options);
         $mform->setType('department', PARAM_TEXT);
         $mform->addRule('department', get_string('department_req', 'thesis'), 'required');
+
+        $mform->addElement('text', 'institution', get_string('institution', 'thesis'), $options);
+        $mform->setType('institution', PARAM_TEXT);
 
         $mform->addElement('text', 'number_of_pages', get_string('no_pages', 'thesis'));
         $mform->setType('number_of_pages', PARAM_TEXT);
