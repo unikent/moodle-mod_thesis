@@ -174,7 +174,7 @@ function thesis_cron() {
 
                 $doc->addChild('format', $f->get_mimetype());
                 $doc->addChild('language', 'en');
-                $doc->addChild('security', 'public');
+                $doc->addChild('security', 'staffonly');
                 $doc->addChild('main', $f->get_filename());
 
                 $embargo_date = '';
@@ -246,7 +246,6 @@ function thesis_cron() {
                 $doc->addChild('language', 'en');
                 $doc->addChild('security', 'staffonly');
                 $doc->addChild('main', $f->get_filename());
-                $doc->addChild('date_embargo', '');
                 $doc->addChild('content', 'submitted');
             }
         }
