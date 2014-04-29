@@ -309,8 +309,6 @@ function thesis_cron() {
 
         $eprint->addChild('qual_level', $sub->qualification_level);
 
-        $eprint->addChild('qualification_name', '');
-
         $funders = $eprint->addChild('org_units');
         $funder = $funders->addChild('item');
         $funder->addChild('title', $sub->funding);
