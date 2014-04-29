@@ -133,6 +133,22 @@ function xmldb_thesis_upgrade($oldversion=0) {
     upgrade_mod_savepoint(true, 2014032600, 'thesis');
   }
 
+  if ($oldversion < 2014042300) {
+    $table = new xmldb_table('thesis_submissions');
+
+    $created = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'terms_accepted');
+    $modified = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'timecreated');
+
+    if (!$dbman->field_exists($table, $created)) {
+      $dbman->add_field($table, $created);
+    }
+    if (!$dbman->field_exists($table, $modified)) {
+      $dbman->add_field($table, $modified);
+    }
+
+    upgrade_mod_savepoint(true, 2014042300, 'thesis');
+  }
+
   return true;
 }
 

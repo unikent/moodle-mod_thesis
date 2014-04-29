@@ -55,7 +55,9 @@
         <FIELD NAME="publish" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="published_by"/>
         <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" NEXT="submitted_for_publishing" PREVIOUS="publish"/>
         <FIELD NAME="submitted_for_publishing" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="published_by" NEXT="terms_accepted"/>
-        <FIELD NAME="terms_accepted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submitted_for_publishing"/>
+        <FIELD NAME="terms_accepted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submitted_for_publishing" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="terms_accepted" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
