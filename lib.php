@@ -292,7 +292,7 @@ function thesis_cron() {
 
         // if additional awarding institution is set
         if(isset($sub->institution)) {
-            $eprint->addChild('institution', 'University of Kent, ' . strip($sub->institution));
+            $eprint->addChild('institution', 'University of Kent, ' . trim($sub->institution));
         } else {
             $eprint->addChild('institution', 'University of Kent');
         }
