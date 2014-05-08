@@ -7,6 +7,10 @@ $string['modulenameplural'] = 'Thesis';
 $string['pluginadministration'] = '';
 $string['pluginname'] = 'Thesis';
 
+// message provider strings
+$string['messageprovider:notes'] = 'Notification of updated thesis deposit notes';
+$string['messageprovider:updated'] = 'Notification of updated thesis deposit';
+
 //Fomr strings
 $string['title'] = 'Title';
 $string['title_help'] = 'This title needs to be exactly the same as the title on your thesis/dissertation';
