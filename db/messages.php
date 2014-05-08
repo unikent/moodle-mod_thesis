@@ -31,7 +31,7 @@ $messageproviders = array(
         'capability' => 'mod/thesis:emailupdated',
         'defaults'   => array (
             'popup' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN,
-            'email' => MESSAGE_FORCED
+            'email' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN
         )
     ),
 
@@ -40,7 +40,7 @@ $messageproviders = array(
         'capability' => 'mod/thesis:emailnotes',
         'defaults'   => array (
             'popup' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN,
-            'email' => MESSAGE_FORCED
+            'email' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN
         )
     )
 );
