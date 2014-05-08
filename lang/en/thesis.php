@@ -11,6 +11,18 @@ $string['pluginname'] = 'Thesis';
 $string['messageprovider:notes'] = 'Notification of updated thesis deposit notes';
 $string['messageprovider:updated'] = 'Notification of updated thesis deposit';
 
+// email strings
+$string['emailupdatedsubject'] = 'Submission confirmation: {$a->name}';
+$string['emailupdatedbody'] = 'Dear {$a->username},
+
+A user has submitted their thesis:
+\'{$a->name}\'
+in \'{$a->coursename}\' - \'{$a->modname}\'
+at \'{$a->submissiontime}\'.
+
+You can access this quiz at \'{$a->depositurllink}\'.';
+$string['emailupdatedsmall'] = 'A user has submitted a thesis in \'{$a->coursename}\'';
+
 //Fomr strings
 $string['title'] = 'Title';
 $string['title_help'] = 'This title needs to be exactly the same as the title on your thesis/dissertation';

@@ -179,7 +179,7 @@ if ($show_as_published) {
             $f = 'kar';
         }
 
-        thesis_create_or_update($entry, $thesis, $isadmin);
+        thesis_create_or_update($entry, $thesis, $context, $isadmin);
         file_postupdate_standard_filemanager($entry, 'publish', $file_options, $context, 'mod_thesis', 'publish', $entry->submission_id);
         file_postupdate_standard_filemanager($entry, 'private', $file_options, $context, 'mod_thesis', 'private', $entry->submission_id);
         file_postupdate_standard_filemanager($entry, 'permanent', $file_options, $context, 'mod_thesis', 'permanent', $entry->submission_id);
