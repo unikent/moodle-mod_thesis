@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Defines message providers (types of message sent) for the quiz module.
+ * Defines message providers (types of message sent) for the thesis module.
  *
  * @package    mod
  * @subpackage thesis
