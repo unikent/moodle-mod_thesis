@@ -32,6 +32,12 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
     $data->publish_month = $data->publishdate['mon'];
     $data->publish_year = $data->publishdate['year'];
 
+    // if submitted for publishing by student
+    if (isset($data->submitted_for_publishing) && $data->submitted_for_publishing && !$isadmin) {
+        // notify admin of submission
+        thesis_notification_updated($data, $thesis, $context, $isadmin);
+    }
+
     if (null == $data->submission_id) {
         $data->thesis_id = $thesis->id;
         $data->user_id = $USER->id;
@@ -39,52 +45,13 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
         $data->timemodified = time();
         $data->submission_id = $DB->insert_record('thesis_submissions', $data);
     } else {
-        if(!$isadmin) {
+        // send notification to student if admin has set notes and not published
+        if ($isadmin && !empty($data->notes) && !$data->submitted_for_publishing) {
+            print_r($thesis);
+            print_r($data);
+            thesis_notification_notes($data, $thesis, $context, $isadmin);
+        } else {
             $data->timemodified = time();
-
-            // TODO: if updated by student send notification to staff
-            $eventdata = new object();
-            $eventdata->component = 'mod_thesis';
-            $eventdata->name = 'updated';
-
-            // from user who made the change
-            $eventdata->userfrom = $USER;
-
-            // get fields for user notification
-            $notifyfields = 'u.id, u.username, u.idnumber, u.email, u.emailstop, u.lang, u.timezone, u.mailformat, u.maildisplay, ';
-            $notifyfields .= get_all_user_name_fields(true, 'u');
-
-            $userstonotify = get_users_by_capability($context, 'mod/thesis:emailupdated', $notifyfields);
-
-            // setup data for email template
-            $a = new stdClass();
-            $a->name = $data->title;
-            $a->depositurl = $CFG->wwwroot . '/mod/thesis/edit.php?id=' . $data->id . '&submission_id=' . $data->submission_id;
-            $a->depositurllink = '<a href="' . $a->depositurl . '">' . $thesis->name . '</a>';
-            $a->timemodified = $data->timemodified;
-            $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
-
-            foreach($userstonotify as $utn) {
-                // set some user specific email template stuff
-                $a->username = $utn->username;
-                $a->coursename = $course->fullname;
-
-                // set message data
-                $eventdata->subject           = get_string('emailupdatedsubject', 'thesis', $a);
-                $eventdata->fullmessage       = get_string('emailupdatedbody', 'thesis', $a);
-                $eventdata->fullmessageformat = FORMAT_PLAIN;
-                $eventdata->fullmessagehtml   = '';
-                $eventdata->smallmessage      = get_string('emailupdatedsmall', 'thesis', $a);;
-
-                
-
-                // set user to send to
-                $eventdata->userto = $utn;
-                
-                // send message
-                $result = message_send($eventdata);
-            }
-            
         }
 
         $data->id = $data->submission_id;
@@ -92,6 +59,97 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
     }
 }
 
+/* Send notification email from admin to student with notes */
+function thesis_notification_notes($data, $thesis, $context, $isadmin) {
+    global $DB, $CFG, $USER;
+
+    $data->timemodified = time();
+
+    $eventdata = new object();
+    $eventdata->component = 'mod_thesis';
+    $eventdata->name = 'notes';
+
+    // from user who made the change
+    $eventdata->userfrom = $USER;
+
+    // get fields for user notification
+    $notifyfields = 'u.id, u.username, u.idnumber, u.email, u.emailstop, u.lang, u.timezone, u.mailformat, u.maildisplay, ';
+    $notifyfields .= get_all_user_name_fields(true, 'u');
+
+    $userstonotify = get_users_by_capability($context, 'mod/thesis:emailupdated', $notifyfields);
+
+    // setup data for email template
+    $a = new stdClass();
+    $a->name = $data->title;
+    $a->depositurl = $CFG->wwwroot . '/mod/thesis/edit.php?id=' . $data->id . '&submission_id=' . $data->submission_id;
+    $a->depositurllink = '<a href="' . $a->depositurl . '">' . $thesis->name . '</a>';
+    $a->timemodified = $data->timemodified;
+    $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
+
+    // set some user specific email template stuff
+    $a->username = $utn->username;
+    $a->coursename = $course->fullname;
+
+    // set message data
+    $eventdata->subject           = get_string('emailupdatedsubject', 'thesis', $a);
+    $eventdata->fullmessage       = get_string('emailupdatedbody', 'thesis', $a);
+    $eventdata->fullmessageformat = FORMAT_PLAIN;
+    $eventdata->fullmessagehtml   = '';
+    $eventdata->smallmessage      = get_string('emailupdatedsmall', 'thesis', $a);;
+
+    // set user to send to
+    $eventdata->userto = $utn;
+    
+    // send message
+    $result = message_send($eventdata);
+}
+
+/* Send notification email from student to admin that submitted */
+function thesis_notification_updated($data, $thesis, $context, $isadmin) {
+    global $DB, $CFG, $USER;
+
+    $data->timemodified = time();
+
+    $eventdata = new object();
+    $eventdata->component = 'mod_thesis';
+    $eventdata->name = 'updated';
+
+    // from user who made the change
+    $eventdata->userfrom = $USER;
+
+    // get fields for user notification
+    $notifyfields = 'u.id, u.username, u.idnumber, u.email, u.emailstop, u.lang, u.timezone, u.mailformat, u.maildisplay, ';
+    $notifyfields .= get_all_user_name_fields(true, 'u');
+
+    $userstonotify = get_users_by_capability($context, 'mod/thesis:emailupdated', $notifyfields);
+
+    // setup data for email template
+    $a = new stdClass();
+    $a->name = $data->title;
+    $a->depositurl = $CFG->wwwroot . '/mod/thesis/edit.php?id=' . $data->id . '&submission_id=' . $data->submission_id;
+    $a->depositurllink = '<a href="' . $a->depositurl . '">' . $thesis->name . '</a>';
+    $a->timemodified = $data->timemodified;
+    $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
+
+    foreach ($userstonotify as $utn) {
+        // set some user specific email template stuff
+        $a->username = $utn->username;
+        $a->coursename = $course->fullname;
+
+        // set message data
+        $eventdata->subject           = get_string('emailupdatedsubject', 'thesis', $a);
+        $eventdata->fullmessage       = get_string('emailupdatedbody', 'thesis', $a);
+        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessagehtml   = '';
+        $eventdata->smallmessage      = get_string('emailupdatedsmall', 'thesis', $a);;
+
+        // set user to send to
+        $eventdata->userto = $utn;
+        
+        // send message
+        $result = message_send($eventdata);
+    }
+}
 
 /**
  *
