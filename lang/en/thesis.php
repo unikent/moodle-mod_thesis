@@ -12,7 +12,7 @@ $string['messageprovider:notes'] = 'Notification of updated thesis deposit notes
 $string['messageprovider:updated'] = 'Notification of updated thesis deposit';
 
 // email strings
-$string['emailupdatedsubject'] = 'Submission confirmation: {$a->name}';
+$string['emailupdatedsubject'] = 'Thesis submitted to \'{$a->coursename}\' - \'{$a->modname}\'';
 $string['emailupdatedbody'] = 'Dear {$a->username},
 
 A user has submitted their thesis:
