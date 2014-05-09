@@ -112,6 +112,10 @@ if ($show_as_published) {
             $fdata = $r != null ? $r->name : $fdata;
         }
 
+        if ($field == 'timecreated' || $field == 'timemodified' ) {
+            $fdata = date("Y-m-d H:i:s", $fdata);
+        }
+
         $output .= '<td class="thesis_table_data">' . $fdata . '</td>';
         $output .= '</tr>';
     }
