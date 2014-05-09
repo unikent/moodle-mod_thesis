@@ -7,6 +7,36 @@ $string['modulenameplural'] = 'Thesis';
 $string['pluginadministration'] = '';
 $string['pluginname'] = 'Thesis';
 
+// message provider strings
+$string['messageprovider:notes'] = 'Notification of updated thesis deposit notes';
+$string['messageprovider:updated'] = 'Notification of updated thesis deposit';
+
+// email strings
+
+// updated by student
+$string['emailupdatedsubject'] = 'Thesis submitted to {$a->coursename} - {$a->name}';
+$string['emailupdatedbody'] = 'Dear {$a->username},
+
+A user has submitted their thesis:
+\'{$a->name}\'
+in {$a->coursename} - {$a->name}
+at {$a->timemodified}.
+
+You can access this deposit at \'{$a->depositurl}\'.';
+$string['emailupdatedsmall'] = 'A user has submitted a thesis in {$a->coursename}';
+
+// staff updated notes
+$string['emailnotessubject'] = 'Thesis notes updated: {$a->coursename} - {$a->name}';
+$string['emailnotesbody'] = 'Dear {$a->username},
+
+Your deposit has been reset to draft and notes added:
+\'{$a->name}\'
+in {$a->coursename} - {$a->name}
+at {$a->timemodified}.
+
+You can access this deposit at \'{$a->depositurl}\'.';
+$string['emailnotessmall'] = 'Notes have been added to your thesis in {$a->coursename}';
+
 //Fomr strings
 $string['title'] = 'Title';
 $string['title_help'] = 'This title needs to be exactly the same as the title on your thesis/dissertation';
