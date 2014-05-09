@@ -143,7 +143,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
         $eventdata->fullmessage       = get_string('emailupdatedbody', 'thesis', $a);
         $eventdata->fullmessageformat = FORMAT_PLAIN;
         $eventdata->fullmessagehtml   = '';
-        $eventdata->smallmessage      = get_string('emailupdatedsmall', 'thesis', $a);;
+        $eventdata->smallmessage      = get_string('emailupdatedsmall', 'thesis', $a);
 
         // set user to send to
         $eventdata->userto = $utn;
