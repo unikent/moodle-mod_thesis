@@ -40,7 +40,6 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
 
     // send notification to student if admin has set comments and not published
     if ($isadmin && !empty($data->comments) && isset($data->submitdraft)) {
-        echo "Notification of notes";
         thesis_notification_notes($data, $thesis, $context, $isadmin);
     }
 
