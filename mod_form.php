@@ -25,7 +25,7 @@ class mod_thesis_mod_form extends moodleform_mod {
     $mform =& $this->_form;
 
     $mform->addElement('header', 'general', 'Submission details');
-    $mform->addElement('text', 'name', 'Link text', array('size'=>'64'));
+    $mform->addElement('text', 'name', 'Name', array('size'=>'64'));
     $mform->setType('name', PARAM_TEXT);
     $mform->addRule('name', null, 'required', null, 'client');
     $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
