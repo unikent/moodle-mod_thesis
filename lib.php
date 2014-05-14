@@ -29,9 +29,6 @@ function thesis_supports($feature) {
     switch ($feature) {
         case FEATURE_MOD_INTRO:
             return false;
-        case FEATURE_MOD_ARCHETYPE:
-            // If not an administrator, don't show up as an activity or resource
-            return $isadmin ? MOD_ARCHETYPE_RESOURCE : MOD_ARCHETYPE_SYSTEM;
         default:
             return null;
     }
