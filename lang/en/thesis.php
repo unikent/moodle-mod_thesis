@@ -12,6 +12,8 @@ $string['messageprovider:notes'] = 'Notification of updated thesis deposit notes
 $string['messageprovider:updated'] = 'Notification of updated thesis deposit';
 
 // email strings
+$string['thesis:emailnotes'] = 'Receive eThesis notes by email';
+$string['thesis:emailupdated'] = 'Receive eThesis update notifications by email';
 
 // updated by student
 $string['emailupdatedsubject'] = 'Thesis submitted to {$a->coursename} - {$a->name}';
