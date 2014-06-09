@@ -51,7 +51,7 @@ function thesis_add_instance($data, $mform) {
 /**
  * Thesis cleanup.
  */
-function thesis_delete_instance() {
+function thesis_delete_instance($id) {
     global $DB;
 
     $DB->delete_records('thesis', array('id' => $id));
