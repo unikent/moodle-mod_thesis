@@ -149,6 +149,30 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2014042300, 'thesis');
     }
 
+    if ($oldversion < 2014060900) {
+        $moduleid = $DB->get_field('modules', 'id', array(
+            'name' => 'thesis'
+        ), MUST_EXIST);
+
+        // Delete all Thesis entries that do not have a corresponding course module.
+        $DB->execute("
+            DELETE t.* FROM {thesis} t
+            LEFT OUTER JOIN {course_modules} cm ON cm.instance=t.id AND cm.module=:moduleid
+            WHERE cm.id IS NULL
+        ", array(
+            'moduleid' => $moduleid
+        ));
+
+        // Delete all Thesis Submissions that do not have a corresponding thesis entry.
+        $DB->execute("
+            DELETE ts.* FROM {thesis_submissions} ts
+            LEFT OUTER JOIN {thesis} t ON t.id=ts.thesis_id
+            WHERE t.id IS NULL
+        ");
+
+        upgrade_mod_savepoint(true, 2014060900, 'thesis');
+    }
+
     return true;
 }
 
