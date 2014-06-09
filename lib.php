@@ -48,6 +48,18 @@ function thesis_add_instance($data, $mform) {
     return $DB->insert_record('thesis', $data);
 }
 
+/**
+ * Thesis cleanup.
+ */
+function thesis_delete_instance() {
+    global $DB;
+
+    $DB->delete_records('thesis', array('id' => $id));
+    $DB->delete_records('thesis_submissions', array('thesis_id' => $id));
+
+    return true;
+}
+
 
 /**
  *
