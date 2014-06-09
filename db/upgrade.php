@@ -4,151 +4,151 @@ defined('MOODLE_INTERNAL') || die();
 
 function xmldb_thesis_upgrade($oldversion=0) {
 
-  global $CFG, $DB, $OUTPUT;
+    global $CFG, $DB, $OUTPUT;
 
-  $dbman = $DB->get_manager();
+    $dbman = $DB->get_manager();
 
-  if($oldversion<2013052904) {
-    $table = new xmldb_table('thesis');
-    $field = new xmldb_field('course_id', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'name');
+    if($oldversion<2013052904) {
+        $table = new xmldb_table('thesis');
+        $field = new xmldb_field('course_id', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'name');
 
-    $dbman->rename_field($table, $field, 'course');
+        $dbman->rename_field($table, $field, 'course');
 
-    $index = new xmldb_index('course', XMLDB_INDEX_NOTUNIQUE, array('course'));
-    if (!$dbman->index_exists($table, $index)) {
-      $dbman->add_index($table, $index);
+        $index = new xmldb_index('course', XMLDB_INDEX_NOTUNIQUE, array('course'));
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+
+        upgrade_mod_savepoint(true, 2013052904, 'thesis');
     }
 
-    upgrade_mod_savepoint(true, 2013052904, 'thesis');
-  }
+    if($oldversion<2013060104) {
+        $table = new xmldb_table('thesis_submissions');
+        $field = new xmldb_field('submitted_for_publishing', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0');
 
-  if($oldversion<2013060104) {
-    $table = new xmldb_table('thesis_submissions');
-    $field = new xmldb_field('submitted_for_publishing', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
 
-    if (!$dbman->field_exists($table, $field)) {
-      $dbman->add_field($table, $field);
+        upgrade_mod_savepoint(true, 2013060104, 'thesis');
     }
 
-    upgrade_mod_savepoint(true, 2013060104, 'thesis');
-  }
+    if($oldversion<2013060401) {
+        $table = new xmldb_table('thesis_submissions');
+        $field = new xmldb_field('number_of_pages', XMLDB_TYPE_TEXT, 'small');
 
-  if($oldversion<2013060401) {
-    $table = new xmldb_table('thesis_submissions');
-    $field = new xmldb_field('number_of_pages', XMLDB_TYPE_TEXT, 'small');
+        $dbman->change_field_type($table, $field);
 
-    $dbman->change_field_type($table, $field);
-
-    upgrade_mod_savepoint(true, 2013060401, 'thesis');
-  }
-
-  if($oldversion<2013060402) {
-    $table = new xmldb_table('thesis_submissions');
-    $field = new xmldb_field('terms_accepted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
-
-    if (!$dbman->field_exists($table, $field)) {
-      $dbman->add_field($table, $field);
+        upgrade_mod_savepoint(true, 2013060401, 'thesis');
     }
 
-    upgrade_mod_savepoint(true, 2013060402, 'thesis');
-  }
+    if($oldversion<2013060402) {
+        $table = new xmldb_table('thesis_submissions');
+        $field = new xmldb_field('terms_accepted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
 
-  if($oldversion<2013061001) {
-    $table = new xmldb_table('thesis_submissions');
-    $month = new xmldb_field('publish_month', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
-    $year = new xmldb_field('publish_year', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
-    $publishdate = new xmldb_field('publishdate');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
 
-    if (!$dbman->field_exists($table, $month)) {
-      $dbman->add_field($table, $month);
-    }
-    if (!$dbman->field_exists($table, $year)) {
-      $dbman->add_field($table, $year);
-    }
-    if ($dbman->field_exists($table, $publishdate)) {
-      $dbman->drop_field($table, $publishdate);
+        upgrade_mod_savepoint(true, 2013060402, 'thesis');
     }
 
-    upgrade_mod_savepoint(true, 2013061001, 'thesis');
-  }
+    if($oldversion<2013061001) {
+        $table = new xmldb_table('thesis_submissions');
+        $month = new xmldb_field('publish_month', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $year = new xmldb_field('publish_year', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $publishdate = new xmldb_field('publishdate');
 
-  if($oldversion<2013061003) {
-    $table = new xmldb_table('thesis_submissions');
+        if (!$dbman->field_exists($table, $month)) {
+            $dbman->add_field($table, $month);
+        }
+        if (!$dbman->field_exists($table, $year)) {
+            $dbman->add_field($table, $year);
+        }
+        if ($dbman->field_exists($table, $publishdate)) {
+            $dbman->drop_field($table, $publishdate);
+        }
 
-    $fields = array(
-      'second_supervisor_fname', 'second_supervisor_sname', 'second_supervisor_email',
-      'third_supervisor_fname', 'third_supervisor_sname', 'third_supervisor_email'
-    );
-
-    foreach ($fields as $i) {
-      $field = new xmldb_field($i, XMLDB_TYPE_TEXT, 'small');
-      if (!$dbman->field_exists($table, $field)) {
-        $dbman->add_field($table, $field);
-      }
+        upgrade_mod_savepoint(true, 2013061001, 'thesis');
     }
 
-    upgrade_mod_savepoint(true, 2013061003, 'thesis');
-  }
+    if($oldversion<2013061003) {
+        $table = new xmldb_table('thesis_submissions');
 
-  if ($oldversion < 2014032101) {
-    // Define field family_name to be added to thesis_submissions.
-    $table = new xmldb_table('thesis_submissions');
-    $field = new xmldb_field('family_name', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'user_id');
+        $fields = array(
+            'second_supervisor_fname', 'second_supervisor_sname', 'second_supervisor_email',
+            'third_supervisor_fname', 'third_supervisor_sname', 'third_supervisor_email'
+        );
 
-    // Conditionally launch add field family_name.
-    if (!$dbman->field_exists($table, $field)) {
-        $dbman->add_field($table, $field);
+        foreach ($fields as $i) {
+            $field = new xmldb_field($i, XMLDB_TYPE_TEXT, 'small');
+            if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+            }
+        }
+
+        upgrade_mod_savepoint(true, 2013061003, 'thesis');
     }
 
-    $field = new xmldb_field('given_name', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'family_name');
+    if ($oldversion < 2014032101) {
+        // Define field family_name to be added to thesis_submissions.
+        $table = new xmldb_table('thesis_submissions');
+        $field = new xmldb_field('family_name', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'user_id');
 
-    // Conditionally launch add field given_name.
-    if (!$dbman->field_exists($table, $field)) {
-        $dbman->add_field($table, $field);
+        // Conditionally launch add field family_name.
+        if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('given_name', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'family_name');
+
+        // Conditionally launch add field given_name.
+        if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+        }
+
+        // Newmodule savepoint reached.
+        upgrade_mod_savepoint(true, 2014032101, 'thesis');
     }
 
-    // Newmodule savepoint reached.
-    upgrade_mod_savepoint(true, 2014032101, 'thesis');
-  }
+    if ($oldversion < 2014032500) {
+        $table = new xmldb_table('thesis_submissions');
+        $field = new xmldb_field('embargo', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'metadata');
 
-  if ($oldversion < 2014032500) {
-    $table = new xmldb_table('thesis_submissions');
-    $field = new xmldb_field('embargo', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'metadata');
+        if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+        }
 
-    if (!$dbman->field_exists($table, $field)) {
-        $dbman->add_field($table, $field);
+        upgrade_mod_savepoint(true, 2014032500, 'thesis');
     }
 
-    upgrade_mod_savepoint(true, 2014032500, 'thesis');
-  }
+    if ($oldversion < 2014032600) {
+        $table = new xmldb_table('thesis_submissions');
+        $field = new xmldb_field('comments', XMLDB_TYPE_TEXT, 'medium', null, null, null, null, 'embargo');
 
-  if ($oldversion < 2014032600) {
-    $table = new xmldb_table('thesis_submissions');
-    $field = new xmldb_field('comments', XMLDB_TYPE_TEXT, 'medium', null, null, null, null, 'embargo');
+        if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+        }
 
-    if (!$dbman->field_exists($table, $field)) {
-        $dbman->add_field($table, $field);
+        upgrade_mod_savepoint(true, 2014032600, 'thesis');
     }
 
-    upgrade_mod_savepoint(true, 2014032600, 'thesis');
-  }
+    if ($oldversion < 2014042300) {
+        $table = new xmldb_table('thesis_submissions');
 
-  if ($oldversion < 2014042300) {
-    $table = new xmldb_table('thesis_submissions');
+        $created = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'terms_accepted');
+        $modified = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'timecreated');
 
-    $created = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'terms_accepted');
-    $modified = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'timecreated');
+        if (!$dbman->field_exists($table, $created)) {
+            $dbman->add_field($table, $created);
+        }
+        if (!$dbman->field_exists($table, $modified)) {
+            $dbman->add_field($table, $modified);
+        }
 
-    if (!$dbman->field_exists($table, $created)) {
-      $dbman->add_field($table, $created);
+        upgrade_mod_savepoint(true, 2014042300, 'thesis');
     }
-    if (!$dbman->field_exists($table, $modified)) {
-      $dbman->add_field($table, $modified);
-    }
 
-    upgrade_mod_savepoint(true, 2014042300, 'thesis');
-  }
-
-  return true;
+    return true;
 }
 
