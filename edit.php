@@ -150,6 +150,9 @@ if ($show_as_published) {
 
     $output .= '</table>';
 } else {
+    $heading = $course->fullname . " - " . $thesis->name . " (Deposit)";
+    $PAGE->set_title($heading);
+    $PAGE->set_heading($heading);
 
     $heading = get_string('form_heading', 'mod_thesis');
 
