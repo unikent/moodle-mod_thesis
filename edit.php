@@ -83,7 +83,7 @@ if ($show_as_published) {
     $PAGE->set_title($heading);
     $PAGE->set_heading($heading);
 
-    $hidden = array('id', 'thesis_id', 'user_id', 'institution', 'metadata', 'publish', 'published_by', 'submitted_for_publishing', 'publish_month', 'publish_year');
+    $hidden = array('id', 'thesis_id', 'user_id', 'identification_number', 'metadata', 'publish', 'published_by', 'submitted_for_publishing', 'publish_month', 'publish_year');
     $output .= '<table class="thesis">';
 
     foreach ($submission as $field => $fdata) {
@@ -97,11 +97,26 @@ if ($show_as_published) {
         $field = str_replace('fname', 'firstname', $field);
         $field = str_replace('sname', 'surname', $field);
 
+        // Create field name from key
         $flabel = ucwords(str_replace('_', ' ', $field));
         if ($field == 'thesis_type') {
             $flabel = get_string('thesis_type', 'mod_thesis');
         }
-        $output .=   '<th class="thesis_table_head">' . $flabel . '</th>';
+
+        // manually override some field labels
+        if ($field == 'family_name') {
+            $flabel = get_string('family_name', 'mod_thesis');
+        }
+
+        if ($field == 'given_name') {
+            $flabel = get_string('given_name', 'mod_thesis');
+        }
+
+        if ($field == 'institution') {
+            $flabel = get_string('institution', 'mod_thesis');
+        }
+
+        $output .= '<th class="thesis_table_head">' . $flabel . '</th>';
 
         if ($field === 'publishdate') {
             $fdata = sprintf("%02d", $submission->publishdate['mon']) . '/' . $submission->publishdate['year'];
@@ -112,7 +127,7 @@ if ($show_as_published) {
             $fdata = $r != null ? $r->name : $fdata;
         }
 
-        if ($field == 'timecreated' || $field == 'timemodified' ) {
+        if ($field == 'timecreated' || $field == 'timemodified') {
             $fdata = date("Y-m-d H:i:s", $fdata);
         }
 
