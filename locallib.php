@@ -75,7 +75,7 @@ function thesis_notification_notes($data, $thesis, $context, $isadmin) {
     // get user to notify
     $submission = $DB->get_record('thesis_submissions', array(
         'id' => $data->submission_id,
-        'thesis_id' => $data->id
+        'thesis_id' => $thesis->id
     ), 'user_id');
 
     $utn = $DB->get_record('user', array('id' => $submission->user_id));
@@ -97,7 +97,7 @@ function thesis_notification_notes($data, $thesis, $context, $isadmin) {
     $eventdata->fullmessage       = get_string('emailnotesbody', 'thesis', $a);
     $eventdata->fullmessageformat = FORMAT_PLAIN;
     $eventdata->fullmessagehtml   = '';
-    $eventdata->smallmessage      = get_string('emailnotessmall', 'thesis', $a);;
+    $eventdata->smallmessage      = get_string('emailnotessmall', 'thesis', $a);
 
     // set user to send to
     $eventdata->userto = $utn;
@@ -272,7 +272,7 @@ HTML;
         $mform->setType('family_name', PARAM_TEXT);
         $mform->addRule('family_name', get_string('family_name_req', 'thesis'), 'required');
 
-        $typeoptions = array();
+        $typeoptions = array(null => "Choose type");
         $typeoptions['engd'] = 'Doctor of Engineering (Eng.Doc)';
         $typeoptions['sportd'] = 'Professional Doctorate in Sport, Exercise and Health Science (Sport.D.)';
         $typeoptions['mphil'] = 'Master of Philosophy (M.Phil.)';
@@ -291,6 +291,9 @@ HTML;
         $typeoptions['lld'] = 'Doctor of Laws (LL.D.)';
         $typeoptions['dsc'] = 'Doctor of Science (D.Sc.)';
         $typeoptions['pdip'] = 'Postgraduate Diploma by Research (P.Dip.)';
+
+        // sort the list of schools
+        asort($typeoptions);
         
         $mform->addElement('select', 'thesis_type', 'Thesis/Dissertation type', $typeoptions);
         $mform->addRule('thesis_type', get_string('thesis_type_req', 'thesis'), 'required');
@@ -314,6 +317,9 @@ HTML;
                 $options[$id] = $split[1];
             }
         }
+
+        // sort the list of schools
+        asort($options);
 
         $mform->addElement('select', 'department', get_string('department', 'thesis'), $options);
         $mform->setType('department', PARAM_TEXT);
