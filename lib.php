@@ -183,11 +183,18 @@ function thesis_cron() {
 
                 $doc->addChild('format', $f->get_mimetype());
                 $doc->addChild('language', 'en');
-                $doc->addChild('security', 'staffonly');
+
+                // set security depending on embargo
+                if ($sub->emargo == 0) {
+                    $doc->addChild('security', 'public');
+                } else {
+                    $doc->addChild('security', 'staffonly');
+                }
+
                 $doc->addChild('main', $f->get_filename());
 
                 $embargo_date = '';
-                if($sub->embargo != 0) {
+                if ($sub->embargo != 0) {
                     $embargo_date = ($sub->publish_year + $sub->embargo) . '-' . sprintf("%02d", $sub->publish_month);
                 }
                 
@@ -218,11 +225,18 @@ function thesis_cron() {
 
                 $doc->addChild('format', $f->get_mimetype());
                 $doc->addChild('language', 'en');
-                $doc->addChild('security', 'staffonly');
+                
+                // set security depending on embargo
+                if ($sub->emargo == 0) {
+                    $doc->addChild('security', 'public');
+                } else {
+                    $doc->addChild('security', 'staffonly');
+                }
+
                 $doc->addChild('main', $f->get_filename());
                 
                 $embargo_date = '';
-                if($sub->embargo != 0) {
+                if ($sub->embargo != 0) {
                     $embargo_date = ($sub->publish_year + $sub->embargo) . '-' . sprintf("%02d", $sub->publish_month);
                 }
                 
@@ -289,17 +303,17 @@ function thesis_cron() {
         $corp_creators = $eprint->addChild('corp_creators');
         $corp_creators->addChild('item', $sub->corporate_acknowledgement);
         $eprint->addChild('title', $sub->title);
-        $eprint->addChild('ispublished', 'unpub');
+        $eprint->addChild('ispublished', 'pub');
         $eprint->addChild('keywords', $sub->keywords);
         $eprint->addChild('pages', $sub->number_of_pages);
         $eprint->addChild('note', $sub->additional_information);
         $eprint->addChild('abstract', $sub->abstract);
         $eprint->addChild('date', $sub->publish_year . '-' . sprintf("%02d", $sub->publish_month));
-        $eprint->addChild('date_type', 'submitted');
+        $eprint->addChild('date_type', 'published');
         $eprint->addChild('id_number', '');
 
         // if additional awarding institution is set
-        if(isset($sub->institution)) {
+        if (isset($sub->institution)) {
             $eprint->addChild('institution', 'University of Kent, ' . trim($sub->institution));
         } else {
             $eprint->addChild('institution', 'University of Kent');
