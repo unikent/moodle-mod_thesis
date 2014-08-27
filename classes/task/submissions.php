@@ -58,7 +58,7 @@ class submissions extends \core\task\scheduled_task
                 print_error('invalidcoursemodule');
             }
 
-            $context = context_module::instance($cm->id);
+            $context = \context_module::instance($cm->id);
             $foldername = md5($sub->title) . time();
             $filepath = $CFG->tempdir . '/' . $foldername;
             check_dir_exists($filepath);
@@ -76,7 +76,7 @@ class submissions extends \core\task\scheduled_task
             $fs = get_file_storage();
 
             // Start of xml generation.
-            $xml = new SimpleXMLElement("<?xml version=\"1.0\" encoding=\"utf-8\" ?><eprints></eprints>");
+            $xml = new \SimpleXMLElement("<?xml version=\"1.0\" encoding=\"utf-8\" ?><eprints></eprints>");
             $xml->addAttribute('xmlns', 'http://eprints.org/ep2/data/2.0');
             $eprint = $xml->addChild('eprint');
 
@@ -106,7 +106,7 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('language', 'en');
 
                     // Set security depending on embargo.
-                    if ($sub->emargo == 0) {
+                    if ($sub->embargo == 0) {
                         $doc->addChild('security', 'public');
                     } else {
                         $doc->addChild('security', 'staffonly');
