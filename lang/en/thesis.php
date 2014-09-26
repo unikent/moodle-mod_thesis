@@ -88,7 +88,7 @@ $string['embargo'] = 'With embargo?';
 $string['staff_comments'] = 'Staff comments';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
-$string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to deposit for display of correct terms and conditions.</p><p>Before proceeding please ensure you have read the <a href="#" target="_blank">Guidance Advice to Candidates</a>.</p>';
+$string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to deposit for display of correct terms and conditions.</p><p>Before proceeding please ensure you have read the <a href="http://www.kent.ac.uk/library/research/docs/digital-deposition-of-theses-advice-to-candidates.pdf" target="_blank">Guidance Advice to Candidates</a>.</p>';
 
 $string['thesis:addinstance'] = 'Add a new thesis';
 
