@@ -292,9 +292,9 @@ HTML;
         $typeoptions['dsc'] = 'Doctor of Science (D.Sc.)';
         $typeoptions['pdip'] = 'Postgraduate Diploma by Research (P.Dip.)';
 
-        // sort the list of schools
+        // Sort the list of schools.
         asort($typeoptions);
-        
+
         $mform->addElement('select', 'thesis_type', 'Thesis/Dissertation type', $typeoptions);
         $mform->addRule('thesis_type', get_string('thesis_type_req', 'thesis'), 'required');
 
@@ -307,19 +307,23 @@ HTML;
         $mform->setType('corporate_acknowledgement', PARAM_TEXT);
 
         $category = \coursecat::make_categories_list('', 58, '!!!');
+        $extracategories = array(
+            'Centre for Professional Practice'
+        );
 
-        // we need to just get the second level from the categories list
-        $options = array(null => "Choose school");
-        foreach($category as $id => $cat) {
+        // We need to just get the second level from the categories list.
+        $options = array();
+        foreach ($category as $id => $cat) {
             $split = explode('!!!', $cat);
-            // don't use the anything other than 2 level deep, others have the wrong ids
-            if(count($split) == 2 && strpos($split[1], "School") !== false) {
+            // Don't use the anything other than 2 level deep, others have the wrong ids.
+            if (count($split) == 2 && (strpos($split[1], "School") !== false || in_array($split[1], $extracategories))) {
                 $options[$id] = $split[1];
             }
         }
 
-        // sort the list of schools
+        // Sort the list of schools.
         asort($options);
+        $options = array_merge(array(null => "Choose school"), $options);
 
         $mform->addElement('select', 'department', get_string('department', 'thesis'), $options);
         $mform->setType('department', PARAM_TEXT);
