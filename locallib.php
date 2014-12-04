@@ -148,8 +148,6 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
         }
     }
 
-    // TODO: check for duplicates in recipients.
-
     // setup data for email template
     $a = new stdClass();
     $a->name = $data->title;
