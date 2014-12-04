@@ -16,6 +16,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2014092600;
+$plugin->version  = 2014120400;
 $plugin->requires = 2014051201;
 $plugin->component = 'mod_thesis';
+
+$plugin->dependencies = array(
+    'local_connect' => 2014100102
+);

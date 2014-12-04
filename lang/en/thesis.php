@@ -40,6 +40,8 @@ You can access this deposit at \'{$a->depositurl}\'.';
 $string['emailnotessmall'] = 'Notes have been added to your thesis in {$a->coursename}';
 
 //Fomr strings
+$string['notification_email'] = 'Submission Notification Email';
+$string['notification_email_help'] = 'By default notifications are sent to the convenor of the module when a submission is ready for approval, simply leave the email field blank. Optionally you can provide an email address to be notified instead by completing the field.';
 $string['title'] = 'Title';
 $string['title_help'] = 'This title needs to be exactly the same as the title on your thesis/dissertation';
 $string['title_req'] = 'You must enter a title';

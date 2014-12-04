@@ -106,7 +106,7 @@ function thesis_notification_notes($data, $thesis, $context, $isadmin) {
     $result = message_send($eventdata);
 }
 
-/* Send notification email from student to admin that submitted */
+/* Send notification email from student that submitted to admin */
 function thesis_notification_updated($data, $thesis, $context, $isadmin) {
     global $DB, $CFG, $USER;
 
@@ -119,11 +119,36 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
     // from user who made the change
     $eventdata->userfrom = $USER;
 
-    // get fields for user notification
-    $notifyfields = 'u.id, u.username, u.idnumber, u.email, u.emailstop, u.lang, u.timezone, u.mailformat, u.maildisplay, ';
-    $notifyfields .= get_all_user_name_fields(true, 'u');
+    $recipients = array();
 
-    $userstonotify = get_users_by_capability($context, 'mod/thesis:emailupdated', $notifyfields);
+    // check if a custom notification email is set
+    if (!empty($thesis->notification_email)) {
+        $user = get_admin();
+        $user->email = $thesis->notification_email;
+        $recipients[] = $user;
+    } else {
+        // get the convenor for the module
+        $connectroleconvenor = \local_connect\role::get_by('name', 'convenor');
+        $course = $DB->get_record('course', array('id' => $thesis->course), 'id');
+        $courseobjects = \local_connect\course::get_by('mid', $course->id, true);
+
+        if (!empty($courseobjects)) {
+            $courseobj = array_pop($courseobjects);
+
+            $convenor = \local_connect\enrolment::get_for_course_and_role($courseobj, $connectroleconvenor);
+            if ($convenor) {
+                $recipient = $DB->get_record('user', array(
+                    'id' => $convenor->user->mid
+                ));
+
+                if ($recipient) {
+                    $recipients[] = $recipient;
+                }
+            }
+        }
+    }
+
+    // TODO: check for duplicates in recipients.
 
     // setup data for email template
     $a = new stdClass();
@@ -133,7 +158,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
     $a->timemodified = date("Y-m-d H:i:s", $data->timemodified);
     $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
 
-    foreach ($userstonotify as $utn) {
+    foreach ($recipients as $utn) {
         // set some user specific email template stuff
         $a->username = $utn->username;
         $a->coursename = $course->fullname;
@@ -323,7 +348,7 @@ HTML;
 
         // Sort the list of schools.
         asort($options);
-        $options = array_merge(array(null => "Choose school"), $options);
+        $options = array(null => "Choose school") + $options;
 
         $mform->addElement('select', 'department', get_string('department', 'thesis'), $options);
         $mform->setType('department', PARAM_TEXT);

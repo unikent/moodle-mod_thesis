@@ -173,6 +173,18 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2014060900, 'thesis');
     }
 
+    if ($oldversion < 2014120400) {
+        $table = new xmldb_table('thesis');
+
+        $notification = new xmldb_field('notification_email', XMLDB_TYPE_TEXT, 'small', null, null, null, null, 'name');
+
+        if (!$dbman->field_exists($table, $notification)) {
+            $dbman->add_field($table, $notification);
+        }
+
+        upgrade_mod_savepoint(true, 2014120400, 'thesis');
+    }
+
     return true;
 }
 
