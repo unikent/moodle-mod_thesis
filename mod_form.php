@@ -32,7 +32,7 @@ class mod_thesis_mod_form extends moodleform_mod
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
-        $mform->addElement('text', 'notification_email', get_string('notification_email', 'mod_thesis'));
+        $mform->addElement('text', 'notification_email', get_string('notification_email', 'mod_thesis'), array('size' => '64'));
         $mform->setType('notification_email', PARAM_EMAIL);
         $mform->addRule('notification_email', null, 'email', null, 'client');
         $mform->addHelpButton('notification_email', 'notification_email', 'mod_thesis');
