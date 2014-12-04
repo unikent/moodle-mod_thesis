@@ -300,6 +300,8 @@ class submissions extends \core\task\scheduled_task
                 'publish' => 2
             ));
         }
+
+        return true;
     }
 
     private function add_contributor($contributors, $sname = null, $fname = null, $email = null) {
