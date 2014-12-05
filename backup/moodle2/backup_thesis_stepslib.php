@@ -13,7 +13,7 @@ class backup_thesis_activity_structure_step extends backup_activity_structure_st
 
         // Define each element separated
         $thesis = new backup_nested_element('thesis', array('id'), array(
-            'course_id', 'name');
+            'course_id', 'name'));
 
         // Build the tree
         //nothing here for URLs
