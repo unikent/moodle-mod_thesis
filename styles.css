@@ -25,7 +25,7 @@ form.thesis_form>fieldset {
 }
 
 .thesis_form img.iconhelp {
-  margin-right: 0px !important;
+  margin-right: 0 !important;
 }
 
 .thesis_form #fitem_id_publish_kar>div {
@@ -116,7 +116,7 @@ table.thesis td {
 .kent_thesis_radio_grp {
   float: left;
   width: 30%;
-  margin: 25px 3% 25px 0px;
+  margin: 25px 3% 25px 0;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
   -webkit-border-radius: 5px;

@@ -71,7 +71,6 @@ $output = '';
 
 if (!is_enrolled($context) && !has_capability('moodle/course:update', context_course::instance($cm->course))) {
     throw new moodle_exception('You are not enrolled on this module');
-    exit;
 }
 
 if ($show_as_published) {
@@ -177,7 +176,6 @@ if ($show_as_published) {
         if (isset($submission)) {
             if (!$isadmin && $submission->user_id != $USER->id) {
                 throw new moodle_exception('Unauthorized access to resource');
-                exit;
             }
         }
 
@@ -220,7 +218,6 @@ if ($show_as_published) {
         if (isset($submission)) {
             if (!has_capability('moodle/course:update', context_course::instance($cm->course)) && $submission->user_id != $USER->id) {
                 throw new moodle_exception('Unauthorized access to resource');
-                exit;
             }
         } else { // new record, init
             $submission = new stdClass;
