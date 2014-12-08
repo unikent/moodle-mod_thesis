@@ -24,7 +24,7 @@ var thesis_hide_supervisors = function() {
     Y.one('#id_more_supervisors').setStyle('display','none');
   }
 
-}
+};
 
 var thesis_more_supervisors = function() {
 
@@ -34,4 +34,4 @@ var thesis_more_supervisors = function() {
     Y.all(thesis_third_divs).setStyle('display','block');
     Y.one('#id_more_supervisors').setStyle('display','none');
   }
-}
+};
