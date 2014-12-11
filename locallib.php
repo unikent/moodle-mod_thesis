@@ -125,24 +125,26 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
     if (!empty($thesis->notification_email)) {
         $user = get_admin();
         $user->email = $thesis->notification_email;
-        $recipients[] = $user;
+        $recipients[$user->id] = $user;
     } else {
         // get the convenor for the module
         $connectroleconvenor = \local_connect\role::get_by('name', 'convenor');
         $course = $DB->get_record('course', array('id' => $thesis->course), 'id');
         $courseobjects = \local_connect\course::get_by('mid', $course->id, true);
 
-        if (!empty($courseobjects)) {
-            $courseobj = array_pop($courseobjects);
+        foreach ($courseobjects as $courseobj) {
+            $convenors = \local_connect\enrolment::get_for_course_and_role($courseobj, $connectroleconvenor);
+            foreach ($convenors as $convenor) {
+                if ((int)$convenor->user->mid <= 0 || isset($recipients[$convenor->user->mid])) {
+                    continue;
+                }
 
-            $convenor = \local_connect\enrolment::get_for_course_and_role($courseobj, $connectroleconvenor);
-            if ($convenor) {
                 $recipient = $DB->get_record('user', array(
                     'id' => $convenor->user->mid
                 ));
 
                 if ($recipient) {
-                    $recipients[] = $recipient;
+                    $recipients[$recipient->id] = $recipient;
                 }
             }
         }
@@ -156,7 +158,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
     $a->timemodified = date("Y-m-d H:i:s", $data->timemodified);
     $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
 
-    foreach ($recipients as $utn) {
+    foreach ($recipients as $id => $utn) {
         // set some user specific email template stuff
         $a->username = $utn->username;
         $a->coursename = $course->fullname;
