@@ -128,7 +128,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
         $recipients[$user->id] = $user;
     } else {
         // get the convenor for the module
-        $connectroleconvenor = \local_connect\role::get_by('name', 'convenor');
+        $connectroleconvenor = \local_connect\role::get_by('name', 'sds_convenor');
         $course = $DB->get_record('course', array('id' => $thesis->course), 'id');
         $courseobjects = \local_connect\course::get_by('mid', $course->id, true);
 
