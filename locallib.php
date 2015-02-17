@@ -333,7 +333,9 @@ HTML;
 
         $category = \coursecat::make_categories_list('', 58, '!!!');
         $extracategories = array(
-            'Centre for Professional Practice'
+            'Centre for Professional Practice',
+            'Centre for Medieval and Early Modern Studies',
+            'Centre for American Studies'
         );
 
         // We need to just get the second level from the categories list.
