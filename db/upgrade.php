@@ -185,6 +185,33 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2014120400, 'thesis');
     }
 
+    if ($oldversion < 2015031000) {
+        $table = new xmldb_table('thesis');
+
+        // Define field intro to be added to thesis.
+        $field = new xmldb_field('intro', XMLDB_TYPE_TEXT, null, null, null, null, null, 'notification_email');
+        // Conditionally launch add field intro.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field introformat to be added to thesis.
+        $field = new xmldb_field('introformat', XMLDB_TYPE_INTEGER, '4', null, null, null, '0', 'intro');
+        // Conditionally launch add field introformat.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field timemodified to be added to thesis.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'introformat');
+        // Conditionally launch add field timemodified.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_mod_savepoint(true, 2015031000, 'thesis');
+    }
+    
     return true;
 }
 

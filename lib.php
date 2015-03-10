@@ -16,24 +16,20 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-
-/**
- *
- *
- * @param unknown $feature
- * @return unknown
- */
 function thesis_supports($feature) {
-    $isadmin = has_capability('moodle/site:config', context_system::instance());
+    switch($feature) {
+        case FEATURE_GROUPS:                  return false;
+        case FEATURE_GROUPINGS:               return false;
+        case FEATURE_MOD_INTRO:               return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS: return true;
+        case FEATURE_GRADE_HAS_GRADE:         return false;
+        case FEATURE_GRADE_OUTCOMES:          return false;
+        case FEATURE_BACKUP_MOODLE2:          return true;
+        case FEATURE_SHOW_DESCRIPTION:        return true;
 
-    switch ($feature) {
-        case FEATURE_MOD_INTRO:
-            return false;
-        default:
-            return null;
+        default: return null;
     }
 }
-
 
 /**
  *
@@ -45,6 +41,8 @@ function thesis_supports($feature) {
 function thesis_add_instance($data, $mform) {
     global $DB;
 
+    $data->timemodified = time();
+    
     return $DB->insert_record('thesis', $data);
 }
 
@@ -72,6 +70,7 @@ function thesis_update_instance($data, $mform) {
     global $DB;
 
     $data->id = $data->instance;
+    $data->timemodified = time();
     $DB->update_record('thesis', $data);
 
     return true;
