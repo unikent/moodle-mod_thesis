@@ -44,11 +44,15 @@ $PAGE->set_context($context);
 $heading = get_string('page_title_view', 'mod_thesis');
 $PAGE->set_title($heading);
 $PAGE->set_heading($heading);
+$PAGE->set_activity_record($thesis);
 
 $event = \mod_thesis\event\course_module_viewed::create(array(
     'objectid' => $thesis->id,
     'context' => $context
 ));
+$event->add_record_snapshot('course_modules', $cm);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('thesis', $thesis);
 $event->trigger();
 
 // Update 'viewed' state if required by completion system
