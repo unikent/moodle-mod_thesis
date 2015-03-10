@@ -45,6 +45,8 @@ function thesis_supports($feature) {
 function thesis_add_instance($data, $mform) {
     global $DB;
 
+    $data->timemodified = time();
+    
     return $DB->insert_record('thesis', $data);
 }
 
@@ -72,6 +74,7 @@ function thesis_update_instance($data, $mform) {
     global $DB;
 
     $data->id = $data->instance;
+    $data->timemodified = time();
     $DB->update_record('thesis', $data);
 
     return true;
