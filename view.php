@@ -60,6 +60,11 @@ unset($_SESSION['thesis_terms']);
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('view_page_title', 'mod_thesis'));
+
+if (!empty($thesis->intro)) {
+	echo $OUTPUT->box(format_module_intro('thesis', $thesis, $cm->id), 'generalbox', 'intro');
+}
+
 echo '<div class="thesis_list">';
 echo '<a class="thesis_new" href="edit.php?id='.$id.'">'.get_string('create_submission', 'mod_thesis').'</a>';
 echo thesis_list_submissions($id, $thesis->id, context_course::instance($cm->course));
