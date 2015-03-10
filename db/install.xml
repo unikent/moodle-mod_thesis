@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/newmodule/db" VERSION="20101203" COMMENT="XMLDB file for Moodle mod/newmodule"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
-  >
+<XMLDB PATH="mod/newmodule/db" VERSION="20150310" COMMENT="XMLDB file for Moodle mod/newmodule"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
   <TABLES>
-    <TABLE NAME="thesis" COMMENT="erm, thesis" NEXT="thesis_submissions">
+    <TABLE NAME="thesis" COMMENT="Thesis">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course"/>
-        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="course" NEXT="notification_email"/>
-        <FIELD NAME="notification_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="name"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="notification_email" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction to the activity"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="false" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -18,54 +21,54 @@
         <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="thesis_submissions" COMMENT="thesis submissions" PREVIOUS="thesis">
+    <TABLE NAME="thesis_submissions" COMMENT="thesis submissions">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="thesis_id"/>
-        <FIELD NAME="thesis_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="user_id"/>
-        <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="thesis_id" NEXT="family_name"/>
-        <FIELD NAME="family_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="user_id" NEXT="given_name"/>
-        <FIELD NAME="given_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="family_name" NEXT="title"/>
-        <FIELD NAME="title" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="given_name" NEXT="keywords"/>
-        <FIELD NAME="keywords" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="title" NEXT="abstract"/>
-        <FIELD NAME="abstract" TYPE="text" LENGTH="big"  NOTNULL="false" SEQUENCE="false" PREVIOUS="keywords" NEXT="thesis_type"/>
-        <FIELD NAME="thesis_type" TYPE="text" LENGTH="small"  NOTNULL="false" SEQUENCE="false" PREVIOUS="abstract" NEXT="publish_month"/>
-        <FIELD NAME="publish_month" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="thesis_type" NEXT="publish_year"/>
-        <FIELD NAME="publish_year" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" PREVIOUS="publish_month" NEXT="contactemail"/>
-        <FIELD NAME="contactemail" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="publish_year" NEXT="institution"/>
-        <FIELD NAME="institution" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="contactemail" NEXT="department"/>
-        <FIELD NAME="department" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="institution" NEXT="corporate_acknowledgement"/>
-        <FIELD NAME="corporate_acknowledgement" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="department" NEXT="identification_number"/>
-        <FIELD NAME="identification_number" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="corporate_acknowledgement" NEXT="number_of_pages"/>
-        <FIELD NAME="number_of_pages" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="identification_number" NEXT="funding"/>
-        <FIELD NAME="funding" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="number_of_pages" NEXT="additional_information"/>
-        <FIELD NAME="additional_information" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="funding" NEXT="qualification_level"/>
-        <FIELD NAME="qualification_level" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="additional_information" NEXT="qualification_name"/>
-        <FIELD NAME="qualification_name" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="qualification_level" NEXT="supervisor_fname"/>
-        <FIELD NAME="supervisor_fname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="qualification_name" NEXT="supervisor_sname"/>
-        <FIELD NAME="supervisor_sname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="supervisor_fname" NEXT="supervisor_email"/>
-        <FIELD NAME="supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="supervisor_sname" NEXT="second_supervisor_fname"/>
-        <FIELD NAME="second_supervisor_fname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="supervisor_email" NEXT="second_supervisor_sname"/>
-        <FIELD NAME="second_supervisor_sname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="second_supervisor_fname" NEXT="second_supervisor_email"/>
-        <FIELD NAME="second_supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="second_supervisor_sname" NEXT="third_supervisor_fname"/>
-        <FIELD NAME="third_supervisor_fname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="second_supervisor_email" NEXT="third_supervisor_sname"/>
-        <FIELD NAME="third_supervisor_sname" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="third_supervisor_fname" NEXT="third_supervisor_email"/>
-        <FIELD NAME="third_supervisor_email" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="third_supervisor_sname" NEXT="metadata"/>
-        <FIELD NAME="metadata" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="third_supervisor_email" NEXT="embargo"/>
-        <FIELD NAME="embargo" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="metadata" NEXT="comments"/>
-        <FIELD NAME="comments" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" PREVIOUS="embargo" NEXT="publish"/>
-        <FIELD NAME="publish" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="comments" NEXT="published_by"/>
-        <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" NEXT="submitted_for_publishing" PREVIOUS="publish"/>
-        <FIELD NAME="submitted_for_publishing" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" PREVIOUS="published_by" NEXT="terms_accepted"/>
-        <FIELD NAME="terms_accepted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submitted_for_publishing" NEXT="timecreated"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="terms_accepted" NEXT="timemodified"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="thesis_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="family_name" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="given_name" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="title" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="keywords" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="abstract" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="thesis_type" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="publish_month" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="publish_year" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="contactemail" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="institution" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="department" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="corporate_acknowledgement" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="identification_number" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="number_of_pages" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="funding" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="additional_information" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="qualification_level" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="qualification_name" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="supervisor_fname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="supervisor_sname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="supervisor_email" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="second_supervisor_fname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="second_supervisor_sname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="second_supervisor_email" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="third_supervisor_fname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="third_supervisor_sname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="third_supervisor_email" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="metadata" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="embargo" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="comments" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="publish" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="published_by" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="submitted_for_publishing" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="terms_accepted" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
       <INDEXES>
-        <INDEX NAME="thesis_id" UNIQUE="false" FIELDS="thesis_id" NEXT="user_id"/>
-        <INDEX NAME="user_id" UNIQUE="false" FIELDS="user_id" PREVIOUS="thesis_id"/>
+        <INDEX NAME="thesis_id" UNIQUE="false" FIELDS="thesis_id"/>
+        <INDEX NAME="user_id" UNIQUE="false" FIELDS="user_id"/>
       </INDEXES>
     </TABLE>
   </TABLES>
