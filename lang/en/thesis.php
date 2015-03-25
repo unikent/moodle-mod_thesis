@@ -91,6 +91,7 @@ $string['staff_comments'] = 'Staff comments';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
 $string['choose_btns_intro'] = '<p>Please select the type of thesis you are wishing to deposit for display of correct terms and conditions.</p><p>Before proceeding please ensure you have read the <a href="http://www.kent.ac.uk/library/research/docs/digital-deposition-of-theses-advice-to-candidates.pdf" target="_blank">Guidance Advice to Candidates</a>.</p>';
+$string['delete_info'] = 'To delete this entry you must reset to draft.';
 
 $string['thesis:addinstance'] = 'Add a new thesis';
 
@@ -125,5 +126,6 @@ $string['form_buttons_save'] = 'Save for later';
 $string['form_buttons_submit'] = 'Submit to School Administrator';
 $string['form_buttons_reset'] = 'Reset to draft';
 $string['form_buttons_publish'] = 'Save changes and publish to Kar';
+$string['form_buttons_delete'] = 'Delete entry';
 
 $string['form_add_sup'] = 'Add another supervisor';

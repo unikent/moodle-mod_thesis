@@ -32,6 +32,38 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
     $data->publish_month = $data->publishdate['mon'];
     $data->publish_year = $data->publishdate['year'];
 
+    if ($isadmin && isset($data->submitdelete)) {
+        // Check not already published
+        $is_published = $DB->get_field('thesis_submissions', 'submitted_for_publishing', array("id" => $data->submission_id));
+        if($is_published > 1) {
+            return;
+        }
+
+        // Delete this submission
+        $fs = get_file_storage();
+        if ($pubfs = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $data->submission_id, '', false)) {
+            foreach($pubfs as $f) {
+                $f->delete();
+            }
+        }
+
+        if ($prifs = $fs->get_area_files($context->id, 'mod_thesis', 'private', $data->submission_id, '', false)) {
+            foreach($prifs as $f) {
+                $f->delete();
+            }
+        }
+
+        if ($permfs = $fs->get_area_files($context->id, 'mod_thesis', 'permanent', $data->submission_id, '', false)) {
+            foreach($permfs as $f) {
+                $f->delete();
+            }
+        }
+
+        $DB->delete_records('thesis_submissions', array("id" => $data->submission_id));
+        redirect('view.php?id='.$thesis->id);
+        return;
+    }
+
     // if submitted for publishing by student
     if (isset($data->submitted_for_publishing) && !$isadmin) {
         // notify admin of submission
@@ -481,6 +513,20 @@ HTML;
         }
 
         $mform->closeHeaderBefore('buttonb');
+
+        $deletesection = array();
+
+        if ($isadmin) {
+            if (!$submitted_for_publishing) {
+                $deletesection[] = $mform->createElement('submit', 'submitdelete', get_string('form_buttons_delete', 'thesis'));
+            } else {
+                $deletesection[] = $mform->createElement('static', 'publish_info', '', get_string('delete_info', 'thesis'));
+            }
+
+            $mform->addGroup($deletesection, 'buttond', '', array(' '), false);
+
+            $mform->closeHeaderBefore('buttond');
+        }
     }
 
 
