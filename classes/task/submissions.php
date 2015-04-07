@@ -30,6 +30,19 @@ class submissions extends \core\task\scheduled_task
         return "Thesis Submissions";
     }
 
+    /*
+     * Shorten filename to under 100 characters
+     */
+    public static function shorten_filename($longfilename) {
+        if (strlen($longfilename) > 80) {
+            $extension = substr(strrchr($longfilename, "."), 1);
+            $shortfilename = substr($longfilename, 0, 80) . "." . $extension;
+        } else {
+            $shortfilename = $longfilename;
+        }
+        return $shortfilename;
+    }
+
     /**
      * Do submissions.
      */
@@ -87,12 +100,7 @@ class submissions extends \core\task\scheduled_task
             $pos = 1;
             if ($publishfiles = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $sub->id, '', false)) {
                 foreach ($publishfiles as $f) {
-                    $longfilename = $f->get_itemid() . $f->get_filename();
-                    if (strlen($longfilename) > 90) {
-                        $shortfilename = substr($longfilename, 0, 90);
-                    } else {
-                        $shortfilename = $longfilename;
-                    }
+                    $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
                     if (!$f->copy_content_to($publicpath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
@@ -135,12 +143,7 @@ class submissions extends \core\task\scheduled_task
             // Restricted.
             if ($restrictfiles = $fs->get_area_files($context->id, 'mod_thesis', 'private', $sub->id, '', false)) {
                 foreach ($restrictfiles as $f) {
-                    $longfilename = $f->get_itemid() . $f->get_filename();
-                    if (strlen($longfilename) > 90) {
-                        $shortfilename = substr($longfilename, 0, 90);
-                    } else {
-                        $shortfilename = $longfilename;
-                    }
+                    $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
                     if (!$f->copy_content_to($privatepath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
@@ -183,12 +186,7 @@ class submissions extends \core\task\scheduled_task
             // Permanently restriced.
             if ($permanentfiles = $fs->get_area_files($context->id, 'mod_thesis', 'permanent', $sub->id, '', false)) {
                 foreach ($permanentfiles as $f) {
-                    $longfilename = $f->get_itemid() . $f->get_filename();
-                    if (strlen($longfilename) > 90) {
-                        $shortfilename = substr($longfilename, 0, 90);
-                    } else {
-                        $shortfilename = $longfilename;
-                    }
+                    $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
                     if (!$f->copy_content_to($privatepath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
