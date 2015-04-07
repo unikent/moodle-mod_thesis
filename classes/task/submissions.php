@@ -30,6 +30,19 @@ class submissions extends \core\task\scheduled_task
         return "Thesis Submissions";
     }
 
+    /*
+     * Shorten filename to under 100 characters
+     */
+    public static function shorten_filename($longfilename) {
+        if (strlen($longfilename) > 80) {
+            $extension = substr(strrchr($longfilename, "."), 1);
+            $shortfilename = substr($longfilename, 0, 80) . "." . $extension;
+        } else {
+            $shortfilename = $longfilename;
+        }
+        return $shortfilename;
+    }
+
     /**
      * Do submissions.
      */
@@ -87,7 +100,9 @@ class submissions extends \core\task\scheduled_task
             $pos = 1;
             if ($publishfiles = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $sub->id, '', false)) {
                 foreach ($publishfiles as $f) {
-                    if (!$f->copy_content_to($publicpath . $f->get_filename())) {
+                    $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
+
+                    if (!$f->copy_content_to($publicpath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
                         return false;
                     }
@@ -99,8 +114,8 @@ class submissions extends \core\task\scheduled_task
                     $files = $doc->addChild('files');
                     $file = $files->addChild('file');
                     $file->addChild('datasetid', 'document');
-                    $file->addChild('filename', $f->get_filename());
-                    $file->addChild('url', 'public/' . $f->get_filename());
+                    $file->addChild('filename', $shortfilename);
+                    $file->addChild('url', 'public/' . $shortfilename);
 
                     $doc->addChild('format', $f->get_mimetype());
                     $doc->addChild('language', 'en');
@@ -112,7 +127,7 @@ class submissions extends \core\task\scheduled_task
                         $doc->addChild('security', 'staffonly');
                     }
 
-                    $doc->addChild('main', $f->get_filename());
+                    $doc->addChild('main', $shortfilename);
 
                     $embargodate = '';
                     if ($sub->embargo != 0) {
@@ -128,8 +143,9 @@ class submissions extends \core\task\scheduled_task
             // Restricted.
             if ($restrictfiles = $fs->get_area_files($context->id, 'mod_thesis', 'private', $sub->id, '', false)) {
                 foreach ($restrictfiles as $f) {
+                    $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
-                    if (!$f->copy_content_to($privatepath . $f->get_filename())) {
+                    if (!$f->copy_content_to($privatepath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
                         return false;
                     }
@@ -141,8 +157,8 @@ class submissions extends \core\task\scheduled_task
                     $files = $doc->addChild('files');
                     $file = $files->addChild('file');
                     $file->addChild('datasetid', 'document');
-                    $file->addChild('filename', $f->get_filename());
-                    $file->addChild('url', 'private/' . $f->get_filename());
+                    $file->addChild('filename', $shortfilename);
+                    $file->addChild('url', 'private/' . $shortfilename);
 
                     $doc->addChild('format', $f->get_mimetype());
                     $doc->addChild('language', 'en');
@@ -154,7 +170,7 @@ class submissions extends \core\task\scheduled_task
                         $doc->addChild('security', 'staffonly');
                     }
 
-                    $doc->addChild('main', $f->get_filename());
+                    $doc->addChild('main', $shortfilename);
 
                     $embargodate = '';
                     if ($sub->embargo != 0) {
@@ -170,8 +186,9 @@ class submissions extends \core\task\scheduled_task
             // Permanently restriced.
             if ($permanentfiles = $fs->get_area_files($context->id, 'mod_thesis', 'permanent', $sub->id, '', false)) {
                 foreach ($permanentfiles as $f) {
+                    $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
-                    if (!$f->copy_content_to($privatepath . $f->get_filename())) {
+                    if (!$f->copy_content_to($privatepath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
                         return false;
                     }
@@ -183,13 +200,13 @@ class submissions extends \core\task\scheduled_task
                     $files = $doc->addChild('files');
                     $file = $files->addChild('file');
                     $file->addChild('datasetid', 'document');
-                    $file->addChild('filename', $f->get_filename());
-                    $file->addChild('url', 'private/' . $f->get_filename());
+                    $file->addChild('filename', $shortfilename);
+                    $file->addChild('url', 'private/' . $shortfilename);
 
                     $doc->addChild('format', $f->get_mimetype());
                     $doc->addChild('language', 'en');
                     $doc->addChild('security', 'staffonly');
-                    $doc->addChild('main', $f->get_filename());
+                    $doc->addChild('main', $shortfilename);
                     $doc->addChild('content', 'submitted');
                 }
             }
