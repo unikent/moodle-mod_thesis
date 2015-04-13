@@ -89,7 +89,7 @@ class submissions extends \core\task\scheduled_task
             $fs = get_file_storage();
 
             // Start of xml generation.
-            $xml = new \SimpleXMLElementExtended("<?xml version=\"1.0\" encoding=\"utf-8\" ?><eprints></eprints>");
+            $xml = new SimpleXMLElementExtended("<?xml version=\"1.0\" encoding=\"utf-8\" ?><eprints></eprints>");
             $xml->addAttribute('xmlns', 'http://eprints.org/ep2/data/2.0');
             $eprint = $xml->addChild('eprint');
 
@@ -335,7 +335,7 @@ class submissions extends \core\task\scheduled_task
     }
 }
 
-Class SimpleXMLElementExtended extends SimpleXMLElement {
+Class SimpleXMLElementExtended extends \SimpleXMLElement {
 
     /**
      * Adds a child with $value inside CDATA
