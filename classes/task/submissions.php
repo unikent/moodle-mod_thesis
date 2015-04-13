@@ -89,7 +89,7 @@ class submissions extends \core\task\scheduled_task
             $fs = get_file_storage();
 
             // Start of xml generation.
-            $xml = new \SimpleXMLElement("<?xml version=\"1.0\" encoding=\"utf-8\" ?><eprints></eprints>");
+            $xml = new \SimpleXMLElementExtended("<?xml version=\"1.0\" encoding=\"utf-8\" ?><eprints></eprints>");
             $xml->addAttribute('xmlns', 'http://eprints.org/ep2/data/2.0');
             $eprint = $xml->addChild('eprint');
 
@@ -255,10 +255,10 @@ class submissions extends \core\task\scheduled_task
             $corpcreators->addChild('item', $sub->corporate_acknowledgement);
             $eprint->addChild('title', $sub->title);
             $eprint->addChild('ispublished', 'pub');
-            $eprint->addChild('keywords', $sub->keywords);
+            $eprint->addChildWithCDATA('keywords', $sub->keywords);
             $eprint->addChild('pages', $sub->number_of_pages);
             $eprint->addChild('note', $sub->additional_information);
-            $eprint->addChild('abstract', $sub->abstract);
+            $eprint->addChildWithCDATA('abstract', $sub->abstract);
             $eprint->addChild('date', $sub->publish_year . '-' . sprintf("%02d", $sub->publish_month));
             $eprint->addChild('date_type', 'published');
             $eprint->addChild('id_number', '');
@@ -332,5 +332,25 @@ class submissions extends \core\task\scheduled_task
         $conname->addChild('family', $sname);
         $conname->addChild('given', $fname);
         $contributor->addChild('id', $email);
+    }
+}
+
+Class SimpleXMLElementExtended extends SimpleXMLElement {
+
+    /**
+     * Adds a child with $value inside CDATA
+     * @param unknown $name
+     * @param unknown $value
+     */
+    public function addChildWithCDATA($name, $value = NULL) {
+        $new_child = $this->addChild($name);
+
+        if ($new_child !== NULL) {
+            $node = dom_import_simplexml($new_child);
+            $no   = $node->ownerDocument;
+            $node->appendChild($no->createCDATASection($value));
+        }
+
+        return $new_child;
     }
 }
