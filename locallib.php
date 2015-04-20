@@ -365,18 +365,13 @@ HTML;
 
         $category = \local_catman\core::get_category();
         $category = \coursecat::make_categories_list('', $category->id, '!!!');
-        $extracategories = array(
-            'Centre for Professional Practice',
-            'Centre for Medieval and Early Modern Studies',
-            'Centre for American Studies'
-        );
 
         // We need to just get the second level from the categories list.
         $options = array();
         foreach ($category as $id => $cat) {
             $split = explode('!!!', $cat);
             // Don't use the anything other than 2 level deep, others have the wrong ids.
-            if (count($split) == 2 && (strpos($split[1], "School") !== false || strpos($split[1], "Centre") !== false || in_array($split[1], $extracategories))) {
+            if (count($split) == 2 && (strpos($split[1], "School") !== false || strpos($split[1], "Centre") !== false)) {
                 $options[$id] = $split[1];
             }
         }
