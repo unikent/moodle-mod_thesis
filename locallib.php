@@ -363,7 +363,8 @@ HTML;
         $mform->addElement('textarea', 'corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
         $mform->setType('corporate_acknowledgement', PARAM_TEXT);
 
-        $category = \coursecat::make_categories_list('', 58, '!!!');
+        $category = \local_catman\core::get_category();
+        $category = \coursecat::make_categories_list('', $category->id, '!!!');
         $extracategories = array(
             'Centre for Professional Practice',
             'Centre for Medieval and Early Modern Studies',
@@ -375,7 +376,7 @@ HTML;
         foreach ($category as $id => $cat) {
             $split = explode('!!!', $cat);
             // Don't use the anything other than 2 level deep, others have the wrong ids.
-            if (count($split) == 2 && (strpos($split[1], "School") !== false || in_array($split[1], $extracategories))) {
+            if (count($split) == 2 && (strpos($split[1], "School") !== false || strpos($split[1], "Centre") !== false || in_array($split[1], $extracategories))) {
                 $options[$id] = $split[1];
             }
         }
