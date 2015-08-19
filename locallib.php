@@ -363,7 +363,7 @@ HTML;
         $mform->addElement('textarea', 'corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
         $mform->setType('corporate_acknowledgement', PARAM_TEXT);
 
-        $category = \local_catman\core::get_category();
+        $category = \tool_cat\recyclebin::get_category();
         $category = \coursecat::make_categories_list('', $category->id, '!!!');
 
         // We need to just get the second level from the categories list.
