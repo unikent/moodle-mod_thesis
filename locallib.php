@@ -363,8 +363,7 @@ HTML;
         $mform->addElement('textarea', 'corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
         $mform->setType('corporate_acknowledgement', PARAM_TEXT);
 
-        $category = \tool_cat\recyclebin::get_category();
-        $category = \coursecat::make_categories_list('', $category->id, '!!!');
+        $category = \coursecat::make_categories_list('', 0, '!!!');
 
         // We need to just get the second level from the categories list.
         $options = array();
