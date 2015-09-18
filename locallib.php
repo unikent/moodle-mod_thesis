@@ -435,6 +435,7 @@ HTML;
         $embargo_options[0] = 'Immediate open access - no embargo';
         $embargo_options[1] = 'One year embargo';
         $embargo_options[3] = 'Three year embargo';
+        $embargo_options[5] = 'Five year embargo';
 
         if ($choice == 1) {
             // public
