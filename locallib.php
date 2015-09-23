@@ -97,7 +97,7 @@ function thesis_notification_notes($data, $thesis, $context, $isadmin) {
 
     $data->timemodified = time();
 
-    $eventdata = new object();
+    $eventdata = new \stdClass();
     $eventdata->component = 'mod_thesis';
     $eventdata->name = 'notes';
 
@@ -144,7 +144,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
 
     $data->timemodified = time();
 
-    $eventdata = new object();
+    $eventdata = new \stdClass();
     $eventdata->component = 'mod_thesis';
     $eventdata->name = 'updated';
 

@@ -38,11 +38,7 @@ class mod_thesis_mod_form extends moodleform_mod
         $mform->addRule('notification_email', null, 'email', null, 'client');
         $mform->addHelpButton('notification_email', 'notification_email', 'mod_thesis');
 
-        if (method_exists($this, 'standard_intro_elements')) {
-            $this->standard_intro_elements();
-        } else {
-            $this->add_intro_editor();
-        }
+        $this->standard_intro_elements();
 
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();
