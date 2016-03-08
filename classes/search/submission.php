@@ -164,7 +164,8 @@ class submission extends \core_search\area\base_mod {
     public function get_doc_url(\core_search\document $doc) {
         // The submission is already in static cache, we fetch it in self::search_access.
         $submission = $this->get_submission($doc->get('itemid'));
-        return new \moodle_url('/mod/thesis/edit.php', array('id' => $submission->thesis_id, 'submission_id' => $submission->id));
+        $contextmodule = \context::instance_by_id($doc->get('contextid'));
+        return new \moodle_url('/mod/thesis/edit.php', array('id' => $contextmodule->instanceid, 'submission_id' => $submission->id));
     }
 
     /**
