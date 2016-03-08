@@ -8,6 +8,7 @@ $string['pluginadministration'] = '';
 $string['pluginname'] = 'Thesis';
 
 $string['search:activity'] = 'Thesis activities';
+$string['search:submission'] = 'Thesis submissions';
 
 // message provider strings
 $string['messageprovider:notes'] = 'Notification of updated thesis deposit notes';
