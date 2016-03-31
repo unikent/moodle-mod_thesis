@@ -62,7 +62,7 @@ class submission extends \core_search\area\base_mod {
      * @param stdClass $record Submission info.
      * @return \core_search\document
      */
-    public function get_document($record) {
+    public function get_document($record, $options = array()) {
         try {
             $cm = $this->get_cm('thesis', $record->thesis_id, $record->course);
             $context = \context_module::instance($cm->id);
