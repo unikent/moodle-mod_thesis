@@ -132,3 +132,4 @@ $string['form_buttons_publish'] = 'Save changes and publish to Kar';
 $string['form_buttons_delete'] = 'Delete entry';
 
 $string['form_add_sup'] = 'Add another supervisor';
+$string['invalid_characters_error'] = 'Title cannot contain the following characters: ;';

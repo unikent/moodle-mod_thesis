@@ -525,6 +525,80 @@ HTML;
         }
     }
 
+    // form verification
+    function validation($data, $files) {
+        $errors = parent::validation($data, $files);
+
+        $mform =& $this->_form;
+
+        // Check if title contains invalid characters
+        if ($mform->elementExists('title')) {
+            if( strpos($data['title'], ";") !== false ) {
+                $errors['title'] = get_string('invalid_characters_error', 'thesis');
+            }
+        }
+
+        return $errors;
+    }
+
+    function definition_after_data() {
+        parent::definition_after_data();
+
+        $mform =& $this->_form;
+
+        // Strip bad characters from title
+        $t = $mform->getElement('title');
+        $new_title = $this->cleanup_characters($t->getValue());
+        $t->setValue($new_title);
+
+        // Strip bad characters from abstract
+        $a = $mform->getElement('abstract');
+        $new_abstract = $this->cleanup_characters($a->getValue());
+        $a->setValue($new_abstract);
+    }
+
+    // Replace word characters with safe versions
+    private function cleanup_characters($text) {
+        $search = [
+            "\xC2\xAB",     // « (U+00AB) in UTF-8
+            "\xC2\xBB",     // » (U+00BB) in UTF-8
+            "\xE2\x80\x98", // ‘ (U+2018) in UTF-8
+            "\xE2\x80\x99", // ’ (U+2019) in UTF-8
+            "\xE2\x80\x9A", // ‚ (U+201A) in UTF-8
+            "\xE2\x80\x9B", // ‛ (U+201B) in UTF-8
+            "\xE2\x80\x9C", // “ (U+201C) in UTF-8
+            "\xE2\x80\x9D", // ” (U+201D) in UTF-8
+            "\xE2\x80\x9E", // „ (U+201E) in UTF-8
+            "\xE2\x80\x9F", // ‟ (U+201F) in UTF-8
+            "\xE2\x80\xB9", // ‹ (U+2039) in UTF-8
+            "\xE2\x80\xBA", // › (U+203A) in UTF-8
+            "\xE2\x80\x93", // – (U+2013) in UTF-8
+            "\xE2\x80\x94", // — (U+2014) in UTF-8
+            "\xE2\x80\xA6"  // … (U+2026) in UTF-8
+        ];
+
+        $replacements = [
+            "<<",
+            ">>",
+            "'",
+            "'",
+            "'",
+            "'",
+            '"',
+            '"',
+            '"',
+            '"',
+            "<",
+            ">",
+            "-",
+            "-",
+            "..."
+        ];
+
+        $clean_text = str_replace($search, $replacements, $text);
+
+        return $clean_text;
+    }
 
     /**
      *
