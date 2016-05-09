@@ -85,6 +85,7 @@ class submission extends \core_search\area\base_mod {
         $doc->set('type', \core_search\manager::TYPE_TEXT);
         $doc->set('courseid', $record->course);
         $doc->set('userid', $record->user_id);
+        $doc->set('owneruserid', $record->user_id);
         $doc->set('modified', $record->timemodified);
         $doc->set('description1', $record->keywords);
 
