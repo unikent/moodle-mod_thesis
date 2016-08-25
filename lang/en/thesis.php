@@ -4,6 +4,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['modulename'] = 'Thesis';
 $string['modulenameplural'] = 'Thesis';
+$string['modulenamehelp'] = 'The Thesis module allows teachers to setup an area for students to drop their thesis for submission into KAR.';
 $string['pluginadministration'] = '';
 $string['pluginname'] = 'Thesis';
 
