@@ -13,7 +13,7 @@ class restore_thesis_activity_structure_step extends restore_activity_structure_
     protected function process_thesis($data) {
         global $DB;
 
-        $data = (object)$data;
+        $data = (object) $data;
         $data->course = $this->get_courseid();
         $data->timemodified = $this->apply_date_offset($data->timemodified);
 

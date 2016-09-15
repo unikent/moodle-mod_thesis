@@ -21,13 +21,13 @@ require_once($CFG->dirroot . '/course/moodleform_mod.php');
 class mod_thesis_mod_form extends moodleform_mod
 {
 
-    function definition()
+    public function definition()
     {
         global $CFG, $DB, $PAGE;
-        $mform =& $this->_form;
+        $mform = &$this->_form;
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
-        
+
         $mform->addElement('text', 'name', 'Name', array('size' => '64'));
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
@@ -44,4 +44,3 @@ class mod_thesis_mod_form extends moodleform_mod
         $this->add_action_buttons();
     }
 }
-

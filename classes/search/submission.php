@@ -70,10 +70,12 @@ class submission extends \core_search\area\base_mod {
             // Notify it as we run here as admin, we should see everything.
             debugging('Error retrieving ' . $this->areaid . ' ' . $record->id . ' document, not all required data is available: ' .
                 $ex->getMessage(), DEBUG_DEVELOPER);
+
             return false;
         } catch (\dml_exception $ex) {
             // Notify it as we run here as admin, we should see everything.
             debugging('Error retrieving ' . $this->areaid . ' ' . $record->id . ' document: ' . $ex->getMessage(), DEBUG_DEVELOPER);
+
             return false;
         }
 
@@ -166,6 +168,7 @@ class submission extends \core_search\area\base_mod {
         // The submission is already in static cache, we fetch it in self::search_access.
         $submission = $this->get_submission($doc->get('itemid'));
         $contextmodule = \context::instance_by_id($doc->get('contextid'));
+
         return new \moodle_url('/mod/thesis/edit.php', array('id' => $contextmodule->instanceid, 'submission_id' => $submission->id));
     }
 
@@ -177,6 +180,7 @@ class submission extends \core_search\area\base_mod {
      */
     public function get_context_url(\core_search\document $doc) {
         $contextmodule = \context::instance_by_id($doc->get('contextid'));
+
         return new \moodle_url('/mod/thesis/view.php', array('id' => $contextmodule->instanceid));
     }
 }

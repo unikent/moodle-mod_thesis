@@ -18,7 +18,7 @@ require_once '../../config.php';
 require_once '../../course/moodleform_mod.php';
 require_once 'lib.php';
 require_once 'locallib.php';
-require_once $CFG->libdir.'/formslib.php';
+require_once $CFG->libdir . '/formslib.php';
 require_once $CFG->dirroot . '/repository/lib.php';
 
 $id = optional_param('id', 0, PARAM_INT);
@@ -27,17 +27,17 @@ $f = optional_param('f', null, PARAM_TEXT);
 
 $PAGE->set_pagelayout('admin');
 $PAGE->requires->js('/mod/thesis/javascript/form.js');
-$PAGE->set_url('/mod/thesis/edit.php', array('id'=>$id, 'submission_id'=>$submission_id));
+$PAGE->set_url('/mod/thesis/edit.php', array('id' => $id, 'submission_id' => $submission_id));
 
-if (! $cm = get_coursemodule_from_id('thesis', $id)) {
+if (!$cm = get_coursemodule_from_id('thesis', $id)) {
     print_error('invalidcoursemodule');
 }
 
-if (! $course = $DB->get_record("course", array("id" => $cm->course))) {
+if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
     print_error('coursemisconf');
 }
 
-if (! $thesis = $DB->get_record("thesis", array("id" => $cm->instance))) {
+if (!$thesis = $DB->get_record('thesis', array('id' => $cm->instance))) {
     print_error('invalidthesisid', 'thesis');
 }
 
@@ -46,7 +46,7 @@ $submitted_for_publishing = false;
 $submission_comments = '';
 
 if ($submission_id) {
-    $submission = $DB->get_record('thesis_submissions', array('id'=>$submission_id));
+    $submission = $DB->get_record('thesis_submissions', array('id' => $submission_id));
     $submission->publishdate = array(
         'mon' => $submission->publish_month,
         'year' => $submission->publish_year
@@ -61,7 +61,6 @@ $isadmin = has_capability('moodle/course:update', context_course::instance($cm->
 
 $show_as_published = $published || ($submitted_for_publishing && !$isadmin);
 
-
 require_course_login($course, true, $cm);
 
 $context = context_module::instance($cm->id);
@@ -75,8 +74,8 @@ if (!is_enrolled($context) && !has_capability('moodle/course:update', context_co
 
 if ($show_as_published) {
 
-    $status = $submission->submitted_for_publishing == 1 ? ' <span class="thesis_status">('.get_string('submitted_school', 'mod_thesis').')</span>' : '';
-    $status = isset($submission->publish) ? ' <span class="thesis_status">('.get_string('published', 'mod_thesis').')</span>' : $status;
+    $status = $submission->submitted_for_publishing == 1 ? ' <span class="thesis_status">(' . get_string('submitted_school', 'mod_thesis') . ')</span>' : '';
+    $status = isset($submission->publish) ? ' <span class="thesis_status">(' . get_string('published', 'mod_thesis') . ')</span>' : $status;
 
     $heading = get_string('page_title_view', 'mod_thesis') . $status;
     $PAGE->set_title($heading);
@@ -118,16 +117,16 @@ if ($show_as_published) {
         $output .= '<th class="thesis_table_head">' . $flabel . '</th>';
 
         if ($field === 'publishdate') {
-            $fdata = sprintf("%02d", $submission->publishdate['mon']) . '/' . $submission->publishdate['year'];
+            $fdata = sprintf('%02d', $submission->publishdate['mon']) . '/' . $submission->publishdate['year'];
         }
 
         if ($field == 'department') {
-            $r = $DB->get_record('course_categories', array('id'=>$fdata));
+            $r = $DB->get_record('course_categories', array('id' => $fdata));
             $fdata = $r != null ? $r->name : $fdata;
         }
 
         if ($field == 'timecreated' || $field == 'timemodified') {
-            $fdata = date("Y-m-d H:i:s", $fdata);
+            $fdata = date('Y-m-d H:i:s', $fdata);
         }
 
         $output .= '<td class="thesis_table_data">' . $fdata . '</td>';
@@ -149,26 +148,26 @@ if ($show_as_published) {
 
     $output .= '</table>';
 } else {
-    $heading = $course->fullname . " - " . $thesis->name . " (Deposit)";
+    $heading = $course->fullname . ' - ' . $thesis->name . ' (Deposit)';
     $PAGE->set_title($heading);
     $PAGE->set_heading($heading);
 
     $heading = get_string('form_heading', 'mod_thesis');
 
-    $form = new mod_thesis_submit_form(null, array('isadmin'=>$isadmin, 'submitted_for_publishing'=>$submitted_for_publishing, 'submission_comments'=>$submission_comments), 'post', '', array('class'=>'thesis_form'));
+    $form = new mod_thesis_submit_form(null, array('isadmin' => $isadmin, 'submitted_for_publishing' => $submitted_for_publishing, 'submission_comments' => $submission_comments), 'post', '', array('class' => 'thesis_form'));
     $terms_accepted_by_form = $form->terms_accepted();
     $terms_accepted_already = isset($submission->terms_accepted) && $submission->terms_accepted > 0;
     $terms_accepted_in_session = !empty($_SESSION['thesis_terms']);
     $terms_accepted = ($terms_accepted_by_form || $terms_accepted_already || $terms_accepted_in_session);
 
-    $file_options = array('subdirs'=>0, 'maxfiles'=>-1, 'accepted_types'=>'pdf', 'return_types'=>FILE_INTERNAL);
+    $file_options = array('subdirs' => 0, 'maxfiles' => -1, 'accepted_types' => 'pdf', 'return_types' => FILE_INTERNAL);
 
     //Has the form been submited?
     if ($form->is_cancelled()) {
         unset($_SESSION['thesis_terms']);
         redirect($CFG->wwwroot . "/mod/thesis/view.php?id=$id");
         die;
-    } else if ($entry = $form->get_data()) {
+    } elseif ($entry = $form->get_data()) {
 
         $f = 'ok';
 
@@ -203,13 +202,13 @@ if ($show_as_published) {
         file_postupdate_standard_filemanager($entry, 'publish', $file_options, $context, 'mod_thesis', 'publish', $entry->submission_id);
         file_postupdate_standard_filemanager($entry, 'private', $file_options, $context, 'mod_thesis', 'private', $entry->submission_id);
         file_postupdate_standard_filemanager($entry, 'permanent', $file_options, $context, 'mod_thesis', 'permanent', $entry->submission_id);
-        redirect('edit.php?id='.$id.'&amp;submission_id='.$entry->submission_id.'&amp;f='.$f);
+        redirect('edit.php?id=' . $id . '&amp;submission_id=' . $entry->submission_id . '&amp;f=' . $f);
         die;
 
-    } else {
+    }
 
         if (!$terms_accepted) {
-            $suburl = isset($submission) ? "&submission_id={$submission->id}" : "";
+            $suburl = isset($submission) ? "&submission_id={$submission->id}" : '';
             redirect($CFG->wwwroot . "/mod/thesis/terms.php?id={$id}{$suburl}");
             die;
         }
@@ -220,7 +219,7 @@ if ($show_as_published) {
                 throw new moodle_exception('Unauthorized access to resource');
             }
         } else { // new record, init
-            $submission = new stdClass;
+            $submission = new stdClass();
             $submission->publishdate = array('mon' => date('n'), 'year' => date('Y'));
             $submission->terms_accepted = $_SESSION['thesis_terms'];
             //unset($_SESSION['thesis_terms']);
@@ -233,7 +232,7 @@ if ($show_as_published) {
         file_prepare_standard_filemanager($submission, 'private', $file_options, $context, 'mod_thesis', 'private', $submission_id);
         file_prepare_standard_filemanager($submission, 'permanent', $file_options, $context, 'mod_thesis', 'permanent', $submission_id);
         $form->set_data($submission);
-    }
+
 }
 
 echo $OUTPUT->header();
@@ -246,7 +245,7 @@ if (null != $f) {
     if ('kar' == $f) {
         $message = get_string('save_state_message_kar', 'mod_thesis') . '<br/>';
     }
-    echo '<div class="thesis_ok notifysuccess">'.$message.' <a href="view.php?id='.$id.'">'.get_string('return_submissions_list', 'mod_thesis').'</a></div>';
+    echo '<div class="thesis_ok notifysuccess">' . $message . ' <a href="view.php?id=' . $id . '">' . get_string('return_submissions_list', 'mod_thesis') . '</a></div>';
 }
 
 if ($show_as_published) {
@@ -255,6 +254,6 @@ if ($show_as_published) {
     $form->display();
 }
 
-echo '<a class="thesis_back" href="view.php?id='.$id.'">'.get_string('return_submissions_list', 'mod_thesis').'</a>';
+echo '<a class="thesis_back" href="view.php?id=' . $id . '">' . get_string('return_submissions_list', 'mod_thesis') . '</a>';
 
 echo $OUTPUT->footer();

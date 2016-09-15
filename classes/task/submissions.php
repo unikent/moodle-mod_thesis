@@ -27,19 +27,20 @@ require_once($CFG->dirroot . '/mod/thesis/locallib.php');
 class submissions extends \core\task\scheduled_task
 {
     public function get_name() {
-        return "Thesis Submissions";
+        return 'Thesis Submissions';
     }
 
     /*
      * Shorten filename to under 100 characters
      */
     public static function shorten_filename($longfilename) {
-        if (strlen($longfilename) > 80) {
-            $extension = substr(strrchr($longfilename, "."), 1);
-            $shortfilename = substr($longfilename, 0, 80) . "." . $extension;
+        if (mb_strlen($longfilename) > 80) {
+            $extension = mb_substr(mb_strrchr($longfilename, '.'), 1);
+            $shortfilename = mb_substr($longfilename, 0, 80) . '.' . $extension;
         } else {
             $shortfilename = $longfilename;
         }
+
         return $shortfilename;
     }
 
@@ -77,7 +78,7 @@ class submissions extends \core\task\scheduled_task
             check_dir_exists($filepath);
 
             // Create the final location for the gzipped files.
-            $finalpath = $CFG->dataroot.'/thesis/';
+            $finalpath = $CFG->dataroot . '/thesis/';
             check_dir_exists($finalpath);
 
             // Create public and private folders.
@@ -89,7 +90,7 @@ class submissions extends \core\task\scheduled_task
             $fs = get_file_storage();
 
             // Start of xml generation.
-            $xml = new SimpleXMLElementExtended("<?xml version=\"1.0\" encoding=\"utf-8\" ?><eprints></eprints>");
+            $xml = new SimpleXMLElementExtended('<?xml version="1.0" encoding="utf-8" ?><eprints></eprints>');
             $xml->addAttribute('xmlns', 'http://eprints.org/ep2/data/2.0');
             $eprint = $xml->addChild('eprint');
 
@@ -104,6 +105,7 @@ class submissions extends \core\task\scheduled_task
 
                     if (!$f->copy_content_to($publicpath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
+
                         return false;
                     }
 
@@ -131,7 +133,7 @@ class submissions extends \core\task\scheduled_task
 
                     $embargodate = '';
                     if ($sub->embargo != 0) {
-                        $embargodate = ($sub->publish_year + $sub->embargo) . '-' . sprintf("%02d", $sub->publish_month);
+                        $embargodate = ($sub->publish_year + $sub->embargo) . '-' . sprintf('%02d', $sub->publish_month);
                     }
 
                     $doc->addChild('date_embargo', $embargodate);
@@ -147,6 +149,7 @@ class submissions extends \core\task\scheduled_task
 
                     if (!$f->copy_content_to($privatepath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
+
                         return false;
                     }
 
@@ -174,7 +177,7 @@ class submissions extends \core\task\scheduled_task
 
                     $embargodate = '';
                     if ($sub->embargo != 0) {
-                        $embargodate = ($sub->publish_year + $sub->embargo) . '-' . sprintf("%02d", $sub->publish_month);
+                        $embargodate = ($sub->publish_year + $sub->embargo) . '-' . sprintf('%02d', $sub->publish_month);
                     }
 
                     $doc->addChild('date_embargo', $embargodate);
@@ -190,6 +193,7 @@ class submissions extends \core\task\scheduled_task
 
                     if (!$f->copy_content_to($privatepath . $shortfilename)) {
                         mtrace('Errors whilst trying to copy thesis files to temp dir.');
+
                         return false;
                     }
 
@@ -259,7 +263,7 @@ class submissions extends \core\task\scheduled_task
             $eprint->addChild('pages', $sub->number_of_pages);
             $eprint->addChild('note', $sub->additional_information);
             $eprint->addChildWithCDATA('abstract', $sub->abstract);
-            $eprint->addChild('date', $sub->publish_year . '-' . sprintf("%02d", $sub->publish_month));
+            $eprint->addChild('date', $sub->publish_year . '-' . sprintf('%02d', $sub->publish_month));
             $eprint->addChild('date_type', 'published');
             $eprint->addChild('id_number', '');
 
@@ -274,7 +278,7 @@ class submissions extends \core\task\scheduled_task
             $dept = null == $dept ? 'Unknown' : $dept->name;
             $eprint->addChild('department', $dept);
 
-            $eprint->addChild('thesis_type', strtolower($sub->thesis_type));
+            $eprint->addChild('thesis_type', mb_strtolower($sub->thesis_type));
 
             $eprint->addChild('contact_email', $sub->contactemail);
             $eprint->addChild('submit_hardcopy', 'FALSE');
@@ -287,6 +291,7 @@ class submissions extends \core\task\scheduled_task
 
             if (!$xml->asXml($filepath . '/import.xml')) {
                 mtrace('Errors whilst trying to write xml document to temp dir.');
+
                 return false;
             }
 
@@ -297,8 +302,9 @@ class submissions extends \core\task\scheduled_task
             );
 
             $zippacker = get_file_packer('application/x-gzip');
-            if (!$zippacker->archive_to_pathname($archive, $filepath .'.tgz')) {
+            if (!$zippacker->archive_to_pathname($archive, $filepath . '.tgz')) {
                 mtrace('Errors whilst trying to tar xml and files.');
+
                 return false;
             }
 
@@ -309,6 +315,7 @@ class submissions extends \core\task\scheduled_task
                 unlink($filepath . '.tgz');
             } else {
                 mtrace('Errors whilst trying to copy thesis tgz into the thesis dir.');
+
                 return false;
             }
 
@@ -335,17 +342,17 @@ class submissions extends \core\task\scheduled_task
     }
 }
 
-Class SimpleXMLElementExtended extends \SimpleXMLElement {
+class SimpleXMLElementExtended extends \SimpleXMLElement {
 
     /**
      * Adds a child with $value inside CDATA
      * @param unknown $name
      * @param unknown $value
      */
-    public function addChildWithCDATA($name, $value = NULL) {
+    public function addChildWithCDATA($name, $value = null) {
         $new_child = $this->addChild($name);
 
-        if ($new_child !== NULL) {
+        if ($new_child !== null) {
             $node = dom_import_simplexml($new_child);
             $no   = $node->ownerDocument;
             $node->appendChild($no->createCDATASection($value));

@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
-require_once($CFG->libdir.'/filelib.php');
+require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once($CFG->libdir . '/filelib.php');
 
 $id = required_param('id', PARAM_INT);
 
@@ -50,7 +50,7 @@ $table->attributes['class'] = 'generaltable mod_index';
 $strname = get_string('name');
 $strintro = get_string('moduleintro');
 if ($usesections) {
-    $strsectionname = get_string('sectionname', 'format_'.$course->format);
+    $strsectionname = get_string('sectionname', 'format_' . $course->format);
     $table->head  = array ($strsectionname, $strname, $strintro);
     $table->align = array ('center', 'left', 'left');
 } else {
@@ -74,20 +74,20 @@ foreach ($theses as $thesis) {
             $currentsection = $thesis->section;
         }
     } else {
-        $printsection = '<span class="smallinfo">'.userdate($thesis->timemodified)."</span>";
+        $printsection = '<span class="smallinfo">' . userdate($thesis->timemodified) . '</span>';
     }
 
     $extra = empty($cm->extra) ? '' : $cm->extra;
     $icon = '';
     if (!empty($cm->icon)) {
         // Each url has an icon in 2.0.
-        $icon = '<img src="'.$OUTPUT->pix_url($cm->icon).'" class="activityicon" alt="'.get_string('modulename', $cm->modname).'" /> ';
+        $icon = '<img src="' . $OUTPUT->pix_url($cm->icon) . '" class="activityicon" alt="' . get_string('modulename', $cm->modname) . '" /> ';
     }
 
     $class = $thesis->visible ? '' : 'class="dimmed"'; // Hidden modules are dimmed.
     $table->data[] = array (
         $printsection,
-        "<a $class $extra href=\"view.php?id=$cm->id\">".$icon.format_string($thesis->name)."</a>",
+        "<a $class $extra href=\"view.php?id=$cm->id\">" . $icon . format_string($thesis->name) . '</a>',
         format_module_intro('url', $thesis, $cm->id));
 }
 

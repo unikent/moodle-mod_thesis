@@ -32,18 +32,18 @@ class backup_thesis_activity_task extends backup_activity_task {
      * Code the transformations to perform in the activity in
      * order to get transportable (encoded) links
      */
-    static public function encode_content_links($content) {
+    public static function encode_content_links($content) {
         global $CFG;
 
-        $base = preg_quote($CFG->wwwroot.'/mod/thesis','#');
+        $base = preg_quote($CFG->wwwroot . '/mod/thesis', '#');
 
         //Access a list of all links in a course
-        $pattern = '#('.$base.'/index\.php\?id=)([0-9]+)#';
+        $pattern = '#(' . $base . '/index\.php\?id=)([0-9]+)#';
         $replacement = '$@THESISINDEX*$2@$';
         $content = preg_replace($pattern, $replacement, $content);
 
         //Access the link supplying a course module id
-        $pattern = '#('.$base.'/view\.php\?id=)([0-9]+)#';
+        $pattern = '#(' . $base . '/view\.php\?id=)([0-9]+)#';
         $replacement = '$@THESISBYID*$2@$';
         $content = preg_replace($pattern, $replacement, $content);
 

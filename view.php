@@ -18,22 +18,22 @@ require_once('../../config.php');
 require_once('../../course/moodleform_mod.php');
 require_once('lib.php');
 require_once('locallib.php');
-require_once($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir . '/formslib.php');
 
 $id = optional_param('id', 0, PARAM_INT);
 
 $PAGE->set_url('/mod/thesis/view.php', array('id' => $id));
 
 if (!$cm = get_coursemodule_from_id('thesis', $id)) {
-	print_error('invalidcoursemodule');
+    print_error('invalidcoursemodule');
 }
 
-if (!$course = $DB->get_record("course", array("id" => $cm->course))) {
-	print_error('coursemisconf');
+if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    print_error('coursemisconf');
 }
 
-if (!$thesis = $DB->get_record("thesis", array("id" => $cm->instance))) {
-	print_error('invalidthesisid', 'thesis');
+if (!$thesis = $DB->get_record('thesis', array('id' => $cm->instance))) {
+    print_error('invalidthesisid', 'thesis');
 }
 
 require_course_login($course, true, $cm);
@@ -66,11 +66,11 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('view_page_title', 'mod_thesis'));
 
 if (!empty($thesis->intro)) {
-	echo $OUTPUT->box(format_module_intro('thesis', $thesis, $cm->id), 'generalbox', 'intro');
+    echo $OUTPUT->box(format_module_intro('thesis', $thesis, $cm->id), 'generalbox', 'intro');
 }
 
 echo '<div class="thesis_list">';
-echo '<a class="thesis_new" href="edit.php?id='.$id.'">'.get_string('create_submission', 'mod_thesis').'</a>';
+echo '<a class="thesis_new" href="edit.php?id=' . $id . '">' . get_string('create_submission', 'mod_thesis') . '</a>';
 echo thesis_list_submissions($id, $thesis->id, context_course::instance($cm->course));
 echo '</div>';
 echo $OUTPUT->footer();

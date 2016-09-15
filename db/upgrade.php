@@ -2,13 +2,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-function xmldb_thesis_upgrade($oldversion=0) {
+function xmldb_thesis_upgrade($oldversion = 0) {
 
     global $CFG, $DB, $OUTPUT;
 
     $dbman = $DB->get_manager();
 
-    if($oldversion<2013052904) {
+    if($oldversion < 2013052904) {
         $table = new xmldb_table('thesis');
         $field = new xmldb_field('course_id', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'name');
 
@@ -22,7 +22,7 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2013052904, 'thesis');
     }
 
-    if($oldversion<2013060104) {
+    if($oldversion < 2013060104) {
         $table = new xmldb_table('thesis_submissions');
         $field = new xmldb_field('submitted_for_publishing', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0');
 
@@ -33,7 +33,7 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2013060104, 'thesis');
     }
 
-    if($oldversion<2013060401) {
+    if($oldversion < 2013060401) {
         $table = new xmldb_table('thesis_submissions');
         $field = new xmldb_field('number_of_pages', XMLDB_TYPE_TEXT, 'small');
 
@@ -42,7 +42,7 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2013060401, 'thesis');
     }
 
-    if($oldversion<2013060402) {
+    if($oldversion < 2013060402) {
         $table = new xmldb_table('thesis_submissions');
         $field = new xmldb_field('terms_accepted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
 
@@ -53,7 +53,7 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2013060402, 'thesis');
     }
 
-    if($oldversion<2013061001) {
+    if($oldversion < 2013061001) {
         $table = new xmldb_table('thesis_submissions');
         $month = new xmldb_field('publish_month', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
         $year = new xmldb_field('publish_year', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
@@ -72,7 +72,7 @@ function xmldb_thesis_upgrade($oldversion=0) {
         upgrade_mod_savepoint(true, 2013061001, 'thesis');
     }
 
-    if($oldversion<2013061003) {
+    if($oldversion < 2013061003) {
         $table = new xmldb_table('thesis_submissions');
 
         $fields = array(
@@ -155,20 +155,20 @@ function xmldb_thesis_upgrade($oldversion=0) {
         ), MUST_EXIST);
 
         // Delete all Thesis entries that do not have a corresponding course module.
-        $DB->execute("
+        $DB->execute('
             DELETE t.* FROM {thesis} t
             LEFT OUTER JOIN {course_modules} cm ON cm.instance=t.id AND cm.module=:moduleid
             WHERE cm.id IS NULL
-        ", array(
+        ', array(
             'moduleid' => $moduleid
         ));
 
         // Delete all Thesis Submissions that do not have a corresponding thesis entry.
-        $DB->execute("
+        $DB->execute('
             DELETE ts.* FROM {thesis_submissions} ts
             LEFT OUTER JOIN {thesis} t ON t.id=ts.thesis_id
             WHERE t.id IS NULL
-        ");
+        ');
 
         upgrade_mod_savepoint(true, 2014060900, 'thesis');
     }
@@ -211,7 +211,6 @@ function xmldb_thesis_upgrade($oldversion=0) {
 
         upgrade_mod_savepoint(true, 2015031000, 'thesis');
     }
-    
+
     return true;
 }
-

@@ -105,7 +105,6 @@ $string['thesis_restricted'] = 'I am depositing one copy of my thesis to be perm
 
 $string['thesis_restricted_info'] = '<p>Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.</p>';
 
-
 $string['form_heading'] = 'Create/update thesis/dissertation';
 $string['page_title_view'] = 'View thesis/dissertation deposit';
 $string['submitted_school'] = 'Submitted to School Administrator';

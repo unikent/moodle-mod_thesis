@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 require_once('../../config.php');
 
 $id = optional_param('id', 0, PARAM_INT);
@@ -22,28 +21,26 @@ $submission_id = optional_param('submission_id', null, PARAM_INT);
 $choice = optional_param('kent_thesis_choose_btn', null, PARAM_TEXT);
 $accepted = optional_param('kent_thesis_tcs_accepted', 0, PARAM_INT);
 
-$PAGE->set_url('/mod/thesis/terms.php', array('id'=>$id));
+$PAGE->set_url('/mod/thesis/terms.php', array('id' => $id));
 
-if (! $cm = get_coursemodule_from_id('thesis', $id)) {
+if (!$cm = get_coursemodule_from_id('thesis', $id)) {
   print_error('invalidcoursemodule');
 }
-if (! $course = $DB->get_record("course", array("id" => $cm->course))) {
+if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
   print_error('coursemisconf');
 }
-if (! $thesis = $DB->get_record("thesis", array("id" => $cm->instance))) {
+if (!$thesis = $DB->get_record('thesis', array('id' => $cm->instance))) {
   print_error('invalidthesisid', 'thesis');
 }
 
 require_course_login($course, true, $cm);
-
 
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
 $content = '<h2>Terms and Conditions</h2>';
 
-$suburl = isset($submission_id) ? "&submission_id={$submission_id}" : "";
-
+$suburl = isset($submission_id) ? "&submission_id={$submission_id}" : '';
 
 $normal_tcs = <<<NTCS
 	<div class="kent_thesis_tcs" id="kent_normal_thesis_tcs">
@@ -165,7 +162,6 @@ $restricted_tcs = <<<NTCS
 	</div>
 NTCS;
 
-
 $thesis_normal = get_string('thesis_normal', 'mod_thesis');
 $thesis_redacted = get_string('thesis_redacted', 'mod_thesis');
 $thesis_restricted = get_string('thesis_restricted', 'mod_thesis');
@@ -188,49 +184,46 @@ $choose_btns = <<<CBTNS
 	</form>
 CBTNS;
 
-$choose_btns_intro = get_string("choose_btns_intro", "thesis");
+$choose_btns_intro = get_string('choose_btns_intro', 'thesis');
 
 if($accepted > 0) {
-	$_SESSION['thesis_terms'] = $accepted;
-	redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}");
+    $_SESSION['thesis_terms'] = $accepted;
+    redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}");
 } elseif(empty($choice)) {
-	unset($_SESSION['thesis_terms']);
-	$content .= $choose_btns_intro;
-	$content .= $choose_btns;
+    unset($_SESSION['thesis_terms']);
+    $content .= $choose_btns_intro;
+    $content .= $choose_btns;
 } else {
-	unset($_SESSION['thesis_terms']);
-	$type = 0;
-	switch ($choice) {
-		case 'normal':
-			$type = 1;
-			$content .= $normal_tcs;
-			break;
-		case 'redacted':
-			$type = 2;
-			$content .= $redacted_tcs;
-			break;
-		case 'restricted':
-			$type = 3;
-			$content .= $restricted_tcs;
-			break;
-		default:
-			$content .= 'Incorrect choice';
-			break;
-	}
+    unset($_SESSION['thesis_terms']);
+    $type = 0;
+    switch ($choice) {
+        case 'normal':
+            $type = 1;
+            $content .= $normal_tcs;
+            break;
+        case 'redacted':
+            $type = 2;
+            $content .= $redacted_tcs;
+            break;
+        case 'restricted':
+            $type = 3;
+            $content .= $restricted_tcs;
+            break;
+        default:
+            $content .= 'Incorrect choice';
+            break;
+    }
 
-	if($type > 0) {
-		$content .= "<a href=' {$CFG->wwwroot}/mod/thesis/terms.php?id={$id}' class='btn form-button kent_thesis_tcs_back'>Back</a>
+    if($type > 0) {
+        $content .= "<a href=' {$CFG->wwwroot}/mod/thesis/terms.php?id={$id}' class='btn form-button kent_thesis_tcs_back'>Back</a>
 					<form class='kent_thesis_tcs_sub' action='terms.php?id={$id}{$suburl}' method='post'>
 						<input type='hidden' value='$type' name='kent_thesis_tcs_accepted' />
 						<input class='form-submit' type='submit' value='Accept'>
 					</form>";
-	}
+    }
 }
 
 echo $OUTPUT->header();
 echo $content;
 
 echo $OUTPUT->footer();
-
-
-

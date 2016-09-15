@@ -16,9 +16,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once $CFG->libdir.'/coursecatlib.php';
-require_once $CFG->libdir.'/formslib.php';
-
+require_once $CFG->libdir . '/coursecatlib.php';
+require_once $CFG->libdir . '/formslib.php';
 
 /**
  *
@@ -34,7 +33,7 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
 
     if ($isadmin && isset($data->submitdelete)) {
         // Check not already published
-        $is_published = $DB->get_field('thesis_submissions', 'submitted_for_publishing', array("id" => $data->submission_id));
+        $is_published = $DB->get_field('thesis_submissions', 'submitted_for_publishing', array('id' => $data->submission_id));
         if($is_published > 1) {
             return;
         }
@@ -59,8 +58,9 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
             }
         }
 
-        $DB->delete_records('thesis_submissions', array("id" => $data->submission_id));
-        redirect('view.php?id='.$thesis->id);
+        $DB->delete_records('thesis_submissions', array('id' => $data->submission_id));
+        redirect('view.php?id=' . $thesis->id);
+
         return;
     }
 
@@ -117,7 +117,7 @@ function thesis_notification_notes($data, $thesis, $context, $isadmin) {
     $a->name = $data->title;
     $a->depositurl = $CFG->wwwroot . '/mod/thesis/edit.php?id=' . $data->id . '&submission_id=' . $data->submission_id;
     $a->depositurllink = '<a href="' . $a->depositurl . '">' . $thesis->name . '</a>';
-    $a->timemodified = date("Y-m-d H:i:s", $data->timemodified);
+    $a->timemodified = date('Y-m-d H:i:s', $data->timemodified);
     $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
 
     // set some user specific email template stuff
@@ -133,7 +133,7 @@ function thesis_notification_notes($data, $thesis, $context, $isadmin) {
 
     // set user to send to
     $eventdata->userto = $utn;
-    
+
     // send message
     $result = message_send($eventdata);
 }
@@ -167,7 +167,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
         foreach ($courseobjects as $courseobj) {
             $convenors = \local_connect\enrolment::get_for_course_and_role($courseobj, $connectroleconvenor);
             foreach ($convenors as $convenor) {
-                if ((int)$convenor->user->mid <= 0 || isset($recipients[$convenor->user->mid])) {
+                if ((int) $convenor->user->mid <= 0 || isset($recipients[$convenor->user->mid])) {
                     continue;
                 }
 
@@ -187,7 +187,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
     $a->name = $data->title;
     $a->depositurl = $CFG->wwwroot . '/mod/thesis/edit.php?id=' . $data->id . '&submission_id=' . $data->submission_id;
     $a->depositurllink = '<a href="' . $a->depositurl . '">' . $thesis->name . '</a>';
-    $a->timemodified = date("Y-m-d H:i:s", $data->timemodified);
+    $a->timemodified = date('Y-m-d H:i:s', $data->timemodified);
     $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
 
     foreach ($recipients as $id => $utn) {
@@ -204,7 +204,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
 
         // set user to send to
         $eventdata->userto = $utn;
-        
+
         // send message
         $result = message_send($eventdata);
     }
@@ -249,23 +249,23 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
             'id' => $s->user_id
         ));
 
-        $name = join(' ', array($user->firstname, $user->lastname));
-        $out .= sprintf($row, $cmid, $s->id, $s->title, $name, $user->email, date("Y-m-d H:i:s", $s->timecreated), date("Y-m-d H:i:s", $s->timemodified), $pushed);
+        $name = implode(' ', array($user->firstname, $user->lastname));
+        $out .= sprintf($row, $cmid, $s->id, $s->title, $name, $user->email, date('Y-m-d H:i:s', $s->timecreated), date('Y-m-d H:i:s', $s->timemodified), $pushed);
     }
 
     $message = '';
     if (empty($submissions)) {
-        return '<p>You currently have no submissions, <a href="edit.php?id='.$cmid.'">create one?</a></p>';
-    } else {
+        return '<p>You currently have no submissions, <a href="edit.php?id=' . $cmid . '">create one?</a></p>';
+    }
+
         return <<<HTML
     <table class="thesis">
       <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Time created</th><th>Time modified</th><th>Status</th></tr></thead>
       <tbody>$out</tbody>
     </table>
 HTML;
-    }
-}
 
+}
 
 class mod_thesis_submit_form extends moodleform {
 
@@ -277,7 +277,7 @@ class mod_thesis_submit_form extends moodleform {
 
         $isadmin = isset($this->_customdata['isadmin']) && true === $this->_customdata['isadmin'];
 
-        $mform =& $this->_form;
+        $mform = &$this->_form;
 
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
@@ -329,7 +329,7 @@ HTML;
         $mform->setType('family_name', PARAM_TEXT);
         $mform->addRule('family_name', get_string('family_name_req', 'thesis'), 'required');
 
-        $typeoptions = array(null => "Choose type");
+        $typeoptions = array(null => 'Choose type');
         $typeoptions['engd'] = 'Doctor of Engineering (Eng.Doc)';
         $typeoptions['sportd'] = 'Professional Doctorate in Sport, Exercise and Health Science (Sport.D.)';
         $typeoptions['mphil'] = 'Master of Philosophy (M.Phil.)';
@@ -370,14 +370,14 @@ HTML;
         foreach ($category as $id => $cat) {
             $split = explode('!!!', $cat);
             // Don't use the anything other than 2 level deep, others have the wrong ids.
-            if (count($split) == 2 && (strpos($split[1], "School") !== false || strpos($split[1], "Centre") !== false)) {
+            if (count($split) == 2 && (mb_strpos($split[1], 'School') !== false || mb_strpos($split[1], 'Centre') !== false)) {
                 $options[$id] = $split[1];
             }
         }
 
         // Sort the list of schools.
         asort($options);
-        $options = array(null => "Choose school") + $options;
+        $options = array(null => 'Choose school') + $options;
 
         $mform->addElement('select', 'department', get_string('department', 'thesis'), $options);
         $mform->setType('department', PARAM_TEXT);
@@ -392,13 +392,13 @@ HTML;
         $date_group = array();
         $months = array();
         for ($i = 0; $i < 12; $i++) {
-            $months[$i+1] = date('F', mktime(0, 0, 0, $i + 1));
+            $months[$i + 1] = date('F', mktime(0, 0, 0, $i + 1));
         }
-        $date_group []= $mform->createElement('select', 'mon', '', $months);
+        $date_group [] = $mform->createElement('select', 'mon', '', $months);
 
         $range = range(1980, 2020);
         $years = array_combine($range, $range);
-        $date_group []= $mform->createElement('select', 'year', '', $years);
+        $date_group [] = $mform->createElement('select', 'year', '', $years);
 
         $mform->addElement('static', 'publishdate_info', '', get_string('publishdate_help', 'thesis'));
         $mform->addGroup($date_group, 'publishdate', get_string('publishdate', 'thesis'));
@@ -415,7 +415,7 @@ HTML;
         $qualoptions['doctorial'] = get_string('quals_doctoral', 'thesis');
         $qualoptions['masters'] = get_string('quals_masters', 'thesis');
         $qualoptions['unspecified'] = get_string('quals_unspecified', 'thesis');
-        $mform->addElement('select', 'qualification_level', get_string("quals", "thesis"), $qualoptions);
+        $mform->addElement('select', 'qualification_level', get_string('quals', 'thesis'), $qualoptions);
         $mform->addRule('qualification_level', get_string('quals_req', 'thesis'), 'required');
 
         foreach (array('', 'second_', 'third_') as $i) {
@@ -526,14 +526,14 @@ HTML;
     }
 
     // form verification
-    function validation($data, $files) {
+    public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
-        $mform =& $this->_form;
+        $mform = &$this->_form;
 
         // Check if title contains invalid characters
         if ($mform->elementExists('title')) {
-            if( strpos($data['title'], ";") !== false ) {
+            if(mb_strpos($data['title'], ';') !== false) {
                 $errors['title'] = get_string('invalid_characters_error', 'thesis');
             }
         }
@@ -541,10 +541,10 @@ HTML;
         return $errors;
     }
 
-    function definition_after_data() {
+    public function definition_after_data() {
         parent::definition_after_data();
 
-        $mform =& $this->_form;
+        $mform = &$this->_form;
 
         // Strip bad characters from title
         $t = $mform->getElement('title');
@@ -578,8 +578,8 @@ HTML;
         ];
 
         $replacements = [
-            "<<",
-            ">>",
+            '<<',
+            '>>',
             "'",
             "'",
             "'",
@@ -588,11 +588,11 @@ HTML;
             '"',
             '"',
             '"',
-            "<",
-            ">",
-            "-",
-            "-",
-            "..."
+            '<',
+            '>',
+            '-',
+            '-',
+            '...'
         ];
 
         $clean_text = str_replace($search, $replacements, $text);
@@ -605,10 +605,10 @@ HTML;
      *
      * @return unknown
      */
-    function terms_accepted() {
+    public function terms_accepted() {
         $ta = $this->_form->getSubmitValue('terms_accepted');
+
         return isset($ta) && ($ta > 0);
     }
-
 
 }

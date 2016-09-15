@@ -42,7 +42,7 @@ function thesis_add_instance($data, $mform) {
     global $DB;
 
     $data->timemodified = time();
-    
+
     return $DB->insert_record('thesis', $data);
 }
 
@@ -57,7 +57,6 @@ function thesis_delete_instance($id) {
 
     return true;
 }
-
 
 /**
  *
@@ -86,12 +85,12 @@ function thesis_update_instance($data, $mform) {
 function thesis_listfiles($files, $title) {
     $output = '';
     $output .= '<tr>';
-    $output .= '<th rowspan= "'. count($files) .'">'.$title.'</th>' ;
+    $output .= '<th rowspan= "' . count($files) . '">' . $title . '</th>';
 
     $first_key = key($files);
     foreach ($files as $key => $f) {
         $output .= $key === $first_key ? '' : '<tr>';
-        $output .= '<td>' . $f->get_filename() .'</td>';
+        $output .= '<td>' . $f->get_filename() . '</td>';
         $output .= '</tr>';
     }
 
