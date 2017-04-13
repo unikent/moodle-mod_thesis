@@ -167,7 +167,7 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('language', 'en');
 
                     // Set security depending on embargo.
-                    if ($sub->emargo == 0) {
+                    if ($sub->embargo == 0) {
                         $doc->addChild('security', 'public');
                     } else {
                         $doc->addChild('security', 'staffonly');
