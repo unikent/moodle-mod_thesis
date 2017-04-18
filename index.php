@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/filelib.php');
 
 $id = required_param('id', PARAM_INT);
