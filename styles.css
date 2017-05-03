@@ -115,8 +115,8 @@ table.thesis td {
 
 .kent_thesis_radio_grp {
   float: left;
-  width: 30%;
-  margin: 25px 3% 25px 0;
+  width: 48%;
+  margin: 25px 2% 25px 0;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
   -webkit-border-radius: 5px;
@@ -146,4 +146,9 @@ table.thesis td {
 
 .mform fieldset.staff_comments {
   background-color: #FCF9B4;
+}
+
+.kent_thesis_option_heading {
+  text-align: center;
+  padding-top: 5px;
 }

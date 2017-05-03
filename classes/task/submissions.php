@@ -139,6 +139,9 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('date_embargo', $embargodate);
 
                     $doc->addChild('content', 'submitted');
+                    if ($sub->license) {
+                        $doc->addChild('license', $sub->license);
+                    }
                 }
             }
 
@@ -183,10 +186,14 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('date_embargo', $embargodate);
 
                     $doc->addChild('content', 'submitted');
+
+                    if ($sub->license) {
+                        $doc->addChild('license', $sub->license);
+                    }
                 }
             }
 
-            // Permanently restriced.
+            // Permanently restricted. Note: we should currently never get here as this option has been removed on the form
             if ($permanentfiles = $fs->get_area_files($context->id, 'mod_thesis', 'permanent', $sub->id, '', false)) {
                 foreach ($permanentfiles as $f) {
                     $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
@@ -212,6 +219,9 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('security', 'staffonly');
                     $doc->addChild('main', $shortfilename);
                     $doc->addChild('content', 'submitted');
+                    if ($sub->license) {
+                        $doc->addChild('license', $sub->license);
+                    }
                 }
             }
 
