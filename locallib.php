@@ -349,6 +349,23 @@ HTML;
         $typeoptions['dsc'] = 'Doctor of Science (D.Sc.)';
         $typeoptions['pdip'] = 'Postgraduate Diploma by Research (P.Dip.)';
 
+        $license_options = array(null => 'Unspecified'); // todo add a value for unspecified
+        $license_options['cc_by_nd'] = 'Creative Commons: Attribution-No Derivative Works 3.0';
+        $license_options['cc_by_nd_4'] = 'Creative Commons: Attribution-No Derivative Works 4.0';
+        $license_options['cc_by'] = 'Creative Commons: Attribution 3.0';
+        $license_options['cc_by_4'] = 'Creative Commons: Attribution 4.0';
+        $license_options['cc_by_nc'] = 'Creative Commons: Attribution-Noncommercial 3.0';
+        $license_options['cc_by_nc_4'] = 'Creative Commons: Attribution-Noncommercial 4.0';
+        $license_options['cc_by_nc_nd'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 3.0';
+        $license_options['cc_by_nc_nd_4'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 4.0';
+        $license_options['cc_by_nc_sa'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 3.0';
+        $license_options['cc_by_nc_sa_4'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 4.0';
+        $license_options['cc_by_sa'] = 'Creative Commons: Attribution-Share Alike 3.0';
+        $license_options['cc_by_sa_4'] = 'Creative Commons: Attribution-Share Alike 4.0';
+        $license_options['cc_public_domain'] = 'Creative Commons: Public Domain Dedication';
+        $license_options['cc_gnu_gpl'] = 'Software: Creative Commons: GNU GPL 2.0';
+        $license_options['cc_gnu_lgpl'] = 'Software: Creative Commons: GNU LGPL 2.1';
+
         // Sort the list of schools.
         asort($typeoptions);
 
@@ -446,6 +463,12 @@ HTML;
 
             $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
             $mform->setDefault('embargo', 3);
+
+            $mform->closeHeaderBefore('license_wording');
+
+            $mform->addElement('static', 'license_wording', '', get_string('license_wording', 'thesis'));
+            $mform->addElement('select', 'license', get_string('license', 'thesis'), $license_options);
+            //$mform->addRule('license', get_string('license_req', 'thesis'), 'required');
         }
 
         if ($choice == 2) {
@@ -457,6 +480,12 @@ HTML;
 
             $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
             $mform->setDefault('embargo', 3);
+
+            $mform->closeHeaderBefore('license_wording');
+
+            $mform->addElement('static', 'license_wording', '', get_string('license_wording', 'thesis'));
+            $mform->addElement('select', 'license', get_string('license', 'thesis'), $license_options);
+            //$mform->addRule('license', get_string('license_req', 'thesis'), 'required');
 
             $mform->closeHeaderBefore('permanent_filemanager');
 
@@ -470,12 +499,14 @@ HTML;
         }
 
         if ($choice == 3) {
-            // permantently restricted
+            // permanently restricted option but note: currently not possible to select
             $mform->closeHeaderBefore('private_filemanager');
 
             $mform->addElement('filemanager', 'permanent_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
         }
+
+        $mform->addElement('static', 'accompany_files', '', get_string('accompany_files', 'thesis'));
 
         $submitted_for_publishing = isset($this->_customdata['submitted_for_publishing']) && true === $this->_customdata['submitted_for_publishing'];
 

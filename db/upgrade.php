@@ -212,5 +212,20 @@ function xmldb_thesis_upgrade($oldversion = 0) {
         upgrade_mod_savepoint(true, 2015031000, 'thesis');
     }
 
+    if ($oldversion < 2017031100) {
+
+        // Define field license to be added to thesis_submissions.
+        $table = new xmldb_table('thesis_submissions');
+        $field = new xmldb_field('license', XMLDB_TYPE_CHAR, '30', null, null, null, null, 'terms_accepted');
+
+        // Conditionally launch add field license.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Thesis savepoint reached.
+        upgrade_mod_savepoint(true, 2017031100, 'thesis');
+    }
+
     return true;
 }

@@ -91,6 +91,10 @@ $string['third_sup_sname'] = 'Third supervisor last name';
 $string['third_sup_email'] = 'Third supervisor email';
 $string['metadata_vis'] = 'Metadata visible?';
 $string['embargo'] = 'With embargo?';
+$string['license'] = 'Which license?';
+$string['license_req'] = 'You must select a creative commons license';
+$string['license_wording'] = 'Creative Commons licenses tell users what they are allowed to do with your work (eg. share, copy adapt). See <a href="https://www.kent.ac.uk/library/research/open-access/copyright.html">https://www.kent.ac.uk/library/research/open-access/copyright.html</a>.';
+$string['accompany_files'] = 'If you need to upload accompanying files please contact <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a>.';
 $string['staff_comments'] = 'Staff comments';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
@@ -100,7 +104,7 @@ $string['delete_info'] = 'To delete this entry you must reset to draft.';
 $string['thesis:addinstance'] = 'Add a new thesis';
 
 $string['thesis_normal'] = 'I am depositing one copy of my thesis for public access with/without embargo';
-$string['thesis_redacted'] = 'I am depositing two copies of my thesis, one redacted copy for public access, with/without embargo, and one full text copy to be permanently restricted';
+$string['thesis_redacted'] = 'I am depositing two copies of my thesis, one redacted copy for public access, with/without embargo, and one full text copy to be permanently restricted. For information about how to redact your thesis please see the guidance <a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">(link)</a>.';
 $string['thesis_restricted'] = 'I am depositing one copy of my thesis to be permanently restricted';
 
 $string['thesis_restricted_info'] = '<p>Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.</p>';

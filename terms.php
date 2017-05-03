@@ -164,24 +164,31 @@ NTCS;
 
 $thesis_normal = get_string('thesis_normal', 'mod_thesis');
 $thesis_redacted = get_string('thesis_redacted', 'mod_thesis');
-$thesis_restricted = get_string('thesis_restricted', 'mod_thesis');
+//$thesis_restricted = get_string('thesis_restricted', 'mod_thesis');
 
 $choose_btns = <<<CBTNS
 	<form class="kent_thesis_choose" action="terms.php?id={$id}{$suburl}" method="post">
 		<div class="kent_thesis_radio_grp">
+			<h4 class="kent_thesis_option_heading">Option 1</h4>
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_normal" value="normal">
 			<label for="kent_thesis_normal">{$thesis_normal}</label>
 		</div>
 		<div class="kent_thesis_radio_grp">
+			<h4 class="kent_thesis_option_heading">Option 2</h4>
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_redacted" value="redacted">
 			<label for="kent_thesis_redacted">{$thesis_redacted}</label>
 		</div>
-		<div class="kent_thesis_radio_grp">
+		<!--<div class="kent_thesis_radio_grp">
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_restricted" value="restricted">
-			<label for="kent_thesis_restricted">{$thesis_restricted}</label>
-		</div>
+			<label for="kent_thesis_restricted">{thesis_restricted}</label>
+		</div>-->
 		<input class="form-submit" type="submit" value="Choose">
 	</form>
+    <div>
+        <h4>Note:</h4>
+        <p>If you think your thesis contains material of a sensitive or confidential nature, and cannot be made publicly available, you may be able to restrict access to it permanently. Please download the permission form (link), complete it, obtain the necessary signatures, and then return it to <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a> 
+    You will still need to upload your thesis using this Moodle module. Please select Option 1 to do so.</p>
+    </div>
 CBTNS;
 
 $choose_btns_intro = get_string('choose_btns_intro', 'thesis');
@@ -206,9 +213,9 @@ if($accepted > 0) {
             $content .= $redacted_tcs;
             break;
         case 'restricted':
-            $type = 3;
-            $content .= $restricted_tcs;
-            break;
+//            $type = 3;
+//            $content .= $restricted_tcs;
+//            break;
         default:
             $content .= 'Incorrect choice';
             break;
