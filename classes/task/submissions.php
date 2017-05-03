@@ -139,8 +139,9 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('date_embargo', $embargodate);
 
                     $doc->addChild('content', 'submitted');
-
-                    $doc->addChild('license', $sub->license);
+                    if ($sub->license) {
+                        $doc->addChild('license', $sub->license);
+                    }
                 }
             }
 
@@ -186,7 +187,9 @@ class submissions extends \core\task\scheduled_task
 
                     $doc->addChild('content', 'submitted');
 
-                    $doc->addChild('license', $sub->license);
+                    if ($sub->license) {
+                        $doc->addChild('license', $sub->license);
+                    }
                 }
             }
 
@@ -216,7 +219,9 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('security', 'staffonly');
                     $doc->addChild('main', $shortfilename);
                     $doc->addChild('content', 'submitted');
-                    $doc->addChild('license', $sub->license);
+                    if ($sub->license) {
+                        $doc->addChild('license', $sub->license);
+                    }
                 }
             }
 
