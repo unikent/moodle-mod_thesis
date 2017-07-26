@@ -137,3 +137,7 @@ $string['form_buttons_delete'] = 'Delete entry';
 
 $string['form_add_sup'] = 'Add another supervisor';
 $string['invalid_characters_error'] = 'Title cannot contain the following characters: ;';
+
+$string['kar:username'] = 'Kar admin username for sword api submissions.';
+$string['kar:password'] = 'Kar admin password for sword api submissions.';
+$string['kar:server'] = 'Kar server for sword api submissions.';

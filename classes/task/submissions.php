@@ -73,19 +73,11 @@ class submissions extends \core\task\scheduled_task
             }
 
             $context = \context_module::instance($cm->id);
+
+            // Create temporary folder for the sword.xml file we will send to Kar.
             $foldername = md5($sub->title) . time();
             $filepath = $CFG->tempdir . '/' . $foldername;
             check_dir_exists($filepath);
-
-            // Create the final location for the gzipped files.
-            $finalpath = $CFG->dataroot . '/thesis/';
-            check_dir_exists($finalpath);
-
-            // Create public and private folders.
-            $publicpath = $filepath . '/public/';
-            check_dir_exists($publicpath);
-            $privatepath = $filepath . '/private/';
-            check_dir_exists($privatepath);
 
             $fs = get_file_storage();
 
@@ -103,12 +95,6 @@ class submissions extends \core\task\scheduled_task
                 foreach ($publishfiles as $f) {
                     $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
-                    if (!$f->copy_content_to($publicpath . $shortfilename)) {
-                        mtrace('Errors whilst trying to copy thesis files to temp dir.');
-
-                        return false;
-                    }
-
                     $doc = $docs->addChild('document');
                     $doc->addChild('pos', $pos);
                     $doc->addChild('placement', $pos);
@@ -117,7 +103,10 @@ class submissions extends \core\task\scheduled_task
                     $file = $files->addChild('file');
                     $file->addChild('datasetid', 'document');
                     $file->addChild('filename', $shortfilename);
-                    $file->addChild('url', 'public/' . $shortfilename);
+
+                    // Embed the file into the xml as based64.
+                    $doc->addChild('filesize', $f->get_filesize());
+                    $doc->addChild('data', base64_encode($f->get_content()));
 
                     $doc->addChild('format', $f->get_mimetype());
                     $doc->addChild('language', 'en');
@@ -150,12 +139,6 @@ class submissions extends \core\task\scheduled_task
                 foreach ($restrictfiles as $f) {
                     $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
-                    if (!$f->copy_content_to($privatepath . $shortfilename)) {
-                        mtrace('Errors whilst trying to copy thesis files to temp dir.');
-
-                        return false;
-                    }
-
                     $doc = $docs->addChild('document');
                     $doc->addChild('pos', $pos);
                     $doc->addChild('placement', $pos);
@@ -164,7 +147,10 @@ class submissions extends \core\task\scheduled_task
                     $file = $files->addChild('file');
                     $file->addChild('datasetid', 'document');
                     $file->addChild('filename', $shortfilename);
-                    $file->addChild('url', 'private/' . $shortfilename);
+
+                    // Embed the file into the xml as based64.
+                    $doc->addChild('filesize', $f->get_filesize());
+                    $doc->addChild('data', base64_encode($f->get_content()));
 
                     $doc->addChild('format', $f->get_mimetype());
                     $doc->addChild('language', 'en');
@@ -198,12 +184,6 @@ class submissions extends \core\task\scheduled_task
                 foreach ($permanentfiles as $f) {
                     $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
 
-                    if (!$f->copy_content_to($privatepath . $shortfilename)) {
-                        mtrace('Errors whilst trying to copy thesis files to temp dir.');
-
-                        return false;
-                    }
-
                     $doc = $docs->addChild('document');
                     $doc->addChild('pos', $pos);
                     $doc->addChild('placement', $pos);
@@ -212,7 +192,10 @@ class submissions extends \core\task\scheduled_task
                     $file = $files->addChild('file');
                     $file->addChild('datasetid', 'document');
                     $file->addChild('filename', $shortfilename);
-                    $file->addChild('url', 'private/' . $shortfilename);
+
+                    // Embed the file into the xml as based64.
+                    $doc->addChild('filesize', $f->get_filesize());
+                    $doc->addChild('data', base64_encode($f->get_content()));
 
                     $doc->addChild('format', $f->get_mimetype());
                     $doc->addChild('language', 'en');
@@ -299,40 +282,52 @@ class submissions extends \core\task\scheduled_task
             $funder = $funders->addChild('item');
             $funder->addChild('title', $sub->funding);
 
-            if (!$xml->asXml($filepath . '/import.xml')) {
-                mtrace('Errors whilst trying to write xml document to temp dir.');
-
+            // Make the .xml file to send to kar via sword
+            $filename = $filepath . '/sword.xml';
+            if (!$xml->asXml($filename)) {
+                mtrace('Errors whilst trying to write thesis submission xml document to temp dir.');
                 return false;
             }
 
-            $archive = array(
-                'import.xml' => $filepath . '/import.xml',
-                'public' => $publicpath,
-                'private' => $privatepath
+            // We now have the xml file, so send it to kar!
+
+            $ch = curl_init($CFG->thesis_kar_server . '/id/contents');
+
+            $xmlfile = fopen(realpath($filename), 'r');
+
+            // Input the xmlfile via fopen, because CURLOPT_POSTFIELDS created multipart which eprints doesn't accept.
+            $options = array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_POST => true,
+                CURLOPT_HTTPHEADER => array(
+                        'Content-type: application/vnd.eprints.data+xml',
+                        'Authorization: Basic ' . base64_encode($CFG->thesis_kar_username.":".$CFG->thesis_kar_password)
+                ),
+                CURLOPT_NOPROGRESS => false,
+                CURLOPT_UPLOAD => 1,
+                CURLOPT_TIMEOUT => 3600,
+                CURLOPT_INFILE => $xmlfile,
+                CURLOPT_INFILESIZE => filesize($filename),
             );
 
-            $zippacker = get_file_packer('application/x-gzip');
-            if (!$zippacker->archive_to_pathname($archive, $filepath . '.tgz')) {
-                mtrace('Errors whilst trying to tar xml and files.');
+            if (curl_setopt_array($ch, $options) !== false) {
+                $result = curl_exec($ch);
+                $info = curl_getinfo($ch);
 
-                return false;
-            }
-
-            // Delete the tmp directory (not the gzipped file).
-            fulldelete($filepath);
-
-            if (copy($filepath . '.tgz', "$finalpath/$foldername.tgz")) {
-                unlink($filepath . '.tgz');
+                curl_close($ch);
             } else {
-                mtrace('Errors whilst trying to copy thesis tgz into the thesis dir.');
-
-                return false;
+                // A Curl option could not be set.
+                mtrace("Curl settings failed when submitting thesis to kar ");
             }
+
+            // Delete the tmp directory.
+            fulldelete($filepath);
 
             $DB->update_record('thesis_submissions', array(
                 'id' => $sub->id,
                 'publish' => 2
             ));
+
         }
 
         return true;
@@ -371,3 +366,4 @@ class SimpleXMLElementExtended extends \SimpleXMLElement {
         return $new_child;
     }
 }
+
