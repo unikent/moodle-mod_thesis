@@ -105,11 +105,11 @@ class submissions extends \core\task\scheduled_task
                     $file->addChild('filename', $shortfilename);
 
                     // Embed the file into the xml as based64.
-                    $doc->addChild('filesize', $f->get_filesize());
-                    $doc->addChild('data', base64_encode($f->get_content()));
+                    $file->addChild('filesize', $f->get_filesize());
+                    $file->addChild('data', base64_encode($f->get_content()));
 
-                    $doc->addChild('format', $f->get_mimetype());
-                    $doc->addChild('language', 'en');
+                    $file->addChild('format', $f->get_mimetype());
+                    $file->addChild('language', 'en');
 
                     // Set security depending on embargo.
                     if ($sub->embargo == 0) {
@@ -149,11 +149,11 @@ class submissions extends \core\task\scheduled_task
                     $file->addChild('filename', $shortfilename);
 
                     // Embed the file into the xml as based64.
-                    $doc->addChild('filesize', $f->get_filesize());
-                    $doc->addChild('data', base64_encode($f->get_content()));
+                    $file->addChild('filesize', $f->get_filesize());
+                    $file->addChild('data', base64_encode($f->get_content()));
 
-                    $doc->addChild('format', $f->get_mimetype());
-                    $doc->addChild('language', 'en');
+                    $file->addChild('format', $f->get_mimetype());
+                    $file->addChild('language', 'en');
 
                     // Set security depending on embargo.
                     if ($sub->embargo == 0) {
@@ -194,11 +194,12 @@ class submissions extends \core\task\scheduled_task
                     $file->addChild('filename', $shortfilename);
 
                     // Embed the file into the xml as based64.
-                    $doc->addChild('filesize', $f->get_filesize());
-                    $doc->addChild('data', base64_encode($f->get_content()));
+                    $file->addChild('filesize', $f->get_filesize());
+                    $file->addChild('data', base64_encode($f->get_content()));
 
-                    $doc->addChild('format', $f->get_mimetype());
-                    $doc->addChild('language', 'en');
+                    $file->addChild('format', $f->get_mimetype());
+                    $file->addChild('language', 'en');
+
                     $doc->addChild('security', 'staffonly');
                     $doc->addChild('main', $shortfilename);
                     $doc->addChild('content', 'submitted');
