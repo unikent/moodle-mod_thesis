@@ -351,17 +351,11 @@ HTML;
 
         $license_options = array(null => 'Unspecified'); // todo add a value for unspecified
         $license_options['cc_by_nd'] = 'Creative Commons: Attribution-No Derivative Works 3.0';
-        $license_options['cc_by_nd_4'] = 'Creative Commons: Attribution-No Derivative Works 4.0';
         $license_options['cc_by'] = 'Creative Commons: Attribution 3.0';
-        $license_options['cc_by_4'] = 'Creative Commons: Attribution 4.0';
         $license_options['cc_by_nc'] = 'Creative Commons: Attribution-Noncommercial 3.0';
-        $license_options['cc_by_nc_4'] = 'Creative Commons: Attribution-Noncommercial 4.0';
         $license_options['cc_by_nc_nd'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 3.0';
-        $license_options['cc_by_nc_nd_4'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 4.0';
         $license_options['cc_by_nc_sa'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 3.0';
-        $license_options['cc_by_nc_sa_4'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 4.0';
         $license_options['cc_by_sa'] = 'Creative Commons: Attribution-Share Alike 3.0';
-        $license_options['cc_by_sa_4'] = 'Creative Commons: Attribution-Share Alike 4.0';
         $license_options['cc_public_domain'] = 'Creative Commons: Public Domain Dedication';
         $license_options['cc_gnu_gpl'] = 'Software: Creative Commons: GNU GPL 2.0';
         $license_options['cc_gnu_lgpl'] = 'Software: Creative Commons: GNU LGPL 2.1';

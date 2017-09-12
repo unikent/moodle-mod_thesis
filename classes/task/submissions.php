@@ -204,6 +204,7 @@ class submissions extends \core\task\scheduled_task
                     $doc->addChild('security', 'staffonly');
                     $doc->addChild('main', $shortfilename);
 
+
                     $doc->addChild('content', '');
 
                     if ($sub->license) {
@@ -259,6 +260,7 @@ class submissions extends \core\task\scheduled_task
             $eprint->addChildWithCDATA('keywords', $sub->keywords);
             $eprint->addChild('pages', $sub->number_of_pages);
             $eprint->addChild('note', $sub->additional_information);
+            //$eprint->addChildWithCDATA('abstract', preg_replace('/[\r\n]+/','', $sub->abstract));
             $eprint->addChildWithCDATA('abstract', $sub->abstract);
             $eprint->addChild('date', $sub->publish_year . '-' . sprintf('%02d', $sub->publish_month));
             $eprint->addChild('date_type', 'published');
@@ -315,13 +317,23 @@ class submissions extends \core\task\scheduled_task
             );
 
             if (curl_setopt_array($ch, $options) !== false) {
-                $result = curl_exec($ch);
+                $swordresult = curl_exec($ch);
                 $info = curl_getinfo($ch);
-
+                $p = xml_parser_create();
+                xml_parse_into_struct($p, $swordresult, $results);
+                xml_parser_free($p);
                 curl_close($ch);
+
+                foreach ($results as $result) {
+                    if (stripos($result['tag'], "error") !== false ) {
+                        mtrace("Kar rejected sword submission" . $result['tag']);
+                        return false;
+                    }
+                }
             } else {
                 // A Curl option could not be set.
                 mtrace("Curl settings failed when submitting thesis to kar ");
+                return false;
             }
 
             // Delete the tmp directory.
