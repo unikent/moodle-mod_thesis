@@ -56,6 +56,9 @@ class submissions extends \core\task\scheduled_task
             return false;
         }
 
+        \core_php_time_limit::raise(5 * 60 * 60); // Now sending huge thesis, so increase memory and time to send.
+        \raise_memory_limit(MEMORY_HUGE);
+
         $module = $DB->get_record('modules', array('name' => 'thesis'));
 
         foreach ($submissions as $sub) {
@@ -91,6 +94,13 @@ class submissions extends \core\task\scheduled_task
 
             // Set the pos as 1 so it can be incremented for each file.
             $pos = 1;
+
+            // Flag the fact we are attempting to submit this item - will leave records with publish = 3 for failures!
+            $DB->update_record('thesis_submissions', array(
+                'id' => $sub->id,
+                'publish' => 3
+            ));
+
             if ($publishfiles = $fs->get_area_files($context->id, 'mod_thesis', 'publish', $sub->id, '', false)) {
                 foreach ($publishfiles as $f) {
                     $shortfilename = self::shorten_filename($f->get_itemid() . $f->get_filename());
