@@ -216,13 +216,15 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
  * @param unknown $cmid
  * @param unknown $tid
  * @param unknown $coursecontext
- * @return unknown
+ * @return string
  */
 function thesis_list_submissions($cmid, $tid, $coursecontext) {
     global $DB, $USER;
 
     $submissions = array();
-    if (has_capability('moodle/course:update', $coursecontext)) {
+    $is_admin = has_capability('moodle/course:update', $coursecontext);
+
+    if ($is_admin) {
         $submissions = $DB->get_records('thesis_submissions', array(
             'thesis_id' => $tid
         ));
@@ -235,6 +237,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
 
     $row = '<tr><td><a href="edit.php?id=%s&amp;submission_id=%s">%s</a></td><td>%s</td><td><a href="mailto:%5$s">%5$s</a></td><td>%6$s</td><td>%7$s</td><td>%8$s</td></tr>';
     $out = '';
+
     foreach ($submissions as $s) {
 
         $pushed = 'draft';
@@ -253,18 +256,47 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         $out .= sprintf($row, $cmid, $s->id, $s->title, $name, $user->email, date('Y-m-d H:i:s', $s->timecreated), date('Y-m-d H:i:s', $s->timemodified), $pushed);
     }
 
-    $message = '';
-    if (empty($submissions)) {
-        return '<p>You currently have no submissions, <a href="edit.php?id=' . $cmid . '">create one?</a></p>';
-    }
-
+    // $message = '';
+    if (empty($submissions) && !$is_admin) {
+        return <<<HTML
+    <div>
+        <p>This module allows you to upload your completed thesis, 
+        which will then be published in the Kent Academic Repository 
+        <a href="https://kar.kent.ac.uk/">(KAR)</a>
+        . It may take up to 5 working days for this action to be completed.</p>
+        <p>In order to proceed you should have:</p>
+        <p><ul>
+            <li>A .pdf of your thesis.</li>
+            <li>Read the guidance (click here) to make sure you have considered copyright, licenses, and Open Access.</li>
+          </ul></p>
+        <p><a href="edit.php?id=$cmid">Click here to start.</a></p> 
+    </div>
+    <!--<p>You currently have no submissions, <a href="edit.php?id=' . $cmid . '">create one?</a></p>-->
+HTML;
+    } elseif (!$is_admin && ( $pushed = 'submitted' || $pushed = 'published')) {
+        return <<<HTML
+    <table class="thesis">
+      <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Time created</th><th>Time modified</th><th>Status</th></tr></thead>
+      <tbody>$out</tbody>
+    </table>
+    <p>Thank you for uploading your completed thesis to Moodle. It will be published in the <a href="https://kar.kent.ac.uk/">Kent Academic Repository</a></p>
+    <p>Please contact <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a> if:</p>
+    <p><ul>
+        <li>Your thesis has not appeared in the repository within 5 working days.</li>
+        <li>You have any accompanying files to upload.</li>
+        <li>You wish to change an embargo.</li>
+    </ul></p>
+    <p>Once your thesis is available in KAR it is possible to access download statistics, if it is Open Access. 
+    This information is located below your thesis details in the Repository, or via the <a href="https://kar.kent.ac.uk/cgi/stats/report">Dashboard</a></p>
+HTML;
+    } else {
         return <<<HTML
     <table class="thesis">
       <thead><tr><th>Title</th><th>Submitted by</th><th>Contact email</th><th>Time created</th><th>Time modified</th><th>Status</th></tr></thead>
       <tbody>$out</tbody>
     </table>
 HTML;
-
+    }
 }
 
 class mod_thesis_submit_form extends moodleform {
@@ -318,7 +350,7 @@ HTML;
 
         $mform->addElement('textarea', 'abstract', get_string('abstract', 'thesis'));
         $mform->setType('abstract', PARAM_TEXT);
-        $mform->addRule('abstract', get_string('abstract_req', 'thesis'), 'required');
+        //$mform->addRule('abstract', get_string('abstract_req', 'thesis'), 'required');
 
         $mform->addElement('static', 'family_name_info', '', get_string('family_name_info', 'thesis'));
         $mform->addElement('text', 'given_name', get_string('given_name', 'thesis'));
@@ -349,16 +381,23 @@ HTML;
         $typeoptions['dsc'] = 'Doctor of Science (D.Sc.)';
         $typeoptions['pdip'] = 'Postgraduate Diploma by Research (P.Dip.)';
 
+        // When KAR supports 4.0 CC attribution remove the commented lines below
         $license_options = array(null => 'Unspecified'); // todo add a value for unspecified
         $license_options['cc_by_nd'] = 'Creative Commons: Attribution-No Derivative Works 3.0';
+        //$license_options['cc_by_nd_4'] = 'Creative Commons: Attribution-No Derivative Works 4.0';
         $license_options['cc_by'] = 'Creative Commons: Attribution 3.0';
+        //$license_options['cc_by_4'] = 'Creative Commons: Attribution 4.0';
         $license_options['cc_by_nc'] = 'Creative Commons: Attribution-Noncommercial 3.0';
+        //$license_options['cc_by_nc_4'] = 'Creative Commons: Attribution-Noncommercial 4.0';
         $license_options['cc_by_nc_nd'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 3.0';
+        //$license_options['cc_by_nc_nd_4'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 4.0';
         $license_options['cc_by_nc_sa'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 3.0';
+        //$license_options['cc_by_nc_sa_4'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 4.0';
         $license_options['cc_by_sa'] = 'Creative Commons: Attribution-Share Alike 3.0';
+        //$license_options['cc_by_sa_4'] = 'Creative Commons: Attribution-Share Alike 4.0';
         $license_options['cc_public_domain'] = 'Creative Commons: Public Domain Dedication';
-        $license_options['cc_gnu_gpl'] = 'Software: Creative Commons: GNU GPL 2.0';
-        $license_options['cc_gnu_lgpl'] = 'Software: Creative Commons: GNU LGPL 2.1';
+        //$license_options['cc_gnu_gpl'] = 'Software: Creative Commons: GNU GPL 2.0';
+        //$license_options['cc_gnu_lgpl'] = 'Software: Creative Commons: GNU LGPL 2.1';
 
         // Sort the list of schools.
         asort($typeoptions);
@@ -369,7 +408,7 @@ HTML;
         $mform->addElement('textarea', 'keywords', 'Subject Keywords');
         $mform->setType('keywords', PARAM_TEXT);
         $mform->addHelpButton('keywords', 'keywords', 'thesis');
-        $mform->addRule('keywords', 'Subject keywords are required', 'required');
+        //$mform->addRule('keywords', 'Subject keywords are required', 'required');
 
         $mform->addElement('textarea', 'corporate_acknowledgement', get_string('corp_acknowl', 'thesis'));
         $mform->setType('corporate_acknowledgement', PARAM_TEXT);
@@ -421,7 +460,7 @@ HTML;
         $mform->addElement('static', 'title_info', '', get_string('email_help', 'thesis'));
         $mform->addElement('text', 'contactemail', get_string('email', 'thesis'));
         $mform->setType('contactemail', PARAM_TEXT);
-
+        $mform->addRule('contactemail', get_string('contactemail_req', 'thesis'), 'required');
         $qualoptions = array();
         $qualoptions['doctorial'] = get_string('quals_doctoral', 'thesis');
         $qualoptions['masters'] = get_string('quals_masters', 'thesis');
@@ -429,7 +468,7 @@ HTML;
         $mform->addElement('select', 'qualification_level', get_string('quals', 'thesis'), $qualoptions);
         $mform->addRule('qualification_level', get_string('quals_req', 'thesis'), 'required');
 
-        foreach (array('', 'second_', 'third_') as $i) {
+        foreach (array('', 'second_') as $i) {
             $mform->addElement('text', $i . 'supervisor_fname', get_string($i . 'sup_fname', 'thesis'));
             $mform->setType($i . 'supervisor_fname', PARAM_TEXT);
             $mform->addElement('text', $i . 'supervisor_sname', get_string($i . 'sup_sname', 'thesis'));
@@ -446,7 +485,7 @@ HTML;
         $embargo_options[0] = 'Immediate open access - no embargo';
         $embargo_options[1] = 'One year embargo';
         $embargo_options[3] = 'Three year embargo';
-        $embargo_options[5] = 'Five year embargo';
+        //$embargo_options[5] = 'Five year embargo';
 
         if ($choice == 1) {
             // public
@@ -466,9 +505,10 @@ HTML;
         }
 
         if ($choice == 2) {
-            // restricted
+            // redacted file form
             $mform->closeHeaderBefore('private_filemanager');
 
+            $mform->addElement('static', 'title_info', '', get_string('form_red_td_help', 'thesis'));
             $mform->addElement('filemanager', 'private_filemanager', get_string('form_red_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
@@ -483,7 +523,8 @@ HTML;
 
             $mform->closeHeaderBefore('permanent_filemanager');
 
-            // perm restricted form
+            // restricted form
+            $mform->addElement('static', 'title_info', '', get_string('form_res_perm_help', 'thesis'));
             $mform->addElement('filemanager', 'permanent_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 

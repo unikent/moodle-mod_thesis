@@ -38,6 +38,8 @@ if (!$thesis = $DB->get_record('thesis', array('id' => $cm->instance))) {
 
 require_course_login($course, true, $cm);
 
+$isadmin = has_capability('moodle/course:update', context_course::instance($cm->course));
+
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
@@ -55,11 +57,11 @@ $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('thesis', $thesis);
 $event->trigger();
 
-// Update 'viewed' state if required by completion system
+// Update 'viewed' state if required by completion system.
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
-// reset terms session variable
+// Reset terms session variable.
 unset($_SESSION['thesis_terms']);
 
 echo $OUTPUT->header();
@@ -70,7 +72,11 @@ if (!empty($thesis->intro)) {
 }
 
 echo '<div class="thesis_list">';
-echo '<a class="thesis_new" href="edit.php?id=' . $id . '">' . get_string('create_submission', 'mod_thesis') . '</a>';
+
+if ($isadmin) {
+    // Only admins can upload multiple thesis - students should upload multi-part thesis in the one deposit.
+    echo '<a class="thesis_new" href="edit.php?id=' . $id . '">' . get_string('create_submission', 'mod_thesis') . '</a>';
+}
 echo thesis_list_submissions($id, $thesis->id, context_course::instance($cm->course));
 echo '</div>';
 echo $OUTPUT->footer();
