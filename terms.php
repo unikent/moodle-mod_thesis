@@ -178,11 +178,11 @@ $choose_btns = <<<CBTNS
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_redacted" value="redacted">
 			<label for="kent_thesis_redacted">{$thesis_redacted}</label>
 		</div>
-		<div class="kent_thesis_radio_grp">
+		<!--<div class="kent_thesis_radio_grp">
 			<h4 class="kent_thesis_option_heading">Option 3</h4>
 			<input type="radio" name="kent_thesis_choose_btn" id="kent_thesis_restricted" value="restricted">
 			<label for="kent_thesis_restricted">{$thesis_restricted}</label>
-		</div>
+		</div>-->
 		<input class="form-submit" type="submit" value="Choose">
 	</form>
     <div>
