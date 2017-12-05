@@ -188,7 +188,7 @@ $choose_btns = <<<CBTNS
     <div>
         <h4>Note:</h4>
         <p>If you think your thesis contains material of a sensitive or confidential nature, and cannot be made publicly available, you may be able to restrict access to it permanently. Please download the permission form (link), complete it, obtain the necessary signatures, and then return it to <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a> 
-    You will still need to upload your thesis using this Moodle module. Please select Option 1 to do so.</p>
+    You will still need to upload your thesis using this Moodle module. Please select Option 1 to do so, and choose an embargo of 1 year.</p>
     </div>
 CBTNS;
 

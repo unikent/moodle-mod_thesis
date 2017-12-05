@@ -105,7 +105,7 @@ $string['delete_info'] = 'To delete this entry you must reset to draft.';
 $string['thesis:addinstance'] = 'Add a new thesis';
 
 $string['thesis_normal'] = 'I am depositing one copy of my thesis for public access with/without embargo';
-$string['thesis_redacted'] = 'I am depositing two copies of my thesis, one redacted copy for public access, with/without embargo, and one full text copy to be permanently restricted. For information about how to redact your thesis please see the guidance <a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">(link)</a>.';
+$string['thesis_redacted'] = 'I am depositing two copies of my thesis, one redacted copy for public access, and one full text copy to be permanently restricted. For information about how to redact your thesis please see the guidance <a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">(link)</a>.';
 $string['thesis_restricted'] = 'I am depositing one copy of my thesis to be permanently restricted';
 
 $string['thesis_restricted_info'] = '<p>Files placed here will be made publicly available after 3 years. If you wish to make special arrangements, please indicate this in the information box below.</p>';
@@ -118,7 +118,7 @@ $string['save_state_message_1'] = 'Thesis/dissertation deposit successfully save
 $string['save_state_message_publish'] = 'Thesis/dissertation deposit published.  An administrator will now check and approve your deposit.  No further updates can now be made.';
 $string['save_state_message_kar'] = 'Thesis/dissertation deposit published to kar.  Further updates can not be made.';
 $string['return_submissions_list'] = 'Return to deposits list';
-$string['view_page_title'] = 'Thesis/Dissertation Deposits';
+$string['view_page_title'] = 'Thesis/Dissertation Upload';
 $string['create_submission'] = '(Make a new deposit on behalf of a student)';
 
 $string['form_publish_info'] = 'This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.';
