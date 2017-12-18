@@ -121,7 +121,7 @@ $string['return_submissions_list'] = 'Return to deposits list';
 $string['view_page_title'] = 'Thesis/Dissertation Upload';
 $string['create_submission'] = '(Make a new deposit on behalf of a student)';
 
-$string['form_publish_info'] = 'This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.';
+$string['form_publish_info'] = "<p>You are responsible for respecting other's copyright. Learn more about conditions <a href='https://www.kent.ac.uk/library/research/thesis-deposit/index.html'>here</a>.</p><p>This version of your thesis/dissertation will be made available publicly via the Kent Academic Repository. Please upload your thesis/dissertation in PDF format.</p>";
 $string['form_pa_td'] = 'Publicly-available Thesis/Dissertation';
 $string['form_res_td'] = 'Restricted Thesis/Dissertation';
 $string['form_res_perm_td'] = 'Permanently restricted Thesis/Dissertation';

@@ -342,7 +342,7 @@ HTML;
             $mform->addElement('html', sprintf($comments_html, get_string('staff_comments', 'thesis'), $this->_customdata['submission_comments']));
             $mform->closeHeaderBefore('title_info');
         }
-
+        $mform->addElement('static','required','','<div class="fdescription required">There are required fields in this form marked <i class="icon fa fa-exclamation-circle text-danger fa-fw " aria-hidden="true" title="Required field" aria-label="Required field"></i>.</div>');
         $mform->addElement('static', 'title_info', '', get_string('title_help', 'thesis'));
         $mform->addElement('text', 'title', get_string('title', 'thesis'));
         $mform->setType('title', PARAM_TEXT);
@@ -383,17 +383,17 @@ HTML;
 
         // When KAR supports 4.0 CC attribution remove the commented lines below
         $license_options = array(null => 'Unspecified'); // todo add a value for unspecified
-        $license_options['cc_by_nd'] = 'Creative Commons: Attribution-No Derivative Works 3.0';
+        $license_options['cc_by_nd'] = 'Creative Commons: Attribution-No Derivative Works';
         //$license_options['cc_by_nd_4'] = 'Creative Commons: Attribution-No Derivative Works 4.0';
-        $license_options['cc_by'] = 'Creative Commons: Attribution 3.0';
+        $license_options['cc_by'] = 'Creative Commons: Attribution';
         //$license_options['cc_by_4'] = 'Creative Commons: Attribution 4.0';
-        $license_options['cc_by_nc'] = 'Creative Commons: Attribution-Noncommercial 3.0';
+        $license_options['cc_by_nc'] = 'Creative Commons: Attribution-Noncommercial';
         //$license_options['cc_by_nc_4'] = 'Creative Commons: Attribution-Noncommercial 4.0';
-        $license_options['cc_by_nc_nd'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 3.0';
+        $license_options['cc_by_nc_nd'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works';
         //$license_options['cc_by_nc_nd_4'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 4.0';
-        $license_options['cc_by_nc_sa'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 3.0';
+        $license_options['cc_by_nc_sa'] = 'Creative Commons: Attribution-Noncommercial-Share Alike';
         //$license_options['cc_by_nc_sa_4'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 4.0';
-        $license_options['cc_by_sa'] = 'Creative Commons: Attribution-Share Alike 3.0';
+        $license_options['cc_by_sa'] = 'Creative Commons: Attribution-Share Alike';
         //$license_options['cc_by_sa_4'] = 'Creative Commons: Attribution-Share Alike 4.0';
         $license_options['cc_public_domain'] = 'Creative Commons: Public Domain Dedication';
         //$license_options['cc_gnu_gpl'] = 'Software: Creative Commons: GNU GPL 2.0';
@@ -494,8 +494,9 @@ HTML;
             $mform->addElement('static', 'publish_info', '', get_string('form_publish_info', 'thesis'));
             $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
 
+            $mform->addElement('static','embargo_warning','','If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">guidance</a>.');
             $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
-            $mform->setDefault('embargo', 3);
+            $mform->setDefault('embargo', 0);
 
             $mform->closeHeaderBefore('license_wording');
 
