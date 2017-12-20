@@ -267,7 +267,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         <p>In order to proceed you should have:</p>
         <p><ul>
             <li>A .pdf of your thesis.</li>
-            <li>Read the guidance (click here) to make sure you have considered copyright, licenses, and Open Access.</li>
+            <li>Read the guidance (<a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">click here</a>) to make sure you have considered copyright, licenses, and Open Access.</li>
           </ul></p>
         <p><a href="edit.php?id=$cmid">Click here to start.</a></p> 
     </div>
@@ -382,20 +382,20 @@ HTML;
         $typeoptions['pdip'] = 'Postgraduate Diploma by Research (P.Dip.)';
 
         // When KAR supports 4.0 CC attribution remove the commented lines below
-        $license_options = array(null => 'Unspecified'); // todo add a value for unspecified
-        $license_options['cc_by_nd'] = 'Creative Commons: Attribution-No Derivative Works';
+        $license_options = array(null => 'UNSPECIFIED'); // todo add a value for unspecified
+        $license_options['cc_by_nd'] = 'CC BY-ND (Attribution-NoDerivatives)';
         //$license_options['cc_by_nd_4'] = 'Creative Commons: Attribution-No Derivative Works 4.0';
-        $license_options['cc_by'] = 'Creative Commons: Attribution';
+        $license_options['cc_by'] = 'CC BY (Attribution)';
         //$license_options['cc_by_4'] = 'Creative Commons: Attribution 4.0';
-        $license_options['cc_by_nc'] = 'Creative Commons: Attribution-Noncommercial';
+        $license_options['cc_by_nc'] = 'CC BY-NC (Attribution-NonCommercial)';
         //$license_options['cc_by_nc_4'] = 'Creative Commons: Attribution-Noncommercial 4.0';
-        $license_options['cc_by_nc_nd'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works';
+        $license_options['cc_by_nc_nd'] = 'CC BY-NC-ND (Attribution-NonCommercial-NoDerivatives)';
         //$license_options['cc_by_nc_nd_4'] = 'Creative Commons: Attribution-Noncommercial-No Derivative Works 4.0';
-        $license_options['cc_by_nc_sa'] = 'Creative Commons: Attribution-Noncommercial-Share Alike';
+        $license_options['cc_by_nc_sa'] = 'CC BY-NC-SA (Attribution-NonCommercial-ShareAlike)';
         //$license_options['cc_by_nc_sa_4'] = 'Creative Commons: Attribution-Noncommercial-Share Alike 4.0';
-        $license_options['cc_by_sa'] = 'Creative Commons: Attribution-Share Alike';
+        $license_options['cc_by_sa'] = 'CC BY-SA (Attribution-ShareAlike)';
         //$license_options['cc_by_sa_4'] = 'Creative Commons: Attribution-Share Alike 4.0';
-        $license_options['cc_public_domain'] = 'Creative Commons: Public Domain Dedication';
+        $license_options['cc_public_domain'] = 'CC0 (Public Domain)';
         //$license_options['cc_gnu_gpl'] = 'Software: Creative Commons: GNU GPL 2.0';
         //$license_options['cc_gnu_lgpl'] = 'Software: Creative Commons: GNU LGPL 2.1';
 
