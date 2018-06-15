@@ -496,8 +496,7 @@ HTML;
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
             $mform->addElement('static','embargo_warning','','If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">guidance</a>.');
-            $embargo_element = $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
-            $embargo_element->setSelected(0); // Default to no embargo
+            $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
             $mform->setDefault('embargo', 0);
 
             $mform->closeHeaderBefore('license_wording');
@@ -518,8 +517,7 @@ HTML;
 
             $mform->addElement('static', 'embargo_info', '', get_string('form_embargo_info', 'thesis'));
             $embargo_element = $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
-            $embargo_element->setSelected(0); // Default to no embargo
-            $mform->setDefault('embargo', 3);
+            $mform->setDefault('embargo', 0);
 
             $mform->closeHeaderBefore('license_wording');
 
