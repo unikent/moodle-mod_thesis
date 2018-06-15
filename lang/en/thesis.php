@@ -127,6 +127,8 @@ $string['form_res_td'] = 'Restricted Thesis/Dissertation';
 $string['form_res_perm_td'] = 'Permanently restricted Thesis/Dissertation';
 $string['form_res_perm_help'] = 'This is the full version of your thesis, which will not be made publicly available because it contains sections you do not wish to be visible.';
 $string['form_red_td'] = 'Redacted Thesis/Dissertation';
+$string['form_red_td_warning'] = 'You are responsible for respecting others’ copyright. Learn more about conditions <a href="https://www.kent.ac.uk/is/copyright/" target="_blank">here</a>';
+$string['form_embargo_info'] = 'If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www.kent.ac.uk/library/research/docs/digital-deposition-of-theses-advice-to-candidates.pdf" target="_blank">guidance here</a>';
 $string['form_red_td_help'] = 'This version of your thesis will be made publicly available in the Kent Academic Repository, but you will have removed the sections you do not wish to be visible to the public. For information about how to redact your thesis please see the <a href="https://www.kent.ac.uk/library/research/thesis-deposit/">guidance here</a>.';
 $string['form_pdf_format'] = '<p>Please upload your thesis/dissertation in PDF format.</p><p>If the thesis is in multiple .pdf files, then please upload all files here.</p>';
 $string['form_embargo_date'] = 'Please include the date on which your restricted thesis/dissertation can become publicly available via the Kent Academic Repository.';

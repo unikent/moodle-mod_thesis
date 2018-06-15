@@ -493,9 +493,11 @@ HTML;
 
             $mform->addElement('static', 'publish_info', '', get_string('form_publish_info', 'thesis'));
             $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
+            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
             $mform->addElement('static','embargo_warning','','If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">guidance</a>.');
-            $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
+            $embargo_element = $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
+            $embargo_element->setSlected(0); // Default to no embargo
             $mform->setDefault('embargo', 0);
 
             $mform->closeHeaderBefore('license_wording');
@@ -509,11 +511,14 @@ HTML;
             // redacted file form
             $mform->closeHeaderBefore('private_filemanager');
 
+            $mform->addElement('static', 'copywrite_info', '', get_string('form_red_td_warning', 'thesis'));
             $mform->addElement('static', 'title_info', '', get_string('form_red_td_help', 'thesis'));
             $mform->addElement('filemanager', 'private_filemanager', get_string('form_red_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
-            $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
+            $mform->addElement('static', 'embargo_info', '', get_string('form_embargo_info', 'thesis'));
+            $embargo_element = $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
+            $embargo_element->setSlected(0); // Default to no embargo
             $mform->setDefault('embargo', 3);
 
             $mform->closeHeaderBefore('license_wording');
