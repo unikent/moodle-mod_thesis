@@ -91,6 +91,53 @@ function thesis_create_or_update($data, $thesis, $context, $isadmin) {
     }
 }
 
+/* Send notification email from admin to student that thesis submitted to Kar */
+function thesis_notification_published($data, $thesis, $context, $isadmin) {
+    global $DB, $CFG, $USER;
+
+    $data->timemodified = time();
+
+    $eventdata = new \stdClass();
+    $eventdata->component = 'mod_thesis';
+    $eventdata->name = 'notes';
+
+    // from user who made the change
+    $eventdata->userfrom = $USER;
+
+    // get user to notify
+    $submission = $DB->get_record('thesis_submissions', array(
+            'id' => $data->submission_id,
+            'thesis_id' => $thesis->id
+    ), 'user_id');
+
+    $utn = $DB->get_record('user', array('id' => $submission->user_id));
+
+    // setup data for email template
+    $a = new stdClass();
+    $a->name = $data->title;
+    $a->depositurl = $CFG->wwwroot . '/mod/thesis/edit.php?id=' . $data->id . '&submission_id=' . $data->submission_id;
+    $a->depositurllink = '<a href="' . $a->depositurl . '">' . $thesis->name . '</a>';
+    $a->timemodified = date('Y-m-d H:i:s', $data->timemodified);
+    $course = $DB->get_record('course', array('id' => $thesis->course), 'id, fullname');
+
+    // set some user specific email template stuff
+    $a->username = $utn->username;
+    $a->coursename = $course->fullname;
+
+    // set message data
+    $eventdata->subject           = get_string('emailpublishedsubject', 'thesis', $a);
+    $eventdata->fullmessage       = get_string('emailpublishedbody', 'thesis', $a);
+    $eventdata->fullmessageformat = FORMAT_PLAIN;
+    $eventdata->fullmessagehtml   = '';
+    //$eventdata->smallmessage      = get_string('emailnotessmall', 'thesis', $a);
+
+    // set user to send to
+    $eventdata->userto = $utn;
+
+    // send message
+    $result = message_send($eventdata);
+}
+
 /* Send notification email from admin to student with comments */
 function thesis_notification_notes($data, $thesis, $context, $isadmin) {
     global $DB, $CFG, $USER;

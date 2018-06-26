@@ -21,15 +21,19 @@ $string['thesis:emailupdated'] = 'Receive eThesis update notifications by email'
 
 // updated by student
 $string['emailupdatedsubject'] = 'Thesis submitted to {$a->coursename} - {$a->name}';
-$string['emailupdatedbody'] = 'Dear {$a->username},
-
-A user has submitted their thesis:
-\'{$a->name}\'
-in {$a->coursename} - {$a->name}
-at {$a->timemodified}.
-
-You can access this deposit at \'{$a->depositurl}\'.';
+$string['emailupdatedbody'] = 'Please be aware that a deposit has been made for module {$a->coursename} to the Moodle Theisis Deposit Page <a href = "{$a->depositurl}">here</a>.
+Please login and check the details of the thesis then select "Save changes and publish to KAR".';
 $string['emailupdatedsmall'] = 'A user has submitted a thesis in {$a->coursename}';
+$string['emailpublishedsubject'] = 'Thesis {$a->name} submitted to KAR';
+
+$string['emailpublishedbody'] = 'Thank you for uploading your completed thesis to Moodle. It will soon be published in the Kent Academic Repository
+
+Please contact researchsupport@kent.ac.uk if:
+
+Your thesis has not appeared in the repository within 5 working days.
+You have any accompanying files to upload.
+You wish to change an embargo.
+Once your thesis is available in KAR it is possible to access download statistics, if it is Open Access. This information is located below your thesis details in the Repository, or via the KAR <a href="https://kar.kent.ac.uk/cgi/stats/report">Dashboard</a>.';
 
 // staff updated notes
 $string['emailnotessubject'] = 'Thesis notes updated: {$a->coursename} - {$a->name}';
