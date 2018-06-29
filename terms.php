@@ -38,7 +38,7 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
-$content = '<h2>Select Option/h2>';
+$content = '<h2>Select Option</h2>';
 
 $suburl = isset($submission_id) ? "&submission_id={$submission_id}" : '';
 

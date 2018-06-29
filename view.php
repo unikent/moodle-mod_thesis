@@ -78,5 +78,5 @@ if ($isadmin) {
     echo '<a class="thesis_new" href="edit.php?id=' . $id . '">' . get_string('create_submission', 'mod_thesis') . '</a>';
 }
 echo thesis_list_submissions($id, $thesis->id, context_course::instance($cm->course));
-echo '</div>';
+echo '<br /><br /><br /><p>&nbsp;</p></div>';
 echo $OUTPUT->footer();
