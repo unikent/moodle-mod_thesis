@@ -254,6 +254,6 @@ if ($show_as_published) {
     $form->display();
 }
 
-echo '<a class="thesis_back" href="view.php?id=' . $id . '">' . get_string('return_submissions_list', 'mod_thesis') . '</a>';
+//echo '<a class="thesis_back" href="view.php?id=' . $id . '">' . get_string('return_submissions_list', 'mod_thesis') . '</a>';
 
 echo $OUTPUT->footer();

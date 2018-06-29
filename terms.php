@@ -38,7 +38,7 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
-$content = '<h2>Terms and Conditions</h2>';
+$content = '<h2>Select Option/h2>';
 
 $suburl = isset($submission_id) ? "&submission_id={$submission_id}" : '';
 
@@ -186,9 +186,10 @@ $choose_btns = <<<CBTNS
 		<input class="form-submit" type="submit" value="Choose">
 	</form>
     <div>
-        <h4>Note:</h4>
-        <p>If you think your thesis contains material of a sensitive or confidential nature, and cannot be made publicly available, you may be able to restrict access to it permanently. Please download the <a href="https://www-test.kent.ac.uk/library/research/docs/thesis-embargo-request.pdf">permission form</a>, complete it, obtain the necessary signatures, and then return it to <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a> 
+        <h4>Sensitive or confidential material:</h4>
+        <p>If you think your thesis contains material of a sensitive or confidential nature, and cannot be made publicly available, you may be able to restrict access to it permanently. Please download the <a href="https://www-test.kent.ac.uk/library/research/docs/thesis-embargo-request.pdf" target="_blank">permission form</a>, complete it, obtain the necessary signatures, and then return it to <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a> 
     You will still need to upload your thesis using this Moodle module. Please select Option 1 to do so, and choose an embargo of 1 year. This will be changed to permanently embargoed on receipt of your form.</p>
+    <br /><br /><br /><p>&nbsp;</p>
     </div>
 CBTNS;
 
@@ -227,7 +228,7 @@ if($accepted > 0) {
 					<form class='kent_thesis_tcs_sub' action='terms.php?id={$id}{$suburl}' method='post'>
 						<input type='hidden' value='$type' name='kent_thesis_tcs_accepted' />
 						<input class='form-submit' type='submit' value='Accept'>
-					</form>";
+					</form><br /><br /><br /><p>&nbsp;</p>";
     }
 }
 

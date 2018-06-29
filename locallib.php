@@ -314,9 +314,9 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         <p>In order to proceed you should have:</p>
         <p><ul>
             <li>A .pdf of your thesis.</li>
-            <li>Read the guidance (<a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">click here</a>) to make sure you have considered copyright, licenses, and Open Access.</li>
+            <li>Read the guidance (<a href="https://www-test.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">click here</a>) to make sure you have considered copyright, licenses, and Open Access.</li>
           </ul></p>
-        <p><a href="edit.php?id=$cmid">Click here to start.</a></p> 
+        <p><a href="edit.php?id=$cmid">Click here to start.</a></p><br /><br /><br /><p>&nbsp;</p>
     </div>
     <!--<p>You currently have no submissions, <a href="edit.php?id=' . $cmid . '">create one?</a></p>-->
 HTML;
@@ -539,10 +539,11 @@ HTML;
             $mform->closeHeaderBefore('publish_info');
 
             $mform->addElement('static', 'publish_info', '', get_string('form_publish_info', 'thesis'));
+            $mform->addElement('static', 'accompany_files', '', get_string('accompany_files', 'thesis'));
             $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
-            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
+            //$mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
-            $mform->addElement('static','embargo_warning','','If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www.kent.ac.uk/library/research/thesis-deposit/index.html">guidance</a>.');
+            $mform->addElement('static','embargo_warning','','If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www-test.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">guidance</a>.');
             $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
             $mform->setDefault('embargo', 0);
 
@@ -559,8 +560,9 @@ HTML;
 
             $mform->addElement('static', 'copywrite_info', '', get_string('form_red_td_warning', 'thesis'));
             $mform->addElement('static', 'title_info', '', get_string('form_red_td_help', 'thesis'));
+            $mform->addElement('static', 'accompany_files', '', get_string('accompany_files', 'thesis'));
             $mform->addElement('filemanager', 'private_filemanager', get_string('form_red_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
-            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
+            //$mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
             $mform->addElement('static', 'embargo_info', '', get_string('form_embargo_info', 'thesis'));
             $embargo_element = $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
@@ -577,7 +579,7 @@ HTML;
             // restricted form
             $mform->addElement('static', 'title_info', '', get_string('form_res_perm_help', 'thesis'));
             $mform->addElement('filemanager', 'permanent_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
-            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
+            //$mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
             //$mform->addElement('static', 'additional_information_info', '', get_string('form_embargo_date', 'thesis'));
             //$mform->addElement('textarea', 'additional_information', get_string('form_res_info', 'thesis'));
@@ -589,10 +591,10 @@ HTML;
             $mform->closeHeaderBefore('private_filemanager');
 
             $mform->addElement('filemanager', 'permanent_filemanager', get_string('form_res_perm_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
-            $mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
+            //$mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
         }
 
-        $mform->addElement('static', 'accompany_files', '', get_string('accompany_files', 'thesis'));
+        //$mform->addElement('static', 'accompany_files', '', get_string('accompany_files', 'thesis'));
 
         $submitted_for_publishing = isset($this->_customdata['submitted_for_publishing']) && true === $this->_customdata['submitted_for_publishing'];
 
