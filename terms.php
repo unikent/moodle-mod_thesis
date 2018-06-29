@@ -187,7 +187,7 @@ $choose_btns = <<<CBTNS
 	</form>
     <div>
         <h4>Sensitive or confidential material:</h4>
-        <p>If you think your thesis contains material of a sensitive or confidential nature, and cannot be made publicly available, you may be able to restrict access to it permanently. Please download the <a href="https://www-test.kent.ac.uk/library/research/docs/thesis-embargo-request.pdf" target="_blank">permission form</a>, complete it, obtain the necessary signatures, and then return it to <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a> 
+        <p>If you think your thesis contains material of a sensitive or confidential nature, and cannot be made publicly available, you may be able to restrict access to it permanently. Please download the <a href="https://www.kent.ac.uk/library/research/docs/thesis-embargo-request.pdf" target="_blank">permission form</a>, complete it, obtain the necessary signatures, and then return it to <a href="mailto:researchsupport@kent.ac.uk">researchsupport@kent.ac.uk</a> 
     You will still need to upload your thesis using this Moodle module. Please select Option 1 to do so, and choose an embargo of 1 year. This will be changed to permanently embargoed on receipt of your form.</p>
     <br /><br /><br /><p>&nbsp;</p>
     </div>

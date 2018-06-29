@@ -314,7 +314,7 @@ function thesis_list_submissions($cmid, $tid, $coursecontext) {
         <p>In order to proceed you should have:</p>
         <p><ul>
             <li>A .pdf of your thesis.</li>
-            <li>Read the guidance (<a href="https://www-test.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">click here</a>) to make sure you have considered copyright, licenses, and Open Access.</li>
+            <li>Read the guidance (<a href="https://www.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">click here</a>) to make sure you have considered copyright, licenses, and Open Access.</li>
           </ul></p>
         <p><a href="edit.php?id=$cmid">Click here to start.</a></p><br /><br /><br /><p>&nbsp;</p>
     </div>
@@ -543,7 +543,7 @@ HTML;
             $mform->addElement('filemanager', 'publish_filemanager', get_string('form_pa_td', 'thesis'), '', array('accepted_types' => 'application/pdf'));
             //$mform->addElement('static', 'format_info', '', get_string('form_pdf_format', 'thesis'));
 
-            $mform->addElement('static','embargo_warning','','If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www-test.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">guidance</a>.');
+            $mform->addElement('static','embargo_warning','','If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href="https://www.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">guidance</a>.');
             $mform->addElement('select', 'embargo', get_string('embargo', 'thesis'), $embargo_options);
             $mform->setDefault('embargo', 0);
 
