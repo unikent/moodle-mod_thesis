@@ -633,7 +633,7 @@ HTML;
 
         if ($isadmin) {
             if (!$submitted_for_publishing) {
-                $deletesection[] = $mform->createElement('submit', 'submitdelete', get_string('form_buttons_delete', 'thesis'));
+                $deletesection[] = $mform->createElement('submit', 'submitdelete', get_string('form_buttons_delete', 'thesis'), ['onclick' => "return confirm('Are you sure you wish to delete the whole thesis entry?')"]);
             } else {
                 $deletesection[] = $mform->createElement('static', 'publish_info', '', get_string('delete_info', 'thesis'));
             }

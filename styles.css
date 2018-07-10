@@ -104,7 +104,7 @@ table.thesis td {
 }
 
 .kent_thesis_tcs_sub {
-  float: right;
+  text-align: center;
 }
 
 .kent_thesis_choose .form-submit {

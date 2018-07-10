@@ -148,7 +148,8 @@ if ($show_as_published) {
 
     $output .= '</table>';
 } else {
-    $heading = $course->fullname . ' - ' . $thesis->name . ' (Deposit)';
+    //$heading = $course->fullname . ' - ' . $thesis->name . ' (Deposit)';
+    $heading = 'Thesis deposit';
     $PAGE->set_title($heading);
     $PAGE->set_heading($heading);
 
