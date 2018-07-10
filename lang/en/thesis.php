@@ -99,7 +99,7 @@ $string['embargo'] = 'With embargo?';
 $string['license'] = 'Which license?';
 $string['license_req'] = 'You must select a creative commons license';
 $string['license_wording'] = 'Creative Commons licenses tell users what they are allowed to do with your work (eg. share, copy adapt). See <a href="https://www.kent.ac.uk/library/research/open-access/copyright.html" target="_blank">https://www.kent.ac.uk/library/research/open-access/copyright.html</a>.';
-$string['accompany_files'] = 'If you have accompanying files with your final thesis they will need to be uploaded separately. Please follow the "Accompanying files" guidance <a href="https://www.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">here</a>.';
+$string['accompany_files'] = '<p>If you have accompanying files with your final thesis they will need to be uploaded separately. Please follow the "Accompanying files" guidance <a href="https://www.kent.ac.uk/library/research/your-thesis/index.html" target="_blank">here</a>.</p><br /><p>This version of your Thesis deposit will be made available publicly via the Kent Academic Repository.</p>';
 $string['staff_comments'] = 'Staff comments';
 $string['restricted'] = 'Restricted';
 $string['restricted_help'] = 'Restricted material';
@@ -125,7 +125,7 @@ $string['return_submissions_list'] = 'View my thesis deposit status';
 $string['view_page_title'] = 'Introduction';
 $string['create_submission'] = '(Make a new deposit on behalf of a student)';
 
-$string['form_publish_info'] = '<p>You are responsible for respecting other\'s copyright. Learn more about conditions <a href=\'https://www.kent.ac.uk/library/research/your-thesis/third-party-copyright.html\' target=\'_blank\'>here</a>.</p><p>This version of your Thesis deposit will be made available publicly via the Kent Academic Repository. Please upload your Thesis deposit in PDF format. If the thesis is in multiple .pdf files, then please upload all files below.</p><p>Please see the "Preparing your document" guidance <a href=\'https://www.kent.ac.uk/library/research/your-thesis/index.html\' target=\'_blank\'>here</a> for options for reducing the size of your thesis.</p>';
+$string['form_publish_info'] = '<p>You are responsible for respecting other\'s copyright. Learn more about conditions <a href=\'https://www.kent.ac.uk/library/research/your-thesis/third-party-copyright.html\' target=\'_blank\'>here</a>.</p><p>Please upload your Thesis deposit in PDF format. If the thesis is in multiple .pdf files, then please upload all files below.</p><p>Please see the "Preparing your document" guidance <a href=\'https://www.kent.ac.uk/library/research/your-thesis/index.html\' target=\'_blank\'>here</a> for options for reducing the size of your thesis.</p>';
 $string['form_pa_td'] = 'Publicly-available Thesis deposit';
 $string['form_res_td'] = 'Restricted Thesis deposit';
 $string['form_res_perm_td'] = 'Permanently restricted Thesis deposit';
@@ -133,7 +133,7 @@ $string['form_res_perm_help'] = 'This is the full version of your thesis, which 
 $string['form_red_td'] = 'Redacted Thesis deposit';
 $string['form_red_td_warning'] = 'You are responsible for respecting other\'s copyright. Learn more about conditions <a href=\'https://www.kent.ac.uk/library/research/your-thesis/third-party-copyright.html\' target=\'_blank\'>here</a>';
 $string['form_embargo_info'] = 'If you place an embargo this restricts the full text from view, and only information about the thesis will be visible. For information regarding embargoes please see the <a href=\'https://www.kent.ac.uk/library/research/your-thesis/index.html\' target=\'_blank\'>guidance here</a>';
-$string['form_red_td_help'] = 'This version of your thesis will be made publicly available in the Kent Academic Repository, but you will have removed the sections you do not wish to be visible to the public. For information about how to redact your thesis please see the <a href=\'https://www.kent.ac.uk/library/research/your-thesis/index.html\' target=\'_blank\'>guidance here.</a>Please upload your Thesis deposit in PDF format. If the thesis is in multiple .pdf files, then please upload all files below.';
+$string['form_red_td_help'] = 'Please upload your Thesis deposit in PDF format. If the thesis is in multiple .pdf files, then please upload all files below.';
 $string['form_pdf_format'] = '<p>Please upload your Thesis deposit in PDF format.</p>';
 $string['form_embargo_date'] = 'Please include the date on which your restricted Thesis deposit can become publicly available via the Kent Academic Repository.';
 $string['form_res_info'] = 'Restricted Thesis deposit Information';
