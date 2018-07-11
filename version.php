@@ -16,7 +16,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2018062905;
+$plugin->version  = 2018070200;
 $plugin->requires = 2014051201;
 $plugin->component = 'mod_thesis';
 

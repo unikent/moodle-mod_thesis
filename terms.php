@@ -38,7 +38,9 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 $PAGE->set_context($context);
 
-$content = '<h2>Terms and Conditions</h2>';
+$content = '';
+$content_tsandcs = '<h2>Terms and Conditions</h2>';
+$content_options = '<h2>Thesis deposit options</h2>';
 
 $suburl = isset($submission_id) ? "&submission_id={$submission_id}" : '';
 
@@ -200,11 +202,13 @@ if($accepted > 0) {
     redirect($CFG->wwwroot . "/mod/thesis/edit.php?id={$id}{$suburl}");
 } elseif(empty($choice)) {
     unset($_SESSION['thesis_terms']);
+    $content .= $content_options;
     $content .= $choose_btns_intro;
     $content .= $choose_btns;
 } else {
     unset($_SESSION['thesis_terms']);
     $type = 0;
+    $content .= $content_tsandcs;
     switch ($choice) {
         case 'normal':
             $type = 1;
