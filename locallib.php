@@ -515,7 +515,7 @@ HTML;
         $mform->addElement('select', 'qualification_level', get_string('quals', 'thesis'), $qualoptions);
         $mform->addRule('qualification_level', get_string('quals_req', 'thesis'), 'required');
 
-        foreach (array('', 'second_') as $i) {
+        foreach (array('', 'second_', 'third_') as $i) {
             $mform->addElement('text', $i . 'supervisor_fname', get_string($i . 'sup_fname', 'thesis'));
             $mform->setType($i . 'supervisor_fname', PARAM_TEXT);
             $mform->addElement('text', $i . 'supervisor_sname', get_string($i . 'sup_sname', 'thesis'));
