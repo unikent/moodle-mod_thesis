@@ -133,6 +133,7 @@ function thesis_notification_published($data, $thesis, $context, $isadmin) {
 
     // set user to send to
     $eventdata->userto = $utn;
+    $eventdata->courseid = SITEID; // Set to site sending email
 
     // send message
     $result = message_send($eventdata);
@@ -180,6 +181,7 @@ function thesis_notification_notes($data, $thesis, $context, $isadmin) {
 
     // set user to send to
     $eventdata->userto = $utn;
+    $eventdata->courseid = SITEID; // Set to site sending email
 
     // send message
     $result = message_send($eventdata);
@@ -251,6 +253,7 @@ function thesis_notification_updated($data, $thesis, $context, $isadmin) {
 
         // set user to send to
         $eventdata->userto = $utn;
+        $eventdata->courseid = SITEID; // Set to site sending email
 
         // send message
         $result = message_send($eventdata);
